@@ -1,11 +1,20 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SignupTypes } from "@/types/signupTypes"
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { auth } from "@/app/fisebase"
 
 export const SignupForm = ()=>{
 
     const {register, handleSubmit, formState:{errors}} = useForm<SignupTypes>()
+
+    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth)
+
     const handleSignUp: SubmitHandler<SignupTypes> = (data)=>{
-        console.log(data)
+        try {
+            createUserWithEmailAndPassword(data.email, data.password)
+        }catch(erro){
+
+        }
     }
 
     return (
@@ -22,7 +31,7 @@ export const SignupForm = ()=>{
                         placeholder="Senha"/>
                 </div>
                 <div className="place-self-end">
-                    <input type="submit" value="Log in" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer"/>
+                    <input type="submit" value="Criar conta" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer"/>
                 </div>
             </form>
         </div>
