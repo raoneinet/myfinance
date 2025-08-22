@@ -1,7 +1,7 @@
 "use client"
 import { useAuthState } from "react-firebase-hooks/auth"
 import {auth} from "./fisebase"
-import { WelcomePage } from "./views/welcome/welcome"
+import { WelcomePage } from "./pages/welcome/welcome"
 import { SignedIn } from "../components/signedin"
 import { SignedOut } from "../components/signedout"
 import {SignInAndOutButtons} from "@/components/signInandOutButtons"
