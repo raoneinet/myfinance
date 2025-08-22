@@ -1,5 +1,5 @@
 "use client"
-import {LoginForm} from "../../../components/loginForm"
+import LoginForm from "@/components/loginForm"
 import Link from "next/link"
 
 const Login = ()=>{
@@ -11,7 +11,7 @@ const Login = ()=>{
                 </div>
                 <LoginForm />
                 <div>
-                    <p>Ainda não tem conta? {" "}<Link href="../views/signup/">Criar conta</Link></p>
+                    <p>Ainda não tem conta? {" "}<Link href="/pages/signup">Criar conta</Link></p>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
+"use client"
 import Link from "next/link"
-import {SignupForm} from "../../../components/signupForm"
+import SignupForm from "@/components/signupForm"
 
 
 const Signup = ()=>{
@@ -12,7 +13,7 @@ const Signup = ()=>{
                 </div>
                 <SignupForm />
                 <div>
-                    <p>Já tem conta? {" "}<Link href="/views/login/">Log in</Link></p>
+                    <p>Já tem conta? {" "}<Link href="/pages/login">Log in</Link></p>
                 </div>
             </div>
         </div>
