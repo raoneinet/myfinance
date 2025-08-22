@@ -2,10 +2,10 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SignupTypes } from "@/types/signupTypes"
 import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth'
-import { auth } from "@/app/fisebase"
+import { auth } from "@/app/firebase"
 import { useRouter } from "next/navigation"
 
-export const SignupForm = ()=>{
+const SignupForm = ()=>{
 
     const router = useRouter()
     const {register, handleSubmit, formState:{errors}} = useForm<SignupTypes>()
@@ -17,7 +17,7 @@ export const SignupForm = ()=>{
         try {
             await createUserWithEmailAndPassword(data.email, data.password)
             await sendEmailVerification()
-            router.push("/views/login")
+            router.push("/pages/login")
             console.log(user)
         }catch(error){
             alert("Erro ao fazer cadastro." + error)
@@ -40,9 +40,14 @@ export const SignupForm = ()=>{
                     {errors.password && <p>{errors.password.message}</p>}
                 </div>
                 <div className="place-self-end">
-                    <input type="submit" value="Criar conta" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer"/>
+                    <input 
+                        type="submit" 
+                        value="Criar conta" 
+                        className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer"/>
                 </div>
             </form>
         </div>
     )
 }
+
+export default SignupForm

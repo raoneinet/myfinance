@@ -2,14 +2,14 @@
 import {useForm, SubmitHandler} from "react-hook-form"
 import {LoginTypes} from "@/types/loginTypes"
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth"
-import { auth } from "@/app/fisebase"
+import { auth } from "@/app/firebase"
 import { useRouter } from "next/navigation"
 
-export const LoginForm = ()=>{
+const LoginForm = ()=>{
 
     const router = useRouter()
     const {register, handleSubmit, formState:{errors}} = useForm<LoginTypes>()
-    const [signInWithEmailAndPassword, user] = useSignInWithEmailAndPassword(auth)
+    const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
 
     const handleLogin:SubmitHandler<LoginTypes> = async (data)=>{
         try{
@@ -32,7 +32,7 @@ export const LoginForm = ()=>{
                         {errors.email && <p>{errors.email.message}</p>}
                 </div>
                 <div>
-                    <input type="password" {...register("password", {required: "Campo obrigatório", min: 6, max: 20})}
+                    <input type="password" {...register("password", {required: "Campo obrigatório", minLength: 6, maxLength: 20})}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg`}
                         placeholder="Senha"/>
                     {errors.password && <p>{errors.password.message}</p>}
@@ -44,3 +44,5 @@ export const LoginForm = ()=>{
         </div>
     )
 }
+
+export default LoginForm
