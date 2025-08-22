@@ -1,5 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth"
 import {auth} from "@/app/firebase"
+import {TotalFinancing} from "./totalFinancing"
 
 export const HomeDashboard = ()=>{
 
@@ -7,7 +8,7 @@ export const HomeDashboard = ()=>{
 
     return (
         <div className="container h-full">
-            <h1>Welcome to {user?.email}</h1>
+            <TotalFinancing/>
         </div>
     )
 }

@@ -14,7 +14,7 @@ export const Header = ()=>{
 
     return (
         <header className="w-full px-2 py-3 bg-gray-900 h-20 text-white">
-            <div className="container flex justify-between items-center h-full">
+            <div className="container px-5 flex justify-between items-center h-full">
                 <div>MyFinance</div>
                 <div className="flex gap-3">
                     <div>{user?.email}</div>
