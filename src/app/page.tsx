@@ -20,7 +20,9 @@ const Page = () => {
         }
         {!user &&
           <SignedOut>
-            <SignInAndOutButtons />
+            <div className="container mx-auto f-fulll">
+              <div>Devo construir uma LP ou página de apresentação.</div>
+            </div>
           </SignedOut>
         }
       </div>
