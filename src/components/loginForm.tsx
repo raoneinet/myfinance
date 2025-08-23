@@ -16,6 +16,8 @@ const LoginForm = ()=>{
             await signInWithEmailAndPassword(data.email, data.password)
             router.push("/")
             console.log(user)
+            console.log(data)
+            console.log(auth)
         }catch(error){
             alert("Erro ao fazer login" + error)
         }

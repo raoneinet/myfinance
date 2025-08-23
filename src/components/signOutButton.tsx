@@ -2,11 +2,12 @@ import { Auth } from "firebase/auth";
 
 type Props = {
     auth: Auth
-    router: any;
-    signOut: (auth:Auth)=>void
+    router: any
+    signOut: (auth: Auth) => void
+    icon: string
 }
 
-const SignOutButton = ({auth, router, signOut}: Props) => {
+const SignOutButton = ({ auth, router, signOut, icon }: Props) => {
 
     const handleSigntOut = async () => {
         try {
@@ -17,10 +18,12 @@ const SignOutButton = ({auth, router, signOut}: Props) => {
         }
     }
     return (
-        <>
+        <div className="flex gap-1 w-fit cursor-pointer"
+            onClick={handleSigntOut}>
             <button className="cursor-pointer"
-                onClick={handleSigntOut}>Sair</button>
-        </>
+            >Sair</button>
+            <img src={icon} className="w-5 h-5 rounded-full" />
+        </div>
     )
 }
 
