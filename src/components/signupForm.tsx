@@ -1,9 +1,14 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SignupTypes } from "@/types/signupTypes"
-import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth'
+import { 
+        useCreateUserWithEmailAndPassword, 
+        useSendEmailVerification, 
+        useUpdateProfile 
+        } from 'react-firebase-hooks/auth'
 import { auth } from "@/app/firebase"
 import { useRouter } from "next/navigation"
+import { signOut } from "firebase/auth"
 
 const SignupForm = ()=>{
 
@@ -12,13 +17,25 @@ const SignupForm = ()=>{
 
     const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth)
     const [sendEmailVerification] = useSendEmailVerification(auth)
+    const [updateProfile] = useUpdateProfile(auth)
 
     const handleSignUp: SubmitHandler<SignupTypes> = async (data)=>{
         try {
-            await createUserWithEmailAndPassword(data.email, data.password)
+            const userCredential = await createUserWithEmailAndPassword(data.email, data.password)
+
+            if(!userCredential) return null
+            
+            await updateProfile({
+                displayName: data.name
+            })
+
+            await signOut(auth)
             await sendEmailVerification()
-            router.push("/pages/login")
-            console.log(user)
+            
+            router.push("/pages/login?verify=true")
+
+            console.log("Usuário criado: " + userCredential.user.displayName)
+            console.log(userCredential)
         }catch(error){
             alert("Erro ao fazer cadastro." + error)
         }
@@ -27,6 +44,12 @@ const SignupForm = ()=>{
     return (
         <div className="p-5 bg-white">
             <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-2">
+                <div>
+                    <input type="name" {...register("name", {required: "Campo obrigatório"})}
+                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg`}
+                        placeholder="Nome e sobrenome"/>
+                        {errors.name && <p>{errors.name.message}</p>}
+                </div>
                 <div>
                     <input type="email" {...register("email", {required: "Campo obrigatório"})}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg`}

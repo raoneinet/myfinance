@@ -15,17 +15,18 @@ export const Header = () => {
 
 
     return (
-        <header className="w-full px-2 py-3 bg-gray-900 h-20 text-white">
-            <div className="container px-5 flex justify-between items-center h-full">
+        <header className="w-full px-2 py-3 bg-black h-20 text-white">
+            <div className="container mx-auto px-5 flex justify-between items-center h-full">
                 <div><Link href="/">MyFinance</Link></div>
                 {user &&
                     <div className="flex gap-3">
-                        <div>{user?.email}</div>
+                        <div>{user?.displayName}</div>
                         <div>
                             <SignOutButton
                                 auth={auth}
                                 router={router}
-                                signOut={signOut} />
+                                signOut={signOut} 
+                                icon="/assets/icons/signout.jpg"/>
                         </div>
                     </div>
                 }

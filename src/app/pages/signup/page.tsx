@@ -12,7 +12,7 @@ const Signup = () => {
             <div className="w-full h-[calc(100vh-80px)] flex justify-center items-center p-2 bg-gray-100">
                 <div className="container h-full px-5 mx-auto flex flex-col">
                     <GoToHomeButton />
-                    <div className="m-auto flex flex-col justify-center items-center p-5 w-2xl h-80 bg-white rounded-lg shadow shadow-gray-400">
+                    <div className="m-auto flex flex-col justify-center items-center p-5 w-2xl bg-white rounded-lg shadow shadow-gray-400">
                         <div className="text-center">
                             <h1 className="font-bold text-xl pb-4">Bem-vindo ao MyFinance</h1>
                             <p>Crie sua conta gratuitamente</p>

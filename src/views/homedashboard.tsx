@@ -7,7 +7,7 @@ export const HomeDashboard = ()=>{
     const [user, loading, error] = useAuthState(auth)
 
     return (
-        <div className="container h-full">
+        <div className="container mx-auto h-full">
             <TotalFinancing/>
         </div>
     )
