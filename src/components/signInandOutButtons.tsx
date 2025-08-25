@@ -4,8 +4,8 @@ import Link from "next/link"
 const SignInAndOutButtons = () => {
     return (
         <>
-            <Link href="/pages/login" className="p-5">Login</Link>
-            <Link href="/pages/signup" className="p-5">Criar conta</Link>
+            <Link href="/auth/login" className="p-5">Login</Link>
+            <Link href="/auth/register" className="p-5">Criar conta</Link>
         </>
     )
 }

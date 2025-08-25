@@ -18,7 +18,7 @@ const Login = () => {
                         </div>
                         <LoginForm />
                         <div>
-                            <p>Ainda não tem conta? {" "}<Link href="/pages/signup">Criar conta</Link></p>
+                            <p>Ainda não tem conta? {" "}<Link href="/auth/register">Criar conta</Link></p>
                         </div>
                     </div>
                 </div>
