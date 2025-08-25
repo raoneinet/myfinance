@@ -20,7 +20,7 @@ const Signup = () => {
                         </div>
                         <SignupForm />
                         <div>
-                            <p>Já tem conta? {" "}<Link href="/pages/login">Log in</Link></p>
+                            <p>Já tem conta? {" "}<Link href="/auth/login">Log in</Link></p>
                         </div>
                     </div>
                 </div>
