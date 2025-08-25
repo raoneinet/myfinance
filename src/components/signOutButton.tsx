@@ -12,7 +12,7 @@ const SignOutButton = ({ auth, router, signOut, icon }: Props) => {
     const handleSigntOut = async () => {
         try {
             await signOut(auth)
-            router.push("/pages/login")
+            router.push("/auth/login")
         } catch (error) {
             alert("Ocorreu um erro ao fazer Sign Out." + error)
         }
