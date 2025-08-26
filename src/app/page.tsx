@@ -1,19 +1,24 @@
 "use client"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "./firebase"
-import { WelcomePage } from "./pages/welcome/welcome"
+import WelcomePage from "./pages/welcome/page"
 import { SignedIn } from "@/components/signedin"
 import { SignedOut } from "@/components/signedout"
-import SignInAndOutButtons from "@/components/signInandOutButtons"
 import { Header } from "@/views/header"
+import { AuthProvider } from "./context/authContext"
+import { LoadingSpinner } from "@/components/loadingSpinner"
 
 const Page = () => {
-  const [user, loading, error] = useAuthState(auth)
+  const [user, loading] = useAuthState(auth)
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
   return (
-    <>
+    <AuthProvider>
       <Header />
       <div className="w-full h-screen">
-        {user &&
+        {user && !loading &&
           <SignedIn>
             <WelcomePage />
           </SignedIn>
@@ -26,7 +31,7 @@ const Page = () => {
           </SignedOut>
         }
       </div>
-    </>
+    </AuthProvider>
   )
 }
 
