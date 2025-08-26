@@ -9,11 +9,11 @@ import { AuthProvider } from "./context/authContext"
 import { LoadingSpinner } from "@/components/loadingSpinner"
 
 const Page = () => {
-  const [user, loading] = useAuthState(auth)
+  const [user, loading, error] = useAuthState(auth)
 
-  if (loading) {
-    return <LoadingSpinner />
-  }
+  if(error) return null
+  if (loading) return <LoadingSpinner />
+  
   return (
     <AuthProvider>
       <Header />
