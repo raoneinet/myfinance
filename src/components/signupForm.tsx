@@ -72,7 +72,7 @@ const SignupForm = () => {
                 <div>
                     <input type="password" {...register("passwordConfirmation", { required: "Campo obrigatório", min: 6, max: 20 })}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${(errors.passwordConfirmation || confirmPassword) ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Senha" />
+                        placeholder="Confirmar senha" />
                     {errors.passwordConfirmation && <p className="text-xs">{errors.passwordConfirmation.message}</p>}
                     {confirmPassword && <p className="text-xs">As senhas não são iguais</p>}
                 </div>
