@@ -1,5 +1,5 @@
 "use client"
-import {useState} from "react"
+import { useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SignupTypes } from "@/types/signupTypes"
 import {
@@ -10,6 +10,8 @@ import {
 import { auth } from "@/app/firebase"
 import { useRouter } from "next/navigation"
 import { signOut } from "firebase/auth"
+import axios from "axios"
+import jsSHA from "jssha"
 
 const SignupForm = () => {
 
@@ -21,16 +23,46 @@ const SignupForm = () => {
     const [sendEmailVerification] = useSendEmailVerification(auth)
     const [updateProfile] = useUpdateProfile(auth)
 
+    const generateHash = ({ password }: any) => {
+        let shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" })
+        shaObj.update(password)
+        return shaObj.getHash("HEX")
+    }
+
     const handleSignUp: SubmitHandler<SignupTypes> = async (data) => {
         try {
-            if (data.password !== data.passwordConfirmation){
+            const password = data.password.trim() || ""
+            const passwordConfirmation = data.passwordConfirmation.trim() || ""
+
+            if (!password || !passwordConfirmation || password !== passwordConfirmation) {
                 setConfirmPassword(true)
                 return
             }
-            
-            const userCredential = await createUserWithEmailAndPassword(data.email, data.password)
-            
+
+            const pwd_hash = generateHash({password})
+
+            const userCredential = await createUserWithEmailAndPassword(data.email, data.password.trim())
+
             if (!userCredential) return null
+
+            try {
+                await axios.post("http://localhost/myfinance_backend/api/create_user.php",
+                    {
+                        fullname: data.name,
+                        email: data.email,
+                        password: pwd_hash
+                    }
+                )
+
+                console.log("PHP DB: " + data.name + " Criado: " + new Date())
+
+            } catch (err: any) {
+                if (err.response) {
+                    alert(err.response.data.error || "Erro ao cadastrar usuário");
+                } else {
+                    alert("Erro de conexão com o servidor");
+                }
+            }
 
             await updateProfile({
                 displayName: data.name
