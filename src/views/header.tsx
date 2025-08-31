@@ -22,7 +22,7 @@ export const Header = () => {
                 <div><Link href="/">MyFinance</Link></div>
                 {!loading && user && (
                     <div className="flex gap-3 text-white">
-                        <div>{user.name}</div>
+                        <div>{user.fullname}</div>
                         <div>
                             <SignOutButton
                                 router={router}
