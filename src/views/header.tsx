@@ -4,10 +4,15 @@ import { useAuthContext } from "@/app/context/authContext"
 import SignOutButton from "@/components/signOutButton"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useEffect } from "react"
 
 export const Header = () => {
     const router = useRouter()
     const { user, logout, loading } = useAuthContext()
+
+    useEffect(()=>{
+        console.log("Este é o usuário: ", user)
+    }, [])
 
 
 
@@ -17,7 +22,7 @@ export const Header = () => {
                 <div><Link href="/">MyFinance</Link></div>
                 {!loading && user && (
                     <div className="flex gap-3 text-white">
-                        <div>Aqui é o nome</div>
+                        <div>{user.name}</div>
                         <div>
                             <SignOutButton
                                 router={router}
