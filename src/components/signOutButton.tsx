@@ -1,27 +1,23 @@
-import { Auth } from "firebase/auth";
 
 type Props = {
-    auth: Auth
     router: any
-    signOut: (auth: Auth) => void
+    logout: () => Promise<void>
     icon: string
 }
 
-const SignOutButton = ({ auth, router, signOut, icon }: Props) => {
+const SignOutButton = ({router, logout, icon }: Props) => {
 
-    const handleSigntOut = () => {
+    const handleLogout = async () => {
         try {
-            signOut(auth)
+            await logout()
             router.push("/auth/login")
         } catch (error) {
             alert("Ocorreu um erro ao fazer Sign Out." + error)
         }
     }
     return (
-        <div className="flex gap-1 w-fit cursor-pointer"
-            onClick={handleSigntOut}>
-            <button className="cursor-pointer"
-            >Sair</button>
+        <div className="flex gap-1 w-fit cursor-pointer" onClick={handleLogout}>
+            <button className="cursor-pointer">Sair</button>
             <img src={icon} className="w-5 h-5 rounded-full" />
         </div>
     )

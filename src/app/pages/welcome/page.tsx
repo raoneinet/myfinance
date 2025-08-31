@@ -1,5 +1,4 @@
 import {HomeDashboard} from "@/views/homedashboard"
-import { Header } from "@/views/header"
 
 const WelcomePage = ()=>{
     return (

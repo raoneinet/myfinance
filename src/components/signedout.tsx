@@ -1,12 +1,11 @@
 import { ReactNode } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "@/app/firebase"
+import { useAuthContext } from "@/app/context/authContext"
 
 export const SignedOut = ({children}: {children: ReactNode})=>{
 
-    const [user] = useAuthState(auth)
+    const {user, loading} = useAuthContext()
 
-    if(user) return null
+    if(loading || user) return null
 
     return <>{children}</>
 }

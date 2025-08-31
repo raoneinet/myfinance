@@ -1,24 +1,21 @@
 "use client"
-import {useForm, SubmitHandler} from "react-hook-form"
-import {LoginTypes} from "@/types/loginTypes"
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth"
-import { auth } from "@/app/firebase"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { LoginTypes } from "@/types/loginTypes"
 import { useRouter } from "next/navigation"
+import { useAuthContext } from "@/app/context/authContext"
 
-const LoginForm = ()=>{
+const LoginForm = () => {
 
     const router = useRouter()
-    const {register, handleSubmit, formState:{errors}} = useForm<LoginTypes>()
-    const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginTypes>()
+    const { login } = useAuthContext()
 
-    const handleLogin:SubmitHandler<LoginTypes> = async (data)=>{
-        try{
-            await signInWithEmailAndPassword(data.email, data.password)
+    const handleLogin: SubmitHandler<LoginTypes> = async (data) => {
+        try {
+            await login(data)
             router.push("/")
-            console.log(user)
-            console.log(data)
-            console.log(auth)
-        }catch(error){
+
+        } catch (error) {
             alert("Erro ao fazer login" + error)
         }
 
@@ -28,19 +25,19 @@ const LoginForm = ()=>{
         <div className="p-5 bg-white">
             <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-2">
                 <div>
-                    <input type="email" {...register("email", {required: "Campo obrigatório"})}
+                    <input type="email" {...register("email", { required: "Campo obrigatório" })}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Email"/>
-                        {errors.email && <p>{errors.email.message}</p>}
+                        placeholder="Email" />
+                    {errors.email && <p>{errors.email.message}</p>}
                 </div>
                 <div>
-                    <input type="password" {...register("password", {required: "Campo obrigatório", minLength: 6, maxLength: 20})}
+                    <input type="password" {...register("password", { required: "Campo obrigatório", minLength: 6, maxLength: 20 })}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Senha"/>
+                        placeholder="Senha" />
                     {errors.password && <p>{errors.password.message}</p>}
                 </div>
                 <div className="place-self-end">
-                    <input type="submit" value="Entrar" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer"/>
+                    <input type="submit" value="Entrar" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer" />
                 </div>
             </form>
         </div>

@@ -2,15 +2,8 @@
 import { useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SignupTypes } from "@/types/signupTypes"
-import {
-    useCreateUserWithEmailAndPassword,
-    useSendEmailVerification,
-    useUpdateProfile
-} from 'react-firebase-hooks/auth'
-import { auth } from "@/app/firebase"
 import { useRouter } from "next/navigation"
-import { signOut } from "firebase/auth"
-import axios from "axios"
+import api from "@/app/api/api"
 import jsSHA from "jssha"
 
 const SignupForm = () => {
@@ -18,10 +11,6 @@ const SignupForm = () => {
     const [confirmPassword, setConfirmPassword] = useState<boolean>(false)
     const router = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm<SignupTypes>()
-
-    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth)
-    const [sendEmailVerification] = useSendEmailVerification(auth)
-    const [updateProfile] = useUpdateProfile(auth)
 
     const generateHash = ({ password }: any) => {
         let shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" })
@@ -41,16 +30,12 @@ const SignupForm = () => {
 
             const pwd_hash = generateHash({password})
 
-            const userCredential = await createUserWithEmailAndPassword(data.email, data.password.trim())
-
-            if (!userCredential) return null
-
             try {
-                await axios.post("http://localhost/myfinance_backend/api/create_user.php",
+                await api.post("/create_user.php",
                     {
                         fullname: data.name,
                         email: data.email,
-                        password: pwd_hash
+                        password: data.password
                     }
                 )
 
@@ -64,17 +49,8 @@ const SignupForm = () => {
                 }
             }
 
-            await updateProfile({
-                displayName: data.name
-            })
-
-            await signOut(auth)
-            await sendEmailVerification()
-
             router.push("/auth/login?verify=true")
 
-            console.log("Usuário criado: " + userCredential.user.displayName)
-            console.log(userCredential)
         } catch (error) {
             alert("Erro ao fazer cadastro." + error)
         }
