@@ -47,8 +47,8 @@ export const ExpenseTable = () => {
                                 <div>{item.transaction_desc}</div>
                             </td>
                             <td>€ {item.transaction_value}</td>
-                            <td>{item.category_id}</td>
-                            <td>{item.transaction_type}</td>
+                            <td>{item.standard_category}</td>
+                            <td>{(item.transaction_type === "cash") ? "Dinheiro" : "Banco" }</td>
                             <td className="">{item.transaction_date}</td>
                         </tr>
                     ))}
