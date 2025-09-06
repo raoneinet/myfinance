@@ -1,5 +1,7 @@
 import { TotalFinancing } from "./totalFinancing"
 import { ExpenseTable } from "./expenseTable"
+import {InsertExpense} from "./insertExpense"
+import { SearchExpense } from "./searchFinance"
 
 export const HomeDashboard = () => {
 
@@ -7,7 +9,8 @@ export const HomeDashboard = () => {
         <>
             <div className="container mx-auto h-full">
                 <TotalFinancing />
-                <ExpenseTable/>
+                <SearchExpense />
+                <ExpenseTable />
             </div>
         </>
     )
