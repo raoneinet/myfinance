@@ -4,6 +4,7 @@ export type FinanceType = {
     standard_category: string;
     transaction_value: number;
     transaction_type: string;
+    fixed_expense: boolean;
     transaction_desc: string;
     transaction_date: string;
 }
