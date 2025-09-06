@@ -2,22 +2,26 @@ import { TotalCards } from "@/components/totalCards"
 
 export const TotalFinancing = () => {
     return (
-        <div className="container px-5 py-5 grid grid-cols-4 gap-4">
+        <div className="px-5 py-5 grid md:grid-cols-4 gap-4">
             <TotalCards
                 title="Salário"
-                value="1500,00"
+                value="0,00"
+                color="bg-[#ccffcc]"
             />
             <TotalCards
                 title="Total Despesas"
-                value="700,00"
+                value="0,00"
+                color="bg-[#FFBFBF]"
             />
             <TotalCards
                 title="Recebimentos"
                 value="0,00"
+                color="bg-[#1591ea]"
             />
             <TotalCards
                 title="Balanço"
-                value="800,00"
+                value="0,00"
+                color="bg-[#FFEE8C]"
             />
         </div>
     )
