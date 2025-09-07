@@ -45,7 +45,7 @@ export const HomeDashboard = () => {
                 {showModal &&
                     <InsertExpense
                         closeModal={handleCloseModal}
-                        updateDashboard={getFinance} 
+                        updateDashboard={getFinance}
                     />
                 }
 
