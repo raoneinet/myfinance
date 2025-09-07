@@ -13,7 +13,7 @@ export const TotalCards = ({title, value, color}: Props)=>{
                     {title} 
                     <span className="text-xs align-super">(mês)</span>
                 </div>
-                <div>{value} €</div>
+                <div className={`${(Number(value) < 0) ? "text-red-600" : ""} font-bold`}>€ {value}</div>
                 <div></div>
             </div>
         </div>

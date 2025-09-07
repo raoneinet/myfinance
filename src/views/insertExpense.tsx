@@ -6,9 +6,10 @@ import api from "@/app/api/api"
 type Props = {
     closeModal: () => void
     updateDashboard: () => void
+    getTotals: ()=>void
 }
 
-export const InsertExpense = ({ closeModal, updateDashboard }: Props) => {
+export const InsertExpense = ({ closeModal, updateDashboard, getTotals }: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -25,6 +26,7 @@ export const InsertExpense = ({ closeModal, updateDashboard }: Props) => {
 
             closeModal()
             updateDashboard()
+            getTotals()
         } catch (error: any) {
             console.log("Ocorreu um erro ao enviar os seus movimentos", error)
         }
