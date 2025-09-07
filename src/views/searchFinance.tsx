@@ -19,16 +19,21 @@ export const SearchExpense = ({ setModal }: any) => {
                 </select>
                 <select {...register("expense_category")}
                     className="p-2 border border-gray-300 rounded-lg">
-                    <option value="">Entretenimneto</option>
-                    <option value="Recebimento">Recebimento</option>
-                    <option value="Lazer">Lazer</option>
+                    <option value="Alimentação">Alimentação</option>
                     <option value="Casa">Casa</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Entretenimento">Entretenimento</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Recebimento">Recebimento</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Transporte">Transporte</option>
                 </select>
                 <select {...register("expense_payment_type")}
                     className="p-2 border border-gray-300 rounded-lg">
+                    <option value="Crédito">Crédito</option>
+                    <option value="Débito">Débito</option>
                     <option value="Dinheiro">Dinheiro</option>
                     <option value="Transferência">Transferência</option>
-                    <option value="Cartão">Cartão</option>
                 </select>
                 <div className="flex items-center w-full">
                     <img src="/assets/icons/search_icon.png" className="-mr-7" />
