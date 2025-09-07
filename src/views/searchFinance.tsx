@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import {AddSalaryBtn} from "@/components/addSalaryBtn"
 
-export const SearchExpense = () => {
+export const SearchExpense = ({setModal}: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -35,7 +35,9 @@ export const SearchExpense = () => {
                     <option value="Cartão">Cartão</option>
                 </select>
             </form>
-            <AddFinanceBtn />
+            <AddFinanceBtn 
+                setModal={setModal}
+            />
             <AddSalaryBtn />
         </div>
     )
