@@ -1,6 +1,9 @@
 import { TotalCards } from "@/components/totalCards"
+import api from "@/app/api/api"
 
-export const TotalFinancing = () => {
+export const TotalFinancing = ({expenseTotals, extraIncomeTotal, expenseBalance}: any) => {
+
+
     return (
         <div className="px-5 py-5 grid md:grid-cols-4 gap-4">
             <TotalCards
@@ -10,17 +13,17 @@ export const TotalFinancing = () => {
             />
             <TotalCards
                 title="Total Despesas"
-                value="0,00"
+                value={expenseTotals}
                 color="bg-[#FFBFBF]"
             />
             <TotalCards
                 title="Recebimentos"
-                value="0,00"
+                value={extraIncomeTotal}
                 color="bg-[#1591ea]"
             />
             <TotalCards
                 title="Balanço"
-                value="0,00"
+                value={expenseBalance}
                 color="bg-[#FFEE8C]"
             />
         </div>
