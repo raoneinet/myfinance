@@ -2,7 +2,7 @@ import {HomeDashboard} from "@/views/homedashboard"
 
 const WelcomePage = ()=>{
     return (
-        <div className="w-full h-screen bg-gray-50">
+        <div className="w-full h-screen bg-white">
             <HomeDashboard/>
         </div>
     )

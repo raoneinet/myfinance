@@ -16,9 +16,9 @@ const SignOutButton = ({router, logout, icon }: Props) => {
         }
     }
     return (
-        <div className="flex gap-1 w-fit cursor-pointer" onClick={handleLogout}>
+        <div className="flex gap-1 w-fit cursor-pointer items-center" onClick={handleLogout}>
             <button className="cursor-pointer">Sair</button>
-            <img src={icon} className="w-5 h-5 rounded-full" />
+            <img src={icon} className="w-4 h-4 rounded-full" />
         </div>
     )
 }
