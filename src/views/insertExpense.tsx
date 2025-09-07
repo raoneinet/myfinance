@@ -1,39 +1,43 @@
+import { ModalAddFinance } from "@/components/modalAddfinance"
 import { useForm, SubmitHandler } from "react-hook-form"
+import {SendFinanceType} from "@/types/sendFinanceType"
+import api from "@/app/api/api"
 
-export const InsertExpense = () => {
+export const InsertExpense = ({ closeModal }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const handleExpenseInsert = () => {
+    const handleExpenseInsert:SubmitHandler<SendFinanceType> = async (data) => {
 
+        try{
+            await api.post("/add_finance.php",
+                data
+            ).then(
+                res => console.log("Movimentos enviados: ", data)
+            ).catch(
+                error => console.log("Erro ao enviar dados", error)
+            ).finally(
+                closeModal()
+            )
+
+        }catch(error: any){
+            console.log("Ocorreu um erro ao enviar os seus movimentos", error)
+        }
+        console.log("Valores do form: ",data)
     }
+
+
     return (
-        <div className="px-5 py-5 w-full">
-            <p>Adicionar novas transações na tabela financeira</p>
-            <form onSubmit={handleSubmit(handleExpenseInsert)} className="flex gap-2">
-                <input {...register("expense_desc")} className="p-2 border border-gray-300 rounded-lg" placeholder="Descrição" />
-                <input {...register("expense_value")} className="p-2 border border-gray-300 rounded-lg" placeholder="Valor" />
-                <select {...register("expense_category")}
-                    className="p-2 border border-gray-300 rounded-lg">
-                    <option value="">Entretenimneto</option>
-                    <option value="Recebimento">Recebimento</option>
-                    <option value="Lazer">Lazer</option>
-                    <option value="Casa">Casa</option>
-                </select>
-                <select {...register("expense_isFixed")}
-                    className="p-2 border border-gray-300 rounded-lg">
-                    <option value="fixed">Gasto Fixo</option>
-                    <option value="notFixed">Gasto Variável</option>
-                </select>
-                <select {...register("expense_payment_type")}
-                    className="p-2 border border-gray-300 rounded-lg">
-                    <option value="Dinheiro">Dinheiro</option>
-                    <option value="Transferência">Transferência</option>
-                    <option value="Cartão">Cartão</option>
-                </select>
-                <input type="date" {...register("expense_date")} className="p-2 border border-gray-300 rounded-lg" placeholder="Descrição" />
-                <input type="submit" value="Adicionar " className="py-2 px-4 bg-green-600 text-white font-bold rounded-lg cursor-pointer"/>
-            </form>
+        <div
+            className="absolute flex justify-center items-center px-5 py-5 w-full h-full left-0 right-0 bottom-0">
+            <div className="absolute">
+                <ModalAddFinance
+                    closeModal={closeModal}
+                    register={register}
+                    handleSubmit={handleSubmit}
+                    handleExpenseInsert={handleExpenseInsert}
+                />
+            </div>
         </div>
     )
 }

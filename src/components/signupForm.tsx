@@ -33,13 +33,13 @@ const SignupForm = () => {
             try {
                 await api.post("/create_user.php",
                     {
-                        fullname: data.name,
+                        fullname: data.fullname,
                         email: data.email,
                         password: data.password
                     }
                 )
 
-                console.log("PHP DB: " + data.name + " Criado: " + new Date())
+                console.log("PHP DB: " + data.fullname + " Criado: " + new Date())
 
             } catch (err: any) {
                 if (err.response) {
@@ -60,10 +60,10 @@ const SignupForm = () => {
         <div className="p-5 bg-white">
             <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-2">
                 <div>
-                    <input type="name" {...register("name", { required: "Campo obrigatório" })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg`}
+                    <input type="name" {...register("fullname", { required: "Campo obrigatório" })}
+                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.fullname ? "border-red-500" : "border-gray-300"} rounded-lg`}
                         placeholder="Nome e sobrenome" />
-                    {errors.name && <p className="text-xs">{errors.name.message}</p>}
+                    {errors.fullname && <p className="text-xs">{errors.fullname.message}</p>}
                 </div>
                 <div>
                     <input type="email" {...register("email", { required: "Campo obrigatório" })}

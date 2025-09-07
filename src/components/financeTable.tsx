@@ -27,7 +27,10 @@ export const FinanceTable = ({finance}: Props)=>{
                             <td className={`${(item.standard_category !== "Recebimento") ? "text-red-700" : "text-green-700"} font-bold`}>
                                 <span>{(item.standard_category !== "Recebimento") ? "-" : "+"}</span>€ {item.transaction_value}</td>
                             <td>{item.standard_category}</td>
-                            <td>{(item.fixed_expense == true) ? "Fixo" : "Variável"}</td>
+                            <td>
+                                {(item.fixed_expense === 'fixed') && "Gasto Fixo"}
+                                {(item.fixed_expense === 'notFixed') && "Gasto Variável"}
+                            </td>
                             <td>{item.transaction_type}</td>
                             <td className="">{item.transaction_date}</td>
                             <td>
