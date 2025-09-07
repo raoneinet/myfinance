@@ -1,7 +1,7 @@
 
 
 export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpenseInsert }: any) => {
-    
+
     return (
         <div className="shadow shadow-gray-700 p-4 bg-white rounded-lg w-fit">
             <p>Adicionar novas transações na tabela financeira</p>
