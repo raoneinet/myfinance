@@ -7,33 +7,41 @@ type Props = {
 export const FinanceTable = ({ finance }: Props) => {
     return (
         <>
-            <table className="w-full bg-white rounded-t-2xl">
+            <table className="w-full bg-white shadow shadow-gray-400 rounded-t-2xl">
                 <thead className="bg-gray-200 text-left text-xs md:text-base">
-                    <tr>
+                    <tr className="align-middle">
                         <th className="py-3 pl-2 rounded-tl-2xl">Descrição</th>
                         <th>valor</th>
-                        <th>Categoria</th>
                         <th>Fixo/Variável</th>
-                        <th className="md:block hidden">Tipo de pgto</th>
+                        <th className="">Tipo de pgto</th>
                         <th>data</th>
                         <th className="rounded-tr-2xl">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {finance.map((item) => (
-                        <tr className="border-b border-gray-200 hover:bg-gray-200 text-xs md:text-base"
-                            key={item.id}>
-                            <td className="py-3 pl-2">{item.transaction_desc}</td>
-                            <td className={`${(item.standard_category !== "Recebimento") ? "text-red-700" : "text-green-700"} font-bold`}>
-                                <span>{(item.standard_category !== "Recebimento") ? "-" : "+"}</span>
-                                € {item.transaction_value}</td>
-                            <td>{item.standard_category}</td>
-                            <td className="md:block hidden">
+                        <tr 
+                        className="border-b border-gray-200 hover:bg-gray-200 text-xs md:text-base align-middle"
+                        key={item.id}>
+                            <td className="py-3 pl-2 flex gap-2 items-center">
+                                <img src={`/assets/icons/${item.standard_category}.png`} className="w-auto h-8"/>
+                                <div>
+                                    <div className="font-bold">{item.transaction_desc}</div>
+                                    <div className="bg-indigo-500 text-xs text-gray-200 rounded-md w-fit px-2">{item.standard_category}</div>
+                                </div>
+                            </td>
+                            <td className={`${(item.standard_category !== "Recebimento") ? "text-red-700" : "text-green-700"}`}>
+                                <div className={`${(item.standard_category !== "Recebimento") ? "bg-red-200" : "bg-green-200"} w-fit rounded-lg py-1 px-2`}>
+                                    <span>{(item.standard_category !== "Recebimento") ? "-" : "+"}</span>
+                                    € {item.transaction_value}
+                                </div>
+                            </td>
+                            <td className="">
                                 {(item.fixed_expense === 'fixed') && "Gasto Fixo"}
                                 {(item.fixed_expense === 'notFixed') && "Gasto Variável"}
                             </td>
                             <td>{item.transaction_type}</td>
-                            <td className="">{item.transaction_date}</td>
+                            <td>{item.transaction_date}</td>
                             <td>
                                 <div className="flex flex-col md:flex-row gap-2 items-center text-center">
                                     <div className="cursor-pointer">

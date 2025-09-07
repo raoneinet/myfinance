@@ -17,7 +17,7 @@ export const Header = () => {
 
 
     return (
-        <header className="w-full px-2 py-3 bg-black h-20 text-white">
+        <header className="w-full px-2 py-3 bg-indigo-900 h-20 text-white">
             <div className="container mx-auto px-5 flex justify-between items-center h-full">
                 <div><Link href="/">MyFinance</Link></div>
                 {!loading && user && (
@@ -27,7 +27,7 @@ export const Header = () => {
                             <SignOutButton
                                 router={router}
                                 logout={logout}
-                                icon="/assets/icons/signout.jpg" />
+                                icon="/assets/icons/signout.png" />
                         </div>
                     </div>
                 )}
