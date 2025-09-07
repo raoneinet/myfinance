@@ -1,29 +1,34 @@
 import { ModalAddFinance } from "@/components/modalAddfinance"
 import { useForm, SubmitHandler } from "react-hook-form"
-import {SendFinanceType} from "@/types/sendFinanceType"
+import { SendFinanceType } from "@/types/sendFinanceType"
 import api from "@/app/api/api"
 
-export const InsertExpense = ({ closeModal }: any) => {
+type Props = {
+    closeModal: () => void
+    updateDashboard: () => void
+}
+
+export const InsertExpense = ({ closeModal, updateDashboard }: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const handleExpenseInsert:SubmitHandler<SendFinanceType> = async (data) => {
+    const handleExpenseInsert: SubmitHandler<SendFinanceType> = async (data) => {
 
-        try{
+        try {
             await api.post("/add_finance.php",
                 data
             ).then(
                 res => console.log("Movimentos enviados: ", data)
             ).catch(
                 error => console.log("Erro ao enviar dados", error)
-            ).finally(
-                closeModal()
             )
 
-        }catch(error: any){
+            closeModal()
+            updateDashboard()
+        } catch (error: any) {
             console.log("Ocorreu um erro ao enviar os seus movimentos", error)
         }
-        console.log("Valores do form: ",data)
+        console.log("Valores do form: ", data)
     }
 
 
