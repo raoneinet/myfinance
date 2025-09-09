@@ -9,22 +9,26 @@ export const TotalFinancing = ({expenseTotals, extraIncomeTotal, expenseBalance}
             <TotalCards
                 title="Salário"
                 value="0,00"
-                color="bg-[#ccffcc]"
+                color="bg-[#E0B0FF]"
+                icon="/assets/icons/salary.png"
             />
             <TotalCards
-                title="Total Despesas"
+                title="Despesas"
                 value={expenseTotals}
                 color="bg-[#FFBFBF]"
+                icon="/assets/icons/expense.png"
             />
             <TotalCards
                 title="Recebimentos"
                 value={extraIncomeTotal}
-                color="bg-[#1591ea]"
+                color="bg-[#ccffcc]"
+                icon="/assets/icons/income.png"
             />
             <TotalCards
                 title="Balanço"
                 value={expenseBalance}
                 color="bg-[#FFEE8C]"
+                icon="/assets/icons/balance.png"
             />
         </div>
     )
