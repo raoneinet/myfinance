@@ -1,14 +1,22 @@
 
 
-export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpenseInsert }: any) => {
+export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpenseInsert,errors }: any) => {
 
     return (
-        <div className="shadow shadow-gray-700 p-4 bg-white rounded-lg w-fit">
+        <div className="shadow shadow-gray-700 p-4 bg-white rounded-lg w-fit px-6">
             <p className="py-3">Adicionar novo movimento na tabela financeira</p>
-            <form onSubmit={handleSubmit(handleExpenseInsert)} className="flex flex-col gap-5 justify-between">
+            <form
+                onSubmit={handleSubmit(handleExpenseInsert)}
+                className="flex flex-col gap-5 justify-between py-5"
+            >
                 <div className="flex flex-col md:flex-row gap-2">
-                    <input {...register("expense_desc")} className="p-2 border border-gray-300 rounded-lg" placeholder="Descrição" />
-                    <input {...register("expense_value")} className="p-2 border border-gray-300 rounded-lg" placeholder="Valor" />
+                    <input {...register("expense_desc", {required: true})}
+                        className="p-2 border border-gray-300 rounded-lg" 
+                        placeholder="Descrição" />
+                    <input {...register("expense_value")}
+                        className="p-2 border border-gray-300 rounded-lg" 
+                        placeholder="Valor" />
+                {errors?.expense_desc && <p>Campo obrigatorio</p>}
                 </div>
                 <div className="flex flex-col md:flex-row justify-between gap-3">
                     <select {...register("expense_standard_category")}
@@ -39,11 +47,18 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                     </select>
                 </div>
                 <div>
-                    <input type="date" {...register("expense_date")} className="p-2 border border-gray-300 rounded-lg" placeholder="Descrição" />
+                    <input 
+                        type="date" {...register("expense_date")} 
+                        className="p-2 border border-gray-300 rounded-lg" 
+                        placeholder="Descrição" />
                 </div>
-                <div className="flex justify-between">
-                    <input onClick={closeModal} type="submit" value="Cancelar " className="py-2 px-4 bg-red-600 text-white font-bold rounded-lg cursor-pointer" />
-                    <input type="submit" value="Adicionar " className="py-2 px-4 bg-green-600 text-white font-bold rounded-lg cursor-pointer" />
+                <div className="flex justify-between ">
+                    <input 
+                        onClick={closeModal} type="button" value="Cancelar " 
+                        className="py-2 px-4 text-red-600 font-bold rounded-lg cursor-pointer" />
+                    <input 
+                        type="submit" value="Adicionar " 
+                        className="py-2 px-4 bg-green-600 text-white font-bold rounded-lg cursor-pointer" />
                 </div>
             </form>
         </div>

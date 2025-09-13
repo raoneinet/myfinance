@@ -36,13 +36,14 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals }: Props)
 
     return (
         <div
-            className="absolute flex justify-center items-center px-5 py-5 w-full h-full left-0 right-0 bottom-0">
-            <div className="absolute">
+            className="fixed bg-black/50 flex justify-center items-center w-full h-full left-0 right-0 top-0 bottom-0">
+            <div className="">
                 <ModalAddFinance
                     closeModal={closeModal}
                     register={register}
                     handleSubmit={handleSubmit}
                     handleExpenseInsert={handleExpenseInsert}
+                    error={errors}
                 />
             </div>
         </div>
