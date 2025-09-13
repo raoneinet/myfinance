@@ -13,12 +13,12 @@ export const SearchExpense = ({ setModal }: any) => {
         <div className="px-5 py-5 w-full flex justify-end gap-3 flex-col md:flex-row">
             <form onSubmit={handleSubmit(handleExpenseInsert)} className="flex flex-col md:flex-row gap-2 justify-end">
                 <select {...register("expense_isFixed")}
-                    className="p-2 border border-gray-300 rounded-lg">
+                    className="px-2 border border-gray-300 rounded-lg">
                     <option value="fixed">Gasto Fixo</option>
                     <option value="notFixed">Gasto Variável</option>
                 </select>
                 <select {...register("expense_category")}
-                    className="p-2 border border-gray-300 rounded-lg">
+                    className="px-2 border border-gray-300 rounded-lg">
                     <option value="Alimentação">Alimentação</option>
                     <option value="Casa">Casa</option>
                     <option value="Educação">Educação</option>
@@ -29,7 +29,7 @@ export const SearchExpense = ({ setModal }: any) => {
                     <option value="Transporte">Transporte</option>
                 </select>
                 <select {...register("expense_payment_type")}
-                    className="p-2 border border-gray-300 rounded-lg">
+                    className="px-2 border border-gray-300 rounded-lg">
                     <option value="Crédito">Crédito</option>
                     <option value="Débito">Débito</option>
                     <option value="Dinheiro">Dinheiro</option>
