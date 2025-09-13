@@ -7,9 +7,10 @@ import { FinanceTable } from "@/components/financeTable"
 type Props = {
     finance: FinanceType[]
     getFinance: ()=>void
+    handleUpdateAll: ()=>void
 }
 
-export const ExpenseTable = ({finance, getFinance}: Props) => {
+export const ExpenseTable = ({finance, getFinance, handleUpdateAll}: Props) => {
 
     useEffect(() => {
         getFinance()
@@ -19,6 +20,7 @@ export const ExpenseTable = ({finance, getFinance}: Props) => {
         <div className="px-5 py-5 w-full">
             <FinanceTable
                 finance={finance}
+                handleUpdateAll={handleUpdateAll}
             />
         </div>
     )
