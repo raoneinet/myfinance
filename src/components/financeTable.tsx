@@ -1,12 +1,13 @@
-import { act, useState } from "react"
+import { useState } from "react"
 import { FinanceType } from "@/types/financeTypes"
 import { ItemActionBox } from "@/components/itemActionBox"
 
 type Props = {
     finance: FinanceType[]
+    handleUpdateAll: ()=>void
 }
 
-export const FinanceTable = ({ finance }: Props) => {
+export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
 
     const [openActionBox, setOpenActionBox] = useState(false)
     const [openIdBox, setOpenIdBox] = useState<any>()
@@ -80,7 +81,12 @@ export const FinanceTable = ({ finance }: Props) => {
                                     onClick={()=>handleCloseActionBox(item.id)}/>
                                 }
 
-                                {(openActionBox && openIdBox === item.id) && <ItemActionBox />}
+                                {(openActionBox && openIdBox === item.id) && 
+                                    <ItemActionBox 
+                                        id={item.id}
+                                        handleUpdateAll={handleUpdateAll}
+                                    />
+                                }
                             </td>
                         </tr>
                     ))}

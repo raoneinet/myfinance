@@ -62,10 +62,14 @@ export const HomeDashboard = () => {
 
     }
 
-    useEffect(() => {
+    const handleUpdateAll = ()=>{
         getFinance()
         getTotals()
         getExpenseBalance()
+    }
+
+    useEffect(() => {
+        handleUpdateAll()
     }, [])
 
     return (
@@ -91,6 +95,7 @@ export const HomeDashboard = () => {
                 <ExpenseTable
                     finance={finance}
                     getFinance={getFinance}
+                    handleUpdateAll={handleUpdateAll}
                 />
             </div>
         </>
