@@ -17,7 +17,7 @@ export const ExpenseTable = ({finance, getFinance, handleUpdateAll}: Props) => {
     }, [])
 
     return (
-        <div className="px-5 py-5 w-full">
+        <div className="px-5 py-5 max-h-5/6">
             <FinanceTable
                 finance={finance}
                 handleUpdateAll={handleUpdateAll}

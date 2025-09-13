@@ -74,7 +74,7 @@ export const HomeDashboard = () => {
 
     return (
         <>
-            <div className="container mx-auto h-full">
+            <div className="container mx-auto">
                 <TotalFinancing
                     expenseTotals={expenseTotals}
                     extraIncomeTotal={extraIncomeTotal}
