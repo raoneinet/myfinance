@@ -69,7 +69,7 @@ export const FinanceTable = ({ finance }: Props) => {
                             <td>{item.transaction_type}</td>
                             <td>{item.transaction_date}</td>
                             <td>
-                                {!openActionBox && openIdBox !== item.id &&
+                                {openIdBox !== item.id &&
                                     (< img src="/assets/icons/menu-actions.png"
                                     className="w-6 cursor-pointer"
                                     onClick={() => handleOpenActionBox(item.id)} />)
