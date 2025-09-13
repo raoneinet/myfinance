@@ -20,7 +20,7 @@ const PageContent = () => {
             }
             {!user &&
                 <SignedOut>
-                    <div className="container mx-auto f-fulll">
+                    <div className="container mx-auto">
                         <div>Devo construir uma LP ou página de apresentação.</div>
                     </div>
                 </SignedOut>
