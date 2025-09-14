@@ -6,6 +6,7 @@ import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/types/financeTypes"
 import api from "@/app/api/api"
 
+
 export const HomeDashboard = () => {
 
     const [showModal, setShowModal] = useState(false)
@@ -97,6 +98,7 @@ export const HomeDashboard = () => {
                     getFinance={getFinance}
                     handleUpdateAll={handleUpdateAll}
                 />
+                
             </div>
         </>
     )
