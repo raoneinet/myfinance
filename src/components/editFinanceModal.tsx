@@ -42,7 +42,7 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
     }
 
     const closeModal = () => {
-        setOpenIdBox(finance.id)
+        setOpenIdBox(null)
         setOpenModal(false)
     }
 

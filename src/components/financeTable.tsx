@@ -92,6 +92,7 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                                         setEditFinance={setEditFinance}
                                         setOpenModal={setOpenModal}
                                         setOpenActionBox={setOpenActionBox}
+                                        setOpenIdBox={setOpenIdBox}
                                     />
                                 }
                             </td>

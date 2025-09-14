@@ -8,9 +8,10 @@ type Props = {
     setEditFinance?: any
     setOpenModal: any
     setOpenActionBox: any
+    setOpenIdBox: any
 }
 
-export const ItemActionBox = ({ id, handleUpdateAll, setEditFinance, setOpenModal, setOpenActionBox }: Props) => {
+export const ItemActionBox = ({ id, handleUpdateAll, setEditFinance, setOpenModal, setOpenActionBox, setOpenIdBox }: Props) => {
 
     const deleteTransaction = async (id: number) => {
         try {
@@ -28,6 +29,7 @@ export const ItemActionBox = ({ id, handleUpdateAll, setEditFinance, setOpenModa
         setEditFinance(result.data)
         setOpenModal(true)
         setOpenActionBox(false)
+        setOpenIdBox(id)
     }
 
 
