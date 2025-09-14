@@ -1,16 +1,20 @@
 import { useState } from "react"
 import { FinanceType } from "@/types/financeTypes"
 import { ItemActionBox } from "@/components/itemActionBox"
+import { EditFinanceModal } from "@/components/editFinanceModal"
+
 
 type Props = {
     finance: FinanceType[]
-    handleUpdateAll: ()=>void
+    handleUpdateAll: () => void
 }
 
 export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
 
     const [openActionBox, setOpenActionBox] = useState(false)
-    const [openIdBox, setOpenIdBox] = useState<any>()
+    const [openIdBox, setOpenIdBox] = useState<number | null>()
+    const [editFinance, setEditFinance] = useState<FinanceType>()
+    const [openModal, setOpenModal] = useState(false)
 
     const handleOpenActionBox = (id: number) => {
         const openId = finance.find(item => item.id === id)
@@ -20,17 +24,17 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
         }
     }
 
-    const handleCloseActionBox = (id:number) =>{
+    const handleCloseActionBox = (id: number) => {
         const closeId = finance.find(item => item.id === id)
-        if(closeId?.id && openActionBox === true){
+        if (closeId?.id && openActionBox === true) {
             setOpenIdBox(null)
             setOpenActionBox(false)
         }
     }
 
     return (
-        <div className="lg:max-w-5/6 max-h-[680px] overflow-y-scroll rounded-t-2xl">
-            <table className="w-full bg-white shadow shadow-gray-400 rounded-t-2xl">
+        <div className="lg:w-4/5 max-h-[680px] overflow-y-scroll rounded-t-2xl flex-1">
+            <table className="w-full bg-white shadow shadow-gray-800 rounded-t-2xl">
                 <thead className="bg-gray-200 text-left text-xs md:text-base sticky top-0">
                     <tr className="align-middle">
                         <th className="py-3 pl-2 rounded-tl-2xl">Descrição</th>
@@ -71,20 +75,23 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                             <td>{item.transaction_date}</td>
                             <td>
                                 {openIdBox !== item.id &&
-                                    (< img src="/assets/icons/menu-actions.png"
-                                    className="w-6 cursor-pointer"
-                                    onClick={() => handleOpenActionBox(item.id)} />)
+                                    < img src="/assets/icons/menu-actions.png"
+                                        className="w-6 cursor-pointer"
+                                        onClick={() => handleOpenActionBox(item.id)} />
                                 }
                                 {openActionBox && openIdBox === item.id &&
                                     <img src="/assets/icons/closeModal.png"
-                                    className="w-6 cursor-pointer"
-                                    onClick={()=>handleCloseActionBox(item.id)}/>
+                                        className="w-6 cursor-pointer"
+                                        onClick={() => handleCloseActionBox(item.id)} />
                                 }
 
-                                {(openActionBox && openIdBox === item.id) && 
-                                    <ItemActionBox 
+                                {(openActionBox && openIdBox === item.id) &&
+                                    <ItemActionBox
                                         id={item.id}
                                         handleUpdateAll={handleUpdateAll}
+                                        setEditFinance={setEditFinance}
+                                        setOpenModal={setOpenModal}
+                                        setOpenActionBox={setOpenActionBox}
                                     />
                                 }
                             </td>
@@ -92,6 +99,15 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                     ))}
                 </tbody>
             </table>
+            {editFinance && openModal === true &&
+                <EditFinanceModal 
+                finance={editFinance}
+                setEditFinance={setEditFinance}
+                handleUpdateAll={handleUpdateAll} 
+                setOpenActionBox={setOpenActionBox}
+                setOpenModal={setOpenModal}
+                setOpenIdBox={setOpenIdBox}/>
+            }
         </div>
     )
 }
