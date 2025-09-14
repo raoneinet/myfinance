@@ -29,9 +29,9 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
     }
 
     return (
-        <div className="lg:max-w-5/6 max-h-[680px] overflow-y-scroll rounded-t-2xl relative">
+        <div className="lg:max-w-5/6 max-h-[680px] overflow-y-scroll rounded-t-2xl">
             <table className="w-full bg-white shadow shadow-gray-400 rounded-t-2xl">
-                <thead className="bg-gray-200 text-left text-xs md:text-base sticky top-0 z-10">
+                <thead className="bg-gray-200 text-left text-xs md:text-base sticky top-0">
                     <tr className="align-middle">
                         <th className="py-3 pl-2 rounded-tl-2xl">Descrição</th>
                         <th>valor</th>

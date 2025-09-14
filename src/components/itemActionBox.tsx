@@ -19,13 +19,13 @@ export const ItemActionBox = ({id, handleUpdateAll}: Props)=>{
 
     return (
         <div className="flex flex-col justify-center w-fit shadow shadow-gray-400 rounded-md mt-2 absolute bg-white -ml-20">
-            <div className="hover:bg-gray-100 w-full flex gap-2 cursor-pointer font-semibold px-4 py-2 ">
+            <div className="rounded-md hover:bg-gray-200 w-full flex gap-2 cursor-pointer font-semibold px-4 py-2 ">
                 <img src="/assets/icons/edit_icon.png" className="w-4 h-4"/>
                 Editar
             </div>
             <div
                 onClick={()=>deleteTransaction(id)} 
-                className="hover:bg-gray-100 flex gap-2 cursor-pointer font-semibold px-4 py-2">
+                className="rounded-md hover:bg-gray-200 flex gap-2 cursor-pointer font-semibold px-4 py-2">
                 <img src="/assets/icons/delete_icon.png" className="w-4 h-4"/>
                 Apagar
             </div>

@@ -36,7 +36,7 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals }: Props)
 
     return (
         <div
-            className="fixed bg-black/50 flex justify-center items-center w-full h-full left-0 right-0 top-0 bottom-0">
+            className="fixed z-10 bg-black/50 flex justify-center items-center w-full h-dvh left-0 right-0 top-0 bottom-0">
             <div className="">
                 <ModalAddFinance
                     closeModal={closeModal}

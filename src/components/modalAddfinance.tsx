@@ -21,7 +21,7 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                 <div className="flex flex-col md:flex-row justify-between gap-3">
                     <select {...register("expense_standard_category", {required: "Campo obrigatório"})}
                         className="p-2 border border-gray-300 rounded-lg" aria-required>
-                        <option>Categoria --</option>
+                        <option disabled>Categoria --</option>
                         <option value="Alimentação">Alimentação</option>
                         <option value="Casa">Casa</option>
                         <option value="Educação">Educação</option>
@@ -33,13 +33,13 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                     </select>
                     <select {...register("expense_isFixed", {required: "Campo obrigatório"})}
                         className="p-2 border border-gray-300 rounded-lg" aria-required>
-                        <option value="" disabled>Fixo / Variável --</option>
+                        <option disabled>Fixo / Variável --</option>
                         <option value="fixed">Gasto Fixo</option>
                         <option value="notFixed">Gasto Variável</option>
                     </select>
                     <select {...register("expense_payment_type", {required: "Campo obrigatório"})}
                         className="p-2 border border-gray-300 rounded-lg" aria-required>
-                        <option value="" disabled>Tipo de pgto --</option>
+                        <option disabled>Tipo de pgto --</option>
                         <option value="Crédito">Crédito</option>
                         <option value="Débito">Débito</option>
                         <option value="Dinheiro">Dinheiro</option>
@@ -58,7 +58,7 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                         className="py-2 px-4 text-red-600 font-bold rounded-lg cursor-pointer" />
                     <input 
                         type="submit" value="Adicionar " 
-                        className="py-2 px-4 bg-green-600 text-white font-bold rounded-lg cursor-pointer" />
+                        className="py-2 px-4 bg-gray-800 text-white font-bold rounded-lg cursor-pointer" />
                 </div>
             </form>
         </div>
