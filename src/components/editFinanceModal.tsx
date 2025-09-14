@@ -7,11 +7,10 @@ type Props = {
     handleUpdateAll: () => void
     setOpenActionBox: any
     setOpenModal: any
-    setEditFinance: any
     setOpenIdBox: any
 }
 
-export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, setOpenModal, setEditFinance, setOpenIdBox }: Props) => {
+export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -32,13 +31,15 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
                 ...data
             })
 
+            setOpenIdBox(null)
             setOpenModal(false)
             setOpenActionBox(false)
             handleUpdateAll()
+            
             console.log("Movimentação atualizada:", response.data);
         } catch (error) {
             console.error("Erro ao atualizar:", error);
-        }
+        }   
     }
 
     const closeModal = () => {

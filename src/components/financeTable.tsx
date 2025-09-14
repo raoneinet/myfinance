@@ -103,7 +103,6 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
             {editFinance && openModal === true &&
                 <EditFinanceModal 
                 finance={editFinance}
-                setEditFinance={setEditFinance}
                 handleUpdateAll={handleUpdateAll} 
                 setOpenActionBox={setOpenActionBox}
                 setOpenModal={setOpenModal}
