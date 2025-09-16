@@ -1,17 +1,22 @@
 import api from "@/app/api/api"
-import { useState } from "react"
 import { FinanceType } from "@/types/financeTypes"
 
 type Props = {
     handleUpdateAll: () => void
     id: any
-    setEditFinance?: any
-    setOpenModal: any
-    setOpenActionBox: any
-    setOpenIdBox: any
+    setEditFinance: (arg: FinanceType)=>void
+    setOpenModal: (arg: boolean)=>void
+    setOpenActionBox: (arg: boolean)=>void
+    setOpenIdBox: (id: number)=>void
 }
 
-export const ItemActionBox = ({ id, handleUpdateAll, setEditFinance, setOpenModal, setOpenActionBox, setOpenIdBox }: Props) => {
+export const ItemActionBox = ({
+    id,
+    handleUpdateAll,
+    setEditFinance,
+    setOpenModal,
+    setOpenActionBox,
+    setOpenIdBox }: Props) => {
 
     const deleteTransaction = async (id: number) => {
         try {
@@ -25,13 +30,12 @@ export const ItemActionBox = ({ id, handleUpdateAll, setEditFinance, setOpenModa
     }
 
     const editTransaction = async (id: number) => {
-        const result = await api.get(`/single_finance.php?id=${id}`,)
+        const result = await api.get(`/single_finance.php?id=${id}`)
         setEditFinance(result.data)
         setOpenModal(true)
         setOpenActionBox(false)
         setOpenIdBox(id)
     }
-
 
 
     return (
