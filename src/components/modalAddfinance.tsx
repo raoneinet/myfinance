@@ -1,4 +1,4 @@
-import { ModalButtons } from "./modalAddFinanceBtn"
+import { ModalButtons } from "./modalButtons"
 
 export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpenseInsert, errors }: any) => {
 
