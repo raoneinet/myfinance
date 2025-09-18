@@ -54,9 +54,9 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                 </div>
                 <div className="">
                     <ModalButtons
-                        onClick={closeModal}
-                        cancel="Cancelar"
-                        saveFinance="Adicionar"
+                        handleCancel={closeModal}
+                        leftBtn="Cancelar"
+                        rightBtn="Adicionar"
                     />
                 </div>
             </form>

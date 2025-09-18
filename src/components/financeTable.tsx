@@ -2,6 +2,7 @@ import { useState } from "react"
 import { FinanceType } from "@/types/financeTypes"
 import { ItemActionBox } from "@/components/itemActionBox"
 import { EditFinanceModal } from "@/components/editFinanceModal"
+import {ModalDeleteConfirmation} from "@/components/modalDeleteConfirmation"
 
 
 type Props = {
@@ -14,6 +15,8 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
     const [openActionBox, setOpenActionBox] = useState(false)
     const [openIdBox, setOpenIdBox] = useState<number | null>()
     const [editFinance, setEditFinance] = useState<FinanceType>()
+    const [deleteModal, setDeleteModal] = useState(true)
+    const [deleFinance, setDeleteFinance] = useState<number>()
     const [openModal, setOpenModal] = useState(false)
 
     const handleOpenActionBox = (id: number) => {
@@ -93,6 +96,8 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                                         setOpenModal={setOpenModal}
                                         setOpenActionBox={setOpenActionBox}
                                         setOpenIdBox={setOpenIdBox}
+                                        setDeleteFinance={setDeleteFinance}
+                                        setDeleteModal={setDeleteModal}
                                     />
                                 }
                             </td>
@@ -106,7 +111,17 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                 handleUpdateAll={handleUpdateAll} 
                 setOpenActionBox={setOpenActionBox}
                 setOpenModal={setOpenModal}
-                setOpenIdBox={setOpenIdBox}/>
+                setOpenIdBox={setOpenIdBox}
+                />
+            }
+            {deleteModal && deleFinance &&
+                <ModalDeleteConfirmation
+                 setDeleteFinance={setDeleteFinance}
+                 setOpenActionBox={setOpenActionBox}
+                 handleUpdateAll={handleUpdateAll}
+                 id={deleFinance}
+                 setDeleteModal={setDeleteModal}
+                />
             }
         </div>
     )

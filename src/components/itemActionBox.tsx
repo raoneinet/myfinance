@@ -4,10 +4,12 @@ import { FinanceType } from "@/types/financeTypes"
 type Props = {
     handleUpdateAll: () => void
     id: any
-    setEditFinance: (arg: FinanceType)=>void
-    setOpenModal: (arg: boolean)=>void
-    setOpenActionBox: (arg: boolean)=>void
-    setOpenIdBox: (id: number)=>void
+    setEditFinance: (arg: FinanceType) => void
+    setOpenModal: (arg: boolean) => void
+    setOpenActionBox: (arg: boolean) => void
+    setOpenIdBox: (id: number) => void
+    setDeleteFinance: any
+    setDeleteModal: any
 }
 
 export const ItemActionBox = ({
@@ -16,14 +18,18 @@ export const ItemActionBox = ({
     setEditFinance,
     setOpenModal,
     setOpenActionBox,
-    setOpenIdBox }: Props) => {
+    setOpenIdBox,
+    setDeleteFinance,
+    setDeleteModal }: Props) => {
 
-    const deleteTransaction = async (id: number) => {
+    const deleteTransaction = () => {
         try {
-            await api.post("/delete_finance_item.php", { id })
-            console.log("Movimento apagado: ", id)
-            setOpenActionBox(false)
-            handleUpdateAll()
+            // await api.post("/delete_finance_item.php", { id })
+            // console.log("Movimento apagado: ", id)
+            // setOpenActionBox(false)
+            // handleUpdateAll()
+            setDeleteFinance(id)
+            setDeleteModal(true)
         } catch (error: any) {
             console.log("Error ao apagar movimento: ", error)
         }
@@ -48,7 +54,7 @@ export const ItemActionBox = ({
                     Editar
                 </div>
                 <div
-                    onClick={() => deleteTransaction(id)}
+                    onClick={() => deleteTransaction()}
                     className="rounded-md hover:bg-gray-200 flex gap-2 cursor-pointer font-semibold px-4 py-2">
                     <img src="/assets/icons/delete_icon.png" className="w-4 h-4" />
                     Apagar

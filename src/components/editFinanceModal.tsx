@@ -6,8 +6,8 @@ import { ModalButtons } from "./modalButtons"
 type Props = {
     finance: FinanceType
     handleUpdateAll: () => void
-    setOpenActionBox: any
-    setOpenModal: any
+    setOpenActionBox: (arg: boolean)=>void
+    setOpenModal: (arg: boolean)=>void
     setOpenIdBox: any
 }
 
@@ -98,9 +98,9 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
                     </div>
                     <div className="">
                         <ModalButtons
-                            onClick={closeModal}
-                            cancel="Cancelar"
-                            saveFinance="Salvar"
+                            handleCancel={closeModal}
+                            leftBtn="Cancelar"
+                            rightBtn="Salvar"
                         />
                     </div>
                 </form>

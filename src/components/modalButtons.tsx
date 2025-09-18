@@ -1,17 +1,21 @@
 type Props = {
-    onClick: ()=>void
-    cancel: string
-    saveFinance: string
+    //onClick: ()=>void
+    leftBtn: string
+    rightBtn: string
+    handleCancel: ()=>void
+    handleConfirm?: ()=>void
 }
 
-export const ModalButtons = ({onClick, cancel, saveFinance}: Props) => {
+export const ModalButtons = ({leftBtn, rightBtn, handleCancel, handleConfirm}: Props) => {
     return (
         <div className="w-full flex justify-between ">
             <input
-                onClick={onClick} type="button" value={cancel}
+                type="button" value={leftBtn}
+                onClick={handleCancel}
                 className="py-2 px-4 text-red-600 font-bold rounded-lg cursor-pointer" />
             <input
-                type="submit" value={saveFinance}
+                type="submit" value={rightBtn}
+                onClick={handleConfirm}
                 className="py-2 px-4 bg-gray-800 text-white font-bold rounded-lg cursor-pointer" />
         </div>
     )
