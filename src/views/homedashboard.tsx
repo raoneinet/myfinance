@@ -59,12 +59,11 @@ export const HomeDashboard = () => {
     }
 
     const getExpenseBalance = () => {
-
-
+        //need to create rules
     }
 
     const handleUpdateAll = ()=>{
-        getFinance()
+        //getFinance()
         getTotals()
         getExpenseBalance()
     }
@@ -83,6 +82,7 @@ export const HomeDashboard = () => {
                 />
                 <SearchExpense
                     setModal={handleShowModal}
+                    getFinance={getFinance}
 
                 />
                 {showModal &&
@@ -97,8 +97,7 @@ export const HomeDashboard = () => {
                     finance={finance}
                     getFinance={getFinance}
                     handleUpdateAll={handleUpdateAll}
-                />
-                
+                />  
             </div>
         </>
     )

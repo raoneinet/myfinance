@@ -2,16 +2,21 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/components/addSalaryBtn"
 
-export const SearchExpense = ({ setModal }: any) => {
+export const SearchExpense = ({ setModal, getFinance }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const handleExpenseInsert = () => {
-
+        //Need to create rules
     }
     return (
         <div className="px-5 py-5 w-full flex justify-end gap-3 flex-col md:flex-row">
-            <form onSubmit={handleSubmit(handleExpenseInsert)} className="flex flex-col md:flex-row gap-2 justify-end">
+            <button 
+                onClick={getFinance}
+                className="bg-gray-200 px-2 rounded-lg text-gray-600 cursor-pointer">Todas as transações</button>
+            <form 
+                onSubmit={handleSubmit(handleExpenseInsert)} 
+                className="flex flex-col md:flex-row gap-2 justify-end">
                 <select {...register("expense_isFixed")}
                     className="px-2 border border-gray-300 rounded-lg">
                     <option value="fixed">Gasto Fixo</option>
@@ -37,7 +42,8 @@ export const SearchExpense = ({ setModal }: any) => {
                 </select>
                 <div className="flex items-center w-full">
                     <img src="/assets/icons/search_icon.png" className="-mr-7" />
-                    <input {...register("search_expense")} className="w-full pl-8 py-3 border border-gray-300 rounded-lg" placeholder="Buscar valor..." />
+                    <input {...register("search_expense")} 
+                        className="w-full pl-8 py-3 border border-gray-300 rounded-lg" placeholder="Buscar valor..." />
                 </div>
             </form>
             <AddFinanceBtn

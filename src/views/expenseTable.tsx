@@ -12,9 +12,9 @@ type Props = {
 
 export const ExpenseTable = ({finance, getFinance, handleUpdateAll}: Props) => {
 
-    useEffect(() => {
-        getFinance()
-    }, [])
+    // useEffect(() => {
+    //     getFinance()
+    // }, [])
 
     return (
         <div className="px-5 py-5 max-h-5/6 flex gap-3 lg:flex-row flex-col">
