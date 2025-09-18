@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form"
 import { FinanceType } from "@/types/financeTypes"
 import api from "@/app/api/api"
+import { ModalButtons } from "./modalButtons"
 
 type Props = {
     finance: FinanceType
     handleUpdateAll: () => void
-    setOpenActionBox: any
-    setOpenModal: any
+    setOpenActionBox: (arg: boolean)=>void
+    setOpenModal: (arg: boolean)=>void
     setOpenIdBox: any
 }
 
@@ -95,13 +96,12 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
                             className="p-2 border border-gray-300 rounded-lg"
                         />
                     </div>
-                    <div className="flex justify-between ">
-                        <input
-                            onClick={closeModal} type="button" value="Cancelar "
-                            className="py-2 px-4 text-red-600 font-bold rounded-lg cursor-pointer" />
-                        <input
-                            type="submit" value="Salvar"
-                            className="py-2 px-4 bg-gray-800 text-white font-bold rounded-lg cursor-pointer" />
+                    <div className="">
+                        <ModalButtons
+                            handleCancel={closeModal}
+                            leftBtn="Cancelar"
+                            rightBtn="Salvar"
+                        />
                     </div>
                 </form>
             </div>
