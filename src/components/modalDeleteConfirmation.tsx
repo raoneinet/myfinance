@@ -2,12 +2,10 @@ import { ModalButtons } from "./modalButtons"
 import api from "@/app/api/api"
 
 type Props = {
-    setDeleteFinance: any
     handleUpdateAll: () => void
-    setOpenActionBox: any
-    id: any
-    setDeleteModal: any
-    setOpenIdBox: any
+    id: number
+    setDeleteModal: (arg: boolean)=>void
+    setOpenIdBox: (arg: number | null)=>void
 }
 
 export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, setOpenIdBox }: Props) => {

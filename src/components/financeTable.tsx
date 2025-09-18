@@ -116,8 +116,6 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
             }
             {deleteModal && deleFinance &&
                 <ModalDeleteConfirmation
-                 setDeleteFinance={setDeleteFinance}
-                 setOpenActionBox={setOpenActionBox}
                  handleUpdateAll={handleUpdateAll}
                  id={deleFinance}
                  setDeleteModal={setDeleteModal}
