@@ -8,7 +8,7 @@ type Props = {
     handleUpdateAll: () => void
     setOpenActionBox: (arg: boolean)=>void
     setOpenModal: (arg: boolean)=>void
-    setOpenIdBox: any
+    setOpenIdBox: (arg: number | null)=>void
 }
 
 export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
