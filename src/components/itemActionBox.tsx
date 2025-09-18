@@ -26,8 +26,8 @@ export const ItemActionBox = ({
         try {
             // await api.post("/delete_finance_item.php", { id })
             // console.log("Movimento apagado: ", id)
-            // setOpenActionBox(false)
             // handleUpdateAll()
+            setOpenActionBox(false)
             setDeleteFinance(id)
             setDeleteModal(true)
         } catch (error: any) {

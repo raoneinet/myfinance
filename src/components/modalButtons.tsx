@@ -1,5 +1,4 @@
 type Props = {
-    //onClick: ()=>void
     leftBtn: string
     rightBtn: string
     handleCancel: ()=>void

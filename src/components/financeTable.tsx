@@ -121,6 +121,7 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                  handleUpdateAll={handleUpdateAll}
                  id={deleFinance}
                  setDeleteModal={setDeleteModal}
+                 setOpenIdBox={setOpenIdBox}
                 />
             }
         </div>

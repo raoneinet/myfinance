@@ -7,9 +7,10 @@ type Props = {
     setOpenActionBox: any
     id: any
     setDeleteModal: any
+    setOpenIdBox: any
 }
 
-export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal }: Props) => {
+export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, setOpenIdBox }: Props) => {
 
     const deleteTransaction = async (id: number | null) => {
         try {
@@ -30,6 +31,7 @@ export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal }:
     const cancelDeletion = ()=>{
         deleteTransaction(null)
         setDeleteModal(false)
+        setOpenIdBox(null)
     }
 
 
