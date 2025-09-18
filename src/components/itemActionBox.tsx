@@ -3,13 +3,13 @@ import { FinanceType } from "@/types/financeTypes"
 
 type Props = {
     handleUpdateAll: () => void
-    id: any
+    id: number
     setEditFinance: (arg: FinanceType) => void
     setOpenModal: (arg: boolean) => void
     setOpenActionBox: (arg: boolean) => void
     setOpenIdBox: (id: number) => void
-    setDeleteFinance: any
-    setDeleteModal: any
+    setDeleteFinance: (id: number) => void
+    setDeleteModal: (arg: boolean) => void
 }
 
 export const ItemActionBox = ({
@@ -23,30 +23,28 @@ export const ItemActionBox = ({
     setDeleteModal }: Props) => {
 
     const deleteTransaction = () => {
-        try {
-            // await api.post("/delete_finance_item.php", { id })
-            // console.log("Movimento apagado: ", id)
-            // handleUpdateAll()
-            setOpenActionBox(false)
-            setDeleteFinance(id)
-            setDeleteModal(true)
-        } catch (error: any) {
-            console.log("Error ao apagar movimento: ", error)
-        }
+        setOpenActionBox(false)
+        setDeleteFinance(id)
+        setDeleteModal(true)
     }
 
     const editTransaction = async (id: number) => {
-        const result = await api.get(`/single_finance.php?id=${id}`)
-        setEditFinance(result.data)
-        setOpenModal(true)
-        setOpenActionBox(false)
-        setOpenIdBox(id)
+        try {
+            const result = await api.get(`/single_finance.php?id=${id}`)
+            setEditFinance(result.data)
+            setOpenModal(true)
+            setOpenActionBox(false)
+            setOpenIdBox(id)
+        } catch (error: any) {
+            console.log("Ocorreu um erro ao editar a transação. ", error)
+        }
     }
 
 
     return (
         <>
-            <div className="flex flex-col justify-center w-fit shadow shadow-gray-400 rounded-md mt-2 absolute bg-white -ml-20">
+            <div 
+                className="flex flex-col justify-center w-fit shadow shadow-gray-400 rounded-md mt-2 absolute bg-white -ml-20">
                 <div
                     onClick={() => editTransaction(id)}
                     className="rounded-md hover:bg-gray-200 w-full flex gap-2 cursor-pointer font-semibold px-4 py-2 ">
