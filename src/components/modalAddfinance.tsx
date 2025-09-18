@@ -10,16 +10,19 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                 className="flex flex-col gap-5 justify-between py-5"
             >
                 <div className="flex flex-col md:flex-row gap-2">
-                    <input {...register("expense_desc", { required: true })}
+                    <input 
+                        {...register("expense_desc", { required: true })}
                         className="p-2 border border-gray-300 rounded-lg"
                         placeholder="Descrição" />
-                    <input {...register("expense_value", { required: true })}
+                    <input 
+                        {...register("expense_value", { required: true })}
                         className="p-2 border border-gray-300 rounded-lg"
                         placeholder="Valor" />
                     {errors?.expense_desc && <p>Campo obrigatorio</p>}
                 </div>
                 <div className="flex flex-col md:flex-row justify-between gap-3">
-                    <select {...register("expense_standard_category", { required: "Campo obrigatório" })}
+                    <select 
+                        {...register("expense_standard_category", { required: "Campo obrigatório" })}
                         className="p-2 border border-gray-300 rounded-lg" aria-required>
                         <option disabled>Categoria --</option>
                         <option value="Alimentação">Alimentação</option>
@@ -31,13 +34,15 @@ export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpe
                         <option value="Saúde">Saúde</option>
                         <option value="Transporte">Transporte</option>
                     </select>
-                    <select {...register("expense_isFixed", { required: "Campo obrigatório" })}
+                    <select 
+                        {...register("expense_isFixed", { required: "Campo obrigatório" })}
                         className="p-2 border border-gray-300 rounded-lg" aria-required>
                         <option disabled>Fixo / Variável --</option>
                         <option value="fixed">Gasto Fixo</option>
                         <option value="notFixed">Gasto Variável</option>
                     </select>
-                    <select {...register("expense_payment_type", { required: "Campo obrigatório" })}
+                    <select 
+                        {...register("expense_payment_type", { required: "Campo obrigatório" })}
                         className="p-2 border border-gray-300 rounded-lg" aria-required>
                         <option disabled>Tipo de pgto --</option>
                         <option value="Crédito">Crédito</option>
