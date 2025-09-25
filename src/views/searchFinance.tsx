@@ -1,49 +1,47 @@
+import { useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/components/addSalaryBtn"
 
-export const SearchExpense = ({ setModal, getFinance }: any) => {
+export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const [month, setMonth] = useState<number>()
 
-    const handleExpenseInsert = () => {
-        //Need to create rules
+    const handleFilterExpense = (data: any) => {
+        console.log("VALOR FILTRADO", month)
+        setMonth(data.month)
+        getFinancePerMonth({ month: data.month })
     }
+
     return (
         <div className="px-5 py-5 w-full flex justify-end gap-3 flex-col md:flex-row">
-            <button 
-                onClick={getFinance}
-                className="bg-gray-200 px-2 rounded-lg text-gray-600 cursor-pointer">Todas as transações</button>
-            <form 
-                onSubmit={handleSubmit(handleExpenseInsert)} 
+            <form
+                onSubmit={handleSubmit(handleFilterExpense)}
                 className="flex flex-col md:flex-row gap-2 justify-end">
-                <select {...register("expense_isFixed")}
-                    className="px-2 border border-gray-300 rounded-lg">
-                    <option value="fixed">Gasto Fixo</option>
-                    <option value="notFixed">Gasto Variável</option>
+                    <input
+                        onClick={getFinance}
+                        className="bg-gray-200 text-center w-fit rounded-lg text-gray-600 cursor-pointer" value="Todas as transações" />
+                <select
+                    {...register("month")}
+                    className="px-3 border border-gray-300 rounded-lg">
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
                 </select>
-                <select {...register("expense_category")}
-                    className="px-2 border border-gray-300 rounded-lg">
-                    <option value="Alimentação">Alimentação</option>
-                    <option value="Casa">Casa</option>
-                    <option value="Educação">Educação</option>
-                    <option value="Entretenimento">Entretenimento</option>
-                    <option value="Lazer">Lazer</option>
-                    <option value="Recebimento">Recebimento</option>
-                    <option value="Saúde">Saúde</option>
-                    <option value="Transporte">Transporte</option>
-                </select>
-                <select {...register("expense_payment_type")}
-                    className="px-2 border border-gray-300 rounded-lg">
-                    <option value="Crédito">Crédito</option>
-                    <option value="Débito">Débito</option>
-                    <option value="Dinheiro">Dinheiro</option>
-                    <option value="Transferência">Transferência</option>
-                </select>
-                <div className="flex items-center w-full">
-                    <img src="/assets/icons/search_icon.png" className="-mr-7" />
-                    <input {...register("search_expense")} 
-                        className="w-full pl-8 py-3 border border-gray-300 rounded-lg" placeholder="Buscar valor..." />
+
+                <div>
+                    <input type="submit"
+                        className="px-3 py-3 text-center border border-gray-300 rounded-lg cursor-pointer" value="Buscar" />
                 </div>
             </form>
             <AddFinanceBtn

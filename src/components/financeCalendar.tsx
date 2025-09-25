@@ -4,9 +4,7 @@ import "dayjs/locale/pt-br"
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-
-
-
+import api from "@/app/api/api"
 export const FinanceCalendar = () => {
 
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs())
@@ -23,6 +21,8 @@ export const FinanceCalendar = () => {
             setSelectedDate(date)
         }
     }
+
+ 
 
     return (
         <div className="lg:max-w-80 h-fit text-center bg-white rounded-md shadow shadow-gray-400">

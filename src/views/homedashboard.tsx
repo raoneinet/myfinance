@@ -23,6 +23,7 @@ export const HomeDashboard = () => {
         setShowModal(false)
     }
 
+    //Gets all finance with no filter
     const getFinance = async () => {
         try {
             const res = await api.get("/finance.php")
@@ -38,6 +39,7 @@ export const HomeDashboard = () => {
         }
     }
 
+    //Get the total sum for income, salary, expense and balance
     const getTotals = async () => {
         try {
             const totalFinance = await api.get("/get_totals.php")
@@ -58,17 +60,43 @@ export const HomeDashboard = () => {
         }
     }
 
+    //formats date for filtering
+    const getDateTime = () => {
+        const getDate = new Date()
+        const selDay = getDate.getDate()
+        const month = getDate.getMonth() + 1
+        const year = getDate.getFullYear()
+        console.log(`Data escolhida: ${selDay > 9 ? selDay : "0" + selDay}, ${month > 9 ? month : "0" + month}, ${year}`)
+        getFinancePerMonth({ month, year })
+    }
+
+    //Gets finance by month and year
+    const getFinancePerMonth = async ({ month }: any) => {
+        try {
+            if (!month) return null
+
+            const res = await api.get(`/finance_month.php?month=${month}&year=2025`)
+            console.log("Finance for: ", res)
+
+            if (res.status !== 200) return console.log("Erro ao buscar movimentos")
+            setFinance(res.data)
+        } catch (error: any) {
+            console.log("Erro ao buscar movimentos: ", error)
+        }
+    }
+
+
     const getExpenseBalance = () => {
         //need to create rules
     }
 
-    const handleUpdateAll = ()=>{
-        //getFinance()
+    //Updates all transactions
+    const handleUpdateAll = () => {
         getTotals()
-        getExpenseBalance()
     }
 
     useEffect(() => {
+        getDateTime()
         handleUpdateAll()
     }, [])
 
@@ -83,6 +111,7 @@ export const HomeDashboard = () => {
                 <SearchExpense
                     setModal={handleShowModal}
                     getFinance={getFinance}
+                    getFinancePerMonth={getFinancePerMonth}
 
                 />
                 {showModal &&
@@ -97,7 +126,7 @@ export const HomeDashboard = () => {
                     finance={finance}
                     getFinance={getFinance}
                     handleUpdateAll={handleUpdateAll}
-                />  
+                />
             </div>
         </>
     )
