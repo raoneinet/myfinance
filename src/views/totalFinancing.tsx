@@ -1,8 +1,6 @@
 import { TotalCards } from "@/components/totalCards"
-import api from "@/app/api/api"
 
 export const TotalFinancing = ({expenseTotals, extraIncomeTotal, expenseBalance}: any) => {
-
 
     return (
         <div className="px-5 py-5 grid md:grid-cols-4 gap-4">
