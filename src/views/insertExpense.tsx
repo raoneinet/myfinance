@@ -21,12 +21,12 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
             .then(res => console.log("Movimentos enviados: ", data))
             .catch(error => console.log("Erro ao enviar dados", error))
 
-            const yearMonth = data.expense_date.split("-")
+            const date = data.expense_date.split("-")
 
             closeModal()
             //updateDashboard()
             getTotals()
-            getFinancePerMonth({month: yearMonth[1], year: yearMonth[0]})
+            getFinancePerMonth({month: date[1], year: date[0]})
         } catch (error: any) {
             console.log("Ocorreu um erro ao enviar os seus movimentos", error)
         }
