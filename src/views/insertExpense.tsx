@@ -7,30 +7,29 @@ type Props = {
     closeModal: () => void
     updateDashboard: () => void
     getTotals: ()=>void
+    getFinancePerMonth: ({month, year}: any)=>void
 }
 
-export const InsertExpense = ({ closeModal, updateDashboard, getTotals }: Props) => {
+export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinancePerMonth }: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const handleExpenseInsert: SubmitHandler<SendFinanceType> = async (data) => {
 
         try {
-            await api.post("/add_finance.php",
-                data
-            ).then(
-                res => console.log("Movimentos enviados: ", data)
-            ).catch(
-                error => console.log("Erro ao enviar dados", error)
-            )
+            await api.post("/add_finance.php", data)
+            .then(res => console.log("Movimentos enviados: ", data))
+            .catch(error => console.log("Erro ao enviar dados", error))
+
+            const yearMonth = data.expense_date.split("-")
 
             closeModal()
-            updateDashboard()
+            //updateDashboard()
             getTotals()
+            getFinancePerMonth({month: yearMonth[1], year: yearMonth[0]})
         } catch (error: any) {
             console.log("Ocorreu um erro ao enviar os seus movimentos", error)
         }
-        console.log("Valores do form: ", data)
     }
 
 

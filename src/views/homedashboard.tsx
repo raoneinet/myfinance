@@ -32,11 +32,13 @@ export const HomeDashboard = () => {
             if (res.status !== 200) throw new Error("Erro ao buscar finanças")
 
             const data = res.data.finance
+            console.log(data)
 
             setFinance(data)
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
+        getTotals()
     }
 
     //Get the total sum for income, salary, expense and balance
@@ -71,12 +73,11 @@ export const HomeDashboard = () => {
     }
 
     //Gets finance by month and year
-    const getFinancePerMonth = async ({ month }: any) => {
+    const getFinancePerMonth = async ({ month, year }: any) => {
         try {
             if (!month) return null
 
-            const res = await api.get(`/finance_month.php?month=${month}&year=2025`)
-            console.log("Finance for: ", res)
+            const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
 
             if (res.status !== 200) return console.log("Erro ao buscar movimentos")
             setFinance(res.data)
@@ -92,7 +93,7 @@ export const HomeDashboard = () => {
 
     //Updates all transactions
     const handleUpdateAll = () => {
-        getTotals()
+        //getTotals()
     }
 
     useEffect(() => {
@@ -119,6 +120,7 @@ export const HomeDashboard = () => {
                         closeModal={handleCloseModal}
                         updateDashboard={getFinance}
                         getTotals={getTotals}
+                        getFinancePerMonth={getFinancePerMonth}
                     />
                 }
 
