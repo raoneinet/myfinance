@@ -4,7 +4,7 @@ import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/components/addSalaryBtn"
 import api from "@/app/api/api"
 
-export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth }: any) => {
+export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handleShowAddSalay }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
@@ -85,7 +85,7 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth }: any)
                 </div>
             </form>
             <AddFinanceBtn setModal={setModal} />
-            <AddSalaryBtn />
+            <AddSalaryBtn setModal={setModal}/>
         </div>
     )
 }
