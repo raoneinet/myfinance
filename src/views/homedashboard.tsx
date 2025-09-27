@@ -75,14 +75,31 @@ export const HomeDashboard = () => {
     //Gets finance by month and year
     const getFinancePerMonth = async ({ month, year }: any) => {
         try {
-            if (!month) return null
+            if (!month && !year) return null
 
             const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
 
             if (res.status !== 200) return console.log("Erro ao buscar movimentos")
             setFinance(res.data)
+            getTotalsByMonth({month, year})
         } catch (error: any) {
             console.log("Erro ao buscar movimentos: ", error)
+        }
+    }
+
+    const getTotalsByMonth = async ({ month, year }: any) => {
+        try {
+            if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
+
+            const res = await api.get(`/totals_month.php?month=${month}&year=${year}`)
+
+            setExpenseTotals(res.data.total_geral)
+            setExtraIncomeTotal(res.data.extra_income)
+
+            console.log("Totais: " + month + " / " + year)
+
+        } catch (error: any) {
+            console.log("Erro ao buscar totais: ", error)
         }
     }
 
