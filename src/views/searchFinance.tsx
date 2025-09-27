@@ -11,7 +11,7 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth }: any)
     const handleFilterExpense = (data: any) => {
         console.log("VALOR FILTRADO", month)
         setMonth(data.month)
-        getFinancePerMonth({ month: data.month })
+        getFinancePerMonth({ month: data.month, year: data.year})
     }
 
     return (
@@ -20,11 +20,13 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth }: any)
                 onSubmit={handleSubmit(handleFilterExpense)}
                 className="flex flex-col md:flex-row gap-2 justify-end">
                     <input
+                        type="button"
                         onClick={getFinance}
-                        className="bg-gray-200 text-center w-fit rounded-lg text-gray-600 cursor-pointer" value="Todas as transações" />
+                        className="px-2 bg-gray-200 text-center w-fit rounded-lg text-gray-600 cursor-pointer outline-gray-400" 
+                        value="Todas as transações" />
                 <select
                     {...register("month")}
-                    className="px-3 border border-gray-300 rounded-lg">
+                    className="px-3 border border-gray-300 rounded-lg outline-gray-400">
                     <option value="1">Janeiro</option>
                     <option value="2">Fevereiro</option>
                     <option value="3">Março</option>
@@ -38,10 +40,20 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth }: any)
                     <option value="11">Novembro</option>
                     <option value="12">Dezembro</option>
                 </select>
-
+                <select 
+                    {...register("year")} 
+                    className="px-3 border border-gray-300 rounded-lg outline-gray-400">
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
                 <div>
-                    <input type="submit"
-                        className="px-3 py-3 text-center border border-gray-300 rounded-lg cursor-pointer" value="Buscar" />
+                    <input 
+                        type="submit"
+                        className="px-3 py-3 text-center border border-gray-300 rounded-lg cursor-pointer outline-gray-400" 
+                        value="Buscar" />
                 </div>
             </form>
             <AddFinanceBtn
