@@ -1,16 +1,18 @@
 import { ModalAddFinance } from "@/components/modalAddfinance"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SendFinanceType } from "@/types/sendFinanceType"
+import { ModalAddSalary } from "@/components/modalAddSalay"
 import api from "@/app/api/api"
 
 type Props = {
     closeModal: () => void
     updateDashboard: () => void
-    getTotals: ()=>void
-    getFinancePerMonth: ({month, year}: any)=>void
+    getTotals: () => void
+    getFinancePerMonth: ({ month, year }: any) => void
+    clickedBtn: any
 }
 
-export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinancePerMonth }: Props) => {
+export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinancePerMonth, clickedBtn }: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -18,15 +20,31 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
 
         try {
             await api.post("/add_finance.php", data)
-            .then(res => console.log("Movimentos enviados: ", data))
-            .catch(error => console.log("Erro ao enviar dados", error))
+                .then(res => console.log("Movimentos enviados: ", data))
+                .catch(error => console.log("Erro ao enviar dados", error))
 
             const date = data.expense_date.split("-")
 
             closeModal()
-            //updateDashboard()
+            updateDashboard()
             getTotals()
-            getFinancePerMonth({month: date[1], year: date[0]})
+            getFinancePerMonth({ month: date[1], year: date[0] })
+        } catch (error: any) {
+            console.log("Ocorreu um erro ao enviar os seus movimentos", error)
+        }
+    }
+
+    const handleInsertSalary = async (data) => {
+        try {
+            await api.post("/add_salary.php", data)
+
+            //const date = data.expense_date.split("-")
+
+            closeModal()
+            updateDashboard()
+            getTotals()
+            console.log("SAlario: ", data)
+            //getFinancePerMonth({ month: date[1], year: date[0] })
         } catch (error: any) {
             console.log("Ocorreu um erro ao enviar os seus movimentos", error)
         }
@@ -37,13 +55,24 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
         <div
             className="fixed z-10 bg-black/50 flex justify-center items-center w-full h-dvh left-0 right-0 top-0 bottom-0">
             <div className="">
-                <ModalAddFinance
-                    closeModal={closeModal}
-                    register={register}
-                    handleSubmit={handleSubmit}
-                    handleExpenseInsert={handleExpenseInsert}
-                    error={errors}
-                />
+                {clickedBtn === "finance" &&
+                    <ModalAddFinance
+                        closeModal={closeModal}
+                        register={register}
+                        handleSubmit={handleSubmit}
+                        handleExpenseInsert={handleExpenseInsert}
+                        error={errors}
+                    />
+                }
+                {clickedBtn === "salary" &&
+                    <ModalAddSalary
+                        handleInsertSalary={handleInsertSalary}
+                        closeModal={closeModal}
+                        register={register}
+                        handleSubmit={handleSubmit}
+                        error={errors}
+                    />
+                }
             </div>
         </div>
     )

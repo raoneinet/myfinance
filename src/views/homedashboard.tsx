@@ -10,16 +10,20 @@ import api from "@/app/api/api"
 export const HomeDashboard = () => {
 
     const [showModal, setShowModal] = useState(false)
+    const [clickedBtn, setClickedBtn] = useState<string | null>()
     const [finance, setFinance] = useState<FinanceType[]>([]);
     const [expenseTotals, setExpenseTotals] = useState()
     const [extraIncomeTotal, setExtraIncomeTotal] = useState()
     const [expenseBalance, setExpenseBalance] = useState<number>()
 
-    const handleShowModal = () => {
+    const handleShowModal = (event:any) => {
+        console.log("Botão clicado: "+event.target.name)
+        setClickedBtn(event.target.name)
         setShowModal(true)
     }
 
     const handleCloseModal = () => {
+        setClickedBtn(null)
         setShowModal(false)
     }
 
@@ -117,11 +121,13 @@ export const HomeDashboard = () => {
     //Updates all transactions
     const handleUpdateAll = () => {
         //getTotals()
+        getDateTime()
     }
 
     useEffect(() => {
         getDateTime()
         handleUpdateAll()
+        getDateTime()
     }, [])
 
     return (
@@ -136,17 +142,16 @@ export const HomeDashboard = () => {
                     setModal={handleShowModal}
                     getFinance={getFinance}
                     getFinancePerMonth={getFinancePerMonth}
-
                 />
                 {showModal &&
                     <InsertExpense
                         closeModal={handleCloseModal}
-                        updateDashboard={getFinance}
+                        updateDashboard={getDateTime}
                         getTotals={getTotals}
                         getFinancePerMonth={getFinancePerMonth}
+                        clickedBtn={clickedBtn}
                     />
                 }
-
                 <ExpenseTable
                     finance={finance}
                     getFinance={getFinance}
