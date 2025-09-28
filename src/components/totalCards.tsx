@@ -23,7 +23,7 @@ export const TotalCards = ({ title, value, color, icon, borderColor }: Props) =>
                 <div
                     className={`text-3xl ${(Number(value) < 0) ? "text-red-600" : ""} 
                                 ${title === "Despesas" ? "text-red-500" : "text-green-500"}`}>
-                    € {value}
+                    € {Number(value).toFixed(2)}
                 </div>
             </div>
         </div>

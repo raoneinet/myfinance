@@ -16,7 +16,7 @@ export const HomeDashboard = () => {
     const [expenseTotals, setExpenseTotals] = useState()
     const [extraIncomeTotal, setExtraIncomeTotal] = useState()
     const [expenseBalance, setExpenseBalance] = useState<number>()
-    const [salary, setSalary] = useState<SalaryTypes>()
+    const [salary, setSalary] = useState<SalaryTypes | any>()
 
     const handleShowModal = (event:any) => {
         console.log("Botão clicado: "+event.target.name)
@@ -55,10 +55,9 @@ export const HomeDashboard = () => {
             setExpenseTotals(totalFinance.data.total_geral)
             setExtraIncomeTotal(totalFinance.data.extra_income)
 
-            if (totalFinance.data.total_geral && totalFinance.data.extra_income) {
+            if(totalFinance.data.total_geral && totalFinance.data.extra_income){
                 const expenseMath = Number(totalFinance.data.extra_income) - Number(totalFinance.data.total_geral)
                 setExpenseBalance(Number(expenseMath.toFixed(2)))
-                console.log("Balanço: ", expenseMath.toFixed(2))
             }
             console.log("TOTAIS: ", totalFinance.data.total_geral)
             console.log("TOTAL Recebimento: ", totalFinance.data)
