@@ -5,6 +5,7 @@ import { InsertExpense } from "./insertExpense"
 import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/types/financeTypes"
 import api from "@/app/api/api"
+import { SalaryTypes } from "@/types/salaryTypes"
 
 
 export const HomeDashboard = () => {
@@ -15,6 +16,7 @@ export const HomeDashboard = () => {
     const [expenseTotals, setExpenseTotals] = useState()
     const [extraIncomeTotal, setExtraIncomeTotal] = useState()
     const [expenseBalance, setExpenseBalance] = useState<number>()
+    const [salary, setSalary] = useState<SalaryTypes>()
 
     const handleShowModal = (event:any) => {
         console.log("Botão clicado: "+event.target.name)
@@ -114,8 +116,15 @@ export const HomeDashboard = () => {
     }
 
 
-    const getExpenseBalance = () => {
-        //need to create rules
+    const getSalary = async () => {
+        try{
+            const res = await api.get("/get_salary.php")
+
+            setSalary(res.data.salary_amount)
+            console.log("Salario atual: ", res.data)
+        }catch(error: any){
+            console.log("Erro ao buscar sálario: ", error)
+        }
     }
 
     //Updates all transactions
@@ -128,6 +137,7 @@ export const HomeDashboard = () => {
         getDateTime()
         handleUpdateAll()
         getDateTime()
+        getSalary()
     }, [])
 
     return (
@@ -137,6 +147,7 @@ export const HomeDashboard = () => {
                     expenseTotals={expenseTotals}
                     extraIncomeTotal={extraIncomeTotal}
                     expenseBalance={expenseBalance}
+                    salary={salary}
                 />
                 <SearchExpense
                     setModal={handleShowModal}

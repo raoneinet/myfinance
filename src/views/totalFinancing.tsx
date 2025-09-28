@@ -1,12 +1,12 @@
 import { TotalCards } from "@/components/totalCards"
 
-export const TotalFinancing = ({expenseTotals, extraIncomeTotal, expenseBalance}: any) => {
+export const TotalFinancing = ({salary, expenseTotals, extraIncomeTotal, expenseBalance}: any) => {
 
     return (
         <div className="px-5 py-5 grid md:grid-cols-4 gap-4">
             <TotalCards
                 title="Salário"
-                value="0,00"
+                value={salary}
                 color="bg-[#E0B0FF]"
                 icon="/assets/icons/salary.png"
             />
