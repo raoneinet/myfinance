@@ -2,17 +2,17 @@
 type Props = {
     title: string
     value: string
-    color: string
+    bgColor: string
     icon: string
     borderColor: string
 }
 
-export const TotalCards = ({ title, value, color, icon, borderColor }: Props) => {
+export const TotalCards = ({ title, value, bgColor, icon, borderColor }: Props) => {
     return (
         <div className={`bg-white rounded-lg shadow shadow-gray-200 border-t-4 ${borderColor}`}>
-            <div className="flex flex-col justify-between px-3 py-5 text-lg">
+            <div className="flex flex-col justify-between px-3 py-5 text-lg gap-2">
                 <div className={`text-gray-600 flex items-center gap-2`}>
-                    <div className={`${color} rounded-lg p-2`}>
+                    <div className={`${bgColor} rounded-lg p-2`}>
                         <img src={icon} className="w-6" />
                     </div>
                     <div className="flex gap-1">
@@ -21,7 +21,7 @@ export const TotalCards = ({ title, value, color, icon, borderColor }: Props) =>
                     </div>
                 </div>
                 <div
-                    className={`text-3xl ${(Number(value) < 0) ? "text-red-600" : ""} 
+                    className={`text-3xl place-self-end ${(Number(value) < 0) ? "text-red-600" : ""} 
                                 ${title === "Despesas" ? "text-red-500" : "text-green-500"}`}>
                     € {Number(value).toFixed(2)}
                 </div>
