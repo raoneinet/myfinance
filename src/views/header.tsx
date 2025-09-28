@@ -19,7 +19,7 @@ export const Header = () => {
     return (
         <header className="w-full px-2 py-3 bg-indigo-900 h-20 text-white">
             <div className="container mx-auto px-5 flex justify-between items-center h-full">
-                <div><Link href="/">MyFinance</Link></div>
+                <div className="font-bold text-xl"><Link href="/">MyFinance</Link></div>
                 {!loading && user && (
                     <div className="flex gap-3 text-white">
                         <div>{user.fullname}</div>
