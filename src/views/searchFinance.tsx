@@ -56,8 +56,9 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
                         value="Todas as transações" />
                     <select
                         {...register("month")}
-                        className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0">
-                        <option disabled selected>Mês</option>
+                        className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0"
+                        defaultValue="Mês">
+                        <option disabled>Mês</option>
                         <option value="1">Janeiro</option>
                         <option value="2">Fevereiro</option>
                         <option value="3">Março</option>
@@ -73,8 +74,9 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
                     </select>
                     <select
                         {...register("year")}
-                        className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0">
-                        <option disabled selected>Ano</option>
+                        className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0"
+                        defaultValue="Ano">
+                        <option disabled>Ano</option>
                         {selectYear?.map((year: number) => (
                             <option key={year} value={year}>{year}</option>
                         ))

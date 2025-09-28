@@ -4,6 +4,7 @@ import { ExpenseTable } from "./expenseTable"
 import { InsertExpense } from "./insertExpense"
 import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/types/financeTypes"
+import { BtnType } from "./btnType"
 import api from "@/app/api/api"
 import { SalaryTypes } from "@/types/salaryTypes"
 
@@ -11,7 +12,7 @@ import { SalaryTypes } from "@/types/salaryTypes"
 export const HomeDashboard = () => {
 
     const [showModal, setShowModal] = useState(false)
-    const [clickedBtn, setClickedBtn] = useState<string | null>()
+    const [clickedBtn, setClickedBtn] = useState<BtnType>()
     const [finance, setFinance] = useState<FinanceType[]>([]);
     const [expenseTotals, setExpenseTotals] = useState()
     const [extraIncomeTotal, setExtraIncomeTotal] = useState()
@@ -19,9 +20,11 @@ export const HomeDashboard = () => {
     const [salary, setSalary] = useState<SalaryTypes | any>()
 
     //Get the clicked button to open right modal (add salary or transaction)
-    const handleShowModal = (event:any) => {
-        setClickedBtn(event.target.name)
+    const handleShowModal = (button: any) => {
+        //const btnName = event.target.name
+        setClickedBtn(button)
         setShowModal(true)
+        console.log("BOTÃO CLICADO: ", button)
     }
 
     //close modal
@@ -56,7 +59,7 @@ export const HomeDashboard = () => {
             setExpenseTotals(totalFinance.data.total_geral)
             setExtraIncomeTotal(totalFinance.data.extra_income)
 
-            if(totalFinance.data.total_geral && totalFinance.data.extra_income){
+            if (totalFinance.data.total_geral && totalFinance.data.extra_income) {
                 const expenseMath = Number(totalFinance.data.extra_income) - Number(totalFinance.data.total_geral)
                 setExpenseBalance(Number(expenseMath.toFixed(2)))
             }
@@ -116,12 +119,12 @@ export const HomeDashboard = () => {
 
     //Get salary according to current month
     const getSalary = async () => {
-        try{
+        try {
             const res = await api.get("/get_salary.php")
 
             setSalary(res.data.salary_amount)
             console.log("Salario atual: ", res.data)
-        }catch(error: any){
+        } catch (error: any) {
             console.log("Erro ao buscar sálario: ", error)
         }
     }
