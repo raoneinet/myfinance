@@ -18,12 +18,13 @@ export const HomeDashboard = () => {
     const [expenseBalance, setExpenseBalance] = useState<number>()
     const [salary, setSalary] = useState<SalaryTypes | any>()
 
+    //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (event:any) => {
-        console.log("Botão clicado: "+event.target.name)
         setClickedBtn(event.target.name)
         setShowModal(true)
     }
 
+    //close modal
     const handleCloseModal = () => {
         setClickedBtn(null)
         setShowModal(false)
@@ -85,6 +86,7 @@ export const HomeDashboard = () => {
             const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
 
             if (res.status !== 200) return console.log("Erro ao buscar movimentos")
+
             setFinance(res.data)
             getTotalsByMonth({ month, year })
         } catch (error: any) {
@@ -104,9 +106,6 @@ export const HomeDashboard = () => {
             if (res.data.total_geral || res.data.extra_income) {
                 const balance = Number(res.data.extra_income) - Number(res.data.total_geral)
                 setExpenseBalance(balance)
-                console.log("Totais: " + month + " / " + year)
-                console.log(res.data.total_geral)
-                console.log(res.data.extra_income)
             }
 
         } catch (error: any) {
@@ -115,6 +114,7 @@ export const HomeDashboard = () => {
     }
 
 
+    //Get salary according to current month
     const getSalary = async () => {
         try{
             const res = await api.get("/get_salary.php")
