@@ -14,10 +14,10 @@ export const HomeDashboard = () => {
     const [showModal, setShowModal] = useState(false)
     const [clickedBtn, setClickedBtn] = useState<BtnType>()
     const [finance, setFinance] = useState<FinanceType[]>([]);
-    const [expenseTotals, setExpenseTotals] = useState()
-    const [extraIncomeTotal, setExtraIncomeTotal] = useState()
-    const [expenseBalance, setExpenseBalance] = useState<number>()
-    const [salary, setSalary] = useState<SalaryTypes | any>()
+    const [expenseTotals, setExpenseTotals] = useState<number>(0)
+    const [extraIncomeTotal, setExtraIncomeTotal] = useState<number>(0)
+    const [expenseBalance, setExpenseBalance] = useState<number>(0)
+    const [salary, setSalary] = useState<number>(0)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
@@ -31,6 +31,20 @@ export const HomeDashboard = () => {
     const handleCloseModal = () => {
         setClickedBtn(null)
         setShowModal(false)
+    }
+
+    //Get salary according to current month
+    const getSalary = async (month?: number, year?: number) => {
+        try {
+            const res = await api.get(`/get_salary.php?month=${month}&year=${year}`)
+
+            const actual_salary = Number(res.data.salary_amount)
+
+            setSalary(actual_salary)
+            console.log("Salario atual: ", actual_salary)
+        } catch (error: any) {
+            console.log("Erro ao buscar sálario: ", error)
+        }
     }
 
     //Gets all finance with no filter
@@ -56,15 +70,16 @@ export const HomeDashboard = () => {
         try {
             const totalFinance = await api.get("/get_totals.php")
 
-            setExpenseTotals(totalFinance.data.total_geral)
-            setExtraIncomeTotal(totalFinance.data.extra_income)
+            const total_expense = Number(totalFinance.data.total_geral)
+            const extra_income = Number(totalFinance.data.extra_income)
 
-            if (totalFinance.data.total_geral && totalFinance.data.extra_income) {
-                const expenseMath = Number(totalFinance.data.extra_income) - Number(totalFinance.data.total_geral)
-                setExpenseBalance(Number(expenseMath.toFixed(2)))
+            setExpenseTotals(total_expense)
+            setExtraIncomeTotal(extra_income)
+
+            if (!isNaN(total_expense) && !isNaN(extra_income)) {
+                const expenseMath = (extra_income + salary) - total_expense
+                setExpenseBalance(expenseMath)
             }
-            console.log("TOTAIS: ", totalFinance.data.total_geral)
-            console.log("TOTAL Recebimento: ", totalFinance.data)
 
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
@@ -72,13 +87,16 @@ export const HomeDashboard = () => {
     }
 
     //formats date for filtering
-    const getDateTime = () => {
+    const getDateTime = async () => {
         const getDate = new Date()
         const selDay = getDate.getDate()
         const month = getDate.getMonth() + 1
         const year = getDate.getFullYear()
-        console.log(`Data escolhida: ${selDay > 9 ? selDay : "0" + selDay}, ${month > 9 ? month : "0" + month}, ${year}`)
-        getFinancePerMonth({ month, year })
+        console.log(`Data escolhida: ${selDay > 9 ? selDay : "0" + selDay}, 
+                                    ${month > 9 ? month : "0" + month}, ${year}`)
+
+        await getSalary(month, year)
+        await getFinancePerMonth({ month, year })
     }
 
     //Gets finance by month and year
@@ -97,35 +115,27 @@ export const HomeDashboard = () => {
         }
     }
 
+    //Get total values by month
     const getTotalsByMonth = async ({ month, year }: any) => {
         try {
             if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
 
-            const res = await api.get(`/totals_month.php?month=${month}&year=${year}`)
+            const totalFinance = await api.get(`/totals_month.php?month=${month}&year=${year}`)
 
-            setExpenseTotals(res.data.total_geral)
-            setExtraIncomeTotal(res.data.extra_income)
+            const total_expense = Number(totalFinance.data.total_geral)
+            const extra_income = Number(totalFinance.data.extra_income)
+            const salaryValue = salary ?? console.log("Erro no salario")
 
-            if (res.data.total_geral || res.data.extra_income) {
-                const balance = Number(res.data.extra_income) - Number(res.data.total_geral)
+            setExpenseTotals(total_expense)
+            setExtraIncomeTotal(extra_income)
+
+            if (!isNaN(total_expense) && !isNaN(extra_income) && !isNaN(salary)) {
+                const balance = (extra_income + salaryValue) - total_expense
                 setExpenseBalance(balance)
             }
 
         } catch (error: any) {
             console.log("Erro ao buscar totais: ", error)
-        }
-    }
-
-
-    //Get salary according to current month
-    const getSalary = async () => {
-        try {
-            const res = await api.get("/get_salary.php")
-
-            setSalary(res.data.salary_amount)
-            console.log("Salario atual: ", res.data)
-        } catch (error: any) {
-            console.log("Erro ao buscar sálario: ", error)
         }
     }
 
@@ -136,11 +146,8 @@ export const HomeDashboard = () => {
     }
 
     useEffect(() => {
-        getDateTime()
         handleUpdateAll()
-        getDateTime()
-        getSalary()
-    }, [])
+    }, [salary])
 
     return (
         <>

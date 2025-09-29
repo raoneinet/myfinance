@@ -1,7 +1,7 @@
 
 type Props = {
     title: string
-    value: string
+    value: number
     bgColor: string
     icon: string
     borderColor: string
