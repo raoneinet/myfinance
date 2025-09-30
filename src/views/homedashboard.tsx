@@ -4,41 +4,51 @@ import { ExpenseTable } from "./expenseTable"
 import { InsertExpense } from "./insertExpense"
 import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/types/financeTypes"
-import api from "@/app/api/api"
+import { BtnType } from "./btnType"
+import { dateTime } from "@/utils/formatDate"
+import {
+    requestSalary, requestFinance, requestTotalValues,
+    requestFinanceByMonth, requestTotalValuesByMonth
+} from "@/services/finance"
 
 
 export const HomeDashboard = () => {
 
     const [showModal, setShowModal] = useState(false)
-    const [clickedBtn, setClickedBtn] = useState<string | null>()
+    const [clickedBtn, setClickedBtn] = useState<BtnType>()
     const [finance, setFinance] = useState<FinanceType[]>([]);
-    const [expenseTotals, setExpenseTotals] = useState()
-    const [extraIncomeTotal, setExtraIncomeTotal] = useState()
-    const [expenseBalance, setExpenseBalance] = useState<number>()
+    const [expenseTotals, setExpenseTotals] = useState<number>(0)
+    const [extraIncomeTotal, setExtraIncomeTotal] = useState<number>(0)
+    const [expenseBalance, setExpenseBalance] = useState<number>(0)
+    const [salary, setSalary] = useState<number>(0)
 
-    const handleShowModal = (event:any) => {
-        console.log("Botão clicado: "+event.target.name)
-        setClickedBtn(event.target.name)
+    //Get the clicked button to open right modal (add salary or transaction)
+    const handleShowModal = (button: any) => {
+        //const btnName = event.target.name
+        setClickedBtn(button)
         setShowModal(true)
+        console.log("BOTÃO CLICADO: ", button)
     }
 
+    //close modal
     const handleCloseModal = () => {
         setClickedBtn(null)
         setShowModal(false)
     }
 
-    //Gets all finance with no filter
-    const getFinance = async () => {
+    //Get salary according to current month
+    const getSalary = (month?: number, year?: number) => {
         try {
-            const res = await api.get("/finance.php")
-            console.log("Finanças: ", res)
+            requestSalary({ month, year, setSalary })
+        } catch (error: any) {
+            console.log("Erro ao buscar sálario: ", error)
+        }
+    }
 
-            if (res.status !== 200) throw new Error("Erro ao buscar finanças")
-
-            const data = res.data.finance
-            console.log(data)
-
-            setFinance(data)
+    //Gets all finance with no filter
+    const getFinance = () => {
+        try {
+            requestFinance({ setFinance })
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
@@ -46,21 +56,16 @@ export const HomeDashboard = () => {
     }
 
     //Get the total sum for income, salary, expense and balance
-    const getTotals = async () => {
+    const getTotals = () => {
         try {
-            const totalFinance = await api.get("/get_totals.php")
-
-            setExpenseTotals(totalFinance.data.total_geral)
-            setExtraIncomeTotal(totalFinance.data.extra_income)
-
-            if (totalFinance.data.total_geral && totalFinance.data.extra_income) {
-                const expenseMath = Number(totalFinance.data.extra_income) - Number(totalFinance.data.total_geral)
-                setExpenseBalance(Number(expenseMath.toFixed(2)))
-                console.log("Balanço: ", expenseMath.toFixed(2))
-            }
-            console.log("TOTAIS: ", totalFinance.data.total_geral)
-            console.log("TOTAL Recebimento: ", totalFinance.data)
-
+            requestTotalValues(
+                {
+                    setExpenseTotals,
+                    setExtraIncomeTotal,
+                    setExpenseBalance,
+                    salary
+                }
+            )
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
         }
@@ -68,12 +73,13 @@ export const HomeDashboard = () => {
 
     //formats date for filtering
     const getDateTime = () => {
-        const getDate = new Date()
-        const selDay = getDate.getDate()
-        const month = getDate.getMonth() + 1
-        const year = getDate.getFullYear()
-        console.log(`Data escolhida: ${selDay > 9 ? selDay : "0" + selDay}, ${month > 9 ? month : "0" + month}, ${year}`)
-        getFinancePerMonth({ month, year })
+        const filterDate = dateTime()
+
+        getSalary(filterDate.month, filterDate.year)
+        getFinancePerMonth({
+            month: filterDate.month,
+            year: filterDate.year
+        })
     }
 
     //Gets finance by month and year
@@ -81,41 +87,31 @@ export const HomeDashboard = () => {
         try {
             if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
 
-            const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
-
-            if (res.status !== 200) return console.log("Erro ao buscar movimentos")
-            setFinance(res.data)
-            getTotalsByMonth({ month, year })
+            requestFinanceByMonth(
+                {
+                    month, year, setFinance,
+                    getTotalsByMonth
+                }
+            )
         } catch (error: any) {
             console.log("Erro ao buscar movimentos: ", error)
         }
     }
 
+    //Get total values by month
     const getTotalsByMonth = async ({ month, year }: any) => {
         try {
             if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
 
-            const res = await api.get(`/totals_month.php?month=${month}&year=${year}`)
-
-            setExpenseTotals(res.data.total_geral)
-            setExtraIncomeTotal(res.data.extra_income)
-
-            if (res.data.total_geral || res.data.extra_income) {
-                const balance = Number(res.data.extra_income) - Number(res.data.total_geral)
-                setExpenseBalance(balance)
-                console.log("Totais: " + month + " / " + year)
-                console.log(res.data.total_geral)
-                console.log(res.data.extra_income)
-            }
-
+            requestTotalValuesByMonth(
+                {
+                    month, year, salary, setExpenseTotals,
+                    setExtraIncomeTotal, setExpenseBalance
+                }
+            )
         } catch (error: any) {
             console.log("Erro ao buscar totais: ", error)
         }
-    }
-
-
-    const getExpenseBalance = () => {
-        //need to create rules
     }
 
     //Updates all transactions
@@ -125,10 +121,8 @@ export const HomeDashboard = () => {
     }
 
     useEffect(() => {
-        getDateTime()
         handleUpdateAll()
-        getDateTime()
-    }, [])
+    }, [salary])
 
     return (
         <>
@@ -137,6 +131,7 @@ export const HomeDashboard = () => {
                     expenseTotals={expenseTotals}
                     extraIncomeTotal={extraIncomeTotal}
                     expenseBalance={expenseBalance}
+                    salary={salary}
                 />
                 <SearchExpense
                     setModal={handleShowModal}
