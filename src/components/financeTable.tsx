@@ -2,7 +2,7 @@ import { useState } from "react"
 import { FinanceType } from "@/types/financeTypes"
 import { ItemActionBox } from "@/components/itemActionBox"
 import { EditFinanceModal } from "@/components/editFinanceModal"
-import {ModalDeleteConfirmation} from "@/components/modalDeleteConfirmation"
+import { ModalDeleteConfirmation } from "@/components/modalDeleteConfirmation"
 
 
 type Props = {
@@ -36,16 +36,18 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
     }
 
     return (
-        <div className="lg:w-4/5 max-h-[680px] overflow-y-scroll rounded-t-2xl flex-1">
-            <table className="w-full bg-white shadow shadow-gray-800 rounded-t-2xl">
+        <div className="lg:w-4/5 max-h-[600px] h-full overflow-y-auto rounded-t-2xl flex-1 
+                    [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400
+                    [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-500">
+            <table className="w-full bg-white shadow relative">
                 <thead className="bg-gray-200 text-left text-xs md:text-base sticky top-0">
                     <tr className="align-middle">
-                        <th className="py-3 pl-2 rounded-tl-2xl">Descrição</th>
+                        <th className="py-3 pl-2 mb-5">Descrição</th>
                         <th>valor</th>
                         <th>Fixo/Variável</th>
                         <th className="">Tipo de pgto</th>
                         <th>data</th>
-                        <th className="rounded-tr-2xl">Ação</th>
+                        <th className="">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,50 +78,53 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                             </td>
                             <td>{item.transaction_type}</td>
                             <td>{item.transaction_date}</td>
-                            <td>
-                                {openIdBox !== item.id &&
-                                    < img src="/assets/icons/menu-actions.png"
-                                        className="w-6 cursor-pointer"
-                                        onClick={() => handleOpenActionBox(item.id)} />
-                                }
-                                {openActionBox && openIdBox === item.id &&
-                                    <img src="/assets/icons/closeModal.png"
-                                        className="w-6 cursor-pointer"
-                                        onClick={() => handleCloseActionBox(item.id)} />
-                                }
-
-                                {(openActionBox && openIdBox === item.id) &&
-                                    <ItemActionBox
-                                        id={item.id}
-                                        handleUpdateAll={handleUpdateAll}
-                                        setEditFinance={setEditFinance}
-                                        setOpenModal={setOpenModal}
-                                        setOpenActionBox={setOpenActionBox}
-                                        setOpenIdBox={setOpenIdBox}
-                                        setDeleteFinance={setDeleteFinance}
-                                        setDeleteModal={setDeleteModal}
-                                    />
-                                }
+                            <td className="">
+                                <div>
+                                    {openIdBox !== item.id &&
+                                        < img src="/assets/icons/menu-actions.png"
+                                            className="w-6 cursor-pointer"
+                                            onClick={() => handleOpenActionBox(item.id)} />
+                                    }
+                                    {openActionBox && openIdBox === item.id &&
+                                        <img src="/assets/icons/closeModal.png"
+                                            className="w-6 cursor-pointer"
+                                            onClick={() => handleCloseActionBox(item.id)} />
+                                    }
+                                </div>
+                                <div>
+                                    {(openActionBox && openIdBox === item.id) &&
+                                        <ItemActionBox
+                                            id={item.id}
+                                            handleUpdateAll={handleUpdateAll}
+                                            setEditFinance={setEditFinance}
+                                            setOpenModal={setOpenModal}
+                                            setOpenActionBox={setOpenActionBox}
+                                            setOpenIdBox={setOpenIdBox}
+                                            setDeleteFinance={setDeleteFinance}
+                                            setDeleteModal={setDeleteModal}
+                                        />
+                                    }
+                                </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             {editFinance && openModal === true &&
-                <EditFinanceModal 
-                finance={editFinance}
-                handleUpdateAll={handleUpdateAll} 
-                setOpenActionBox={setOpenActionBox}
-                setOpenModal={setOpenModal}
-                setOpenIdBox={setOpenIdBox}
+                <EditFinanceModal
+                    finance={editFinance}
+                    handleUpdateAll={handleUpdateAll}
+                    setOpenActionBox={setOpenActionBox}
+                    setOpenModal={setOpenModal}
+                    setOpenIdBox={setOpenIdBox}
                 />
             }
             {deleteModal && deleFinance &&
                 <ModalDeleteConfirmation
-                 handleUpdateAll={handleUpdateAll}
-                 id={deleFinance}
-                 setDeleteModal={setDeleteModal}
-                 setOpenIdBox={setOpenIdBox}
+                    handleUpdateAll={handleUpdateAll}
+                    id={deleFinance}
+                    setDeleteModal={setDeleteModal}
+                    setOpenIdBox={setOpenIdBox}
                 />
             }
         </div>
