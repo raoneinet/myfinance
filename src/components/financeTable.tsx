@@ -37,11 +37,8 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
 
     return (
         <div className="lg:w-4/5 max-h-[600px] h-full overflow-y-auto rounded-t-2xl flex-1 
-                    [&::-webkit-scrollbar]:w-2
-                    [&::-webkit-scrollbar-track]:bg-gray-100
-                    [&::-webkit-scrollbar-thumb]:bg-gray-400
-                    [&::-webkit-scrollbar-thumb]:rounded-full
-                    [&::-webkit-scrollbar-thumb:hover]:bg-gray-500">
+                    [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400
+                    [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-500">
             <table className="w-full bg-white shadow relative">
                 <thead className="bg-gray-200 text-left text-xs md:text-base sticky top-0">
                     <tr className="align-middle">
