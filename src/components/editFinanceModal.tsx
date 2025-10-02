@@ -49,7 +49,7 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
     }
 
     return (
-        <div className="top-0 bottom-0 right-0 left-0  fixed bg-black/50 flex justify-center items-center">
+        <div className="fixed z-10 top-0 bottom-0 right-0 left-0 bg-black/50 flex justify-center items-center">
             <div className="shadow shadow-gray-700 p-4 bg-white rounded-lg w-fit px-6 ">
                 <p className="py-3">Atualizar movimento na tabela financeira</p>
                 <form onSubmit={handleSubmit(updateTransaction)}

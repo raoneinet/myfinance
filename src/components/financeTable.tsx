@@ -36,11 +36,11 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
     }
 
     return (
-        <div className="lg:w-4/5 max-h-[600px] h-full overflow-y-auto rounded-t-2xl flex-1 
+        <div className="lg:w-4/5 max-h-[600px] h-full overflow-y-auto rounded-2xl flex-1 
                     [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400
                     [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-500">
             <table className="w-full bg-white shadow relative">
-                <thead className="bg-gray-200 text-left text-xs md:text-base sticky top-0">
+                <thead className="bg-gray-50 text-left text-xs md:text-base sticky top-0">
                     <tr className="align-middle">
                         <th className="py-3 pl-2 mb-5">Descrição</th>
                         <th>valor</th>
@@ -53,8 +53,8 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                 <tbody>
                     {finance.map((item) => (
                         <tr
-                            className="border-b border-gray-200 hover:bg-gray-200 text-xs text-gray-600 md:text-base align-middle"
-                            key={item.id}>
+                            className="border-b border-gray-200 hover:bg-gray-200 text-xs 
+                                    text-gray-600 md:text-base align-middle" key={item.id}>
                             <td className="py-3 pl-2 flex gap-2 items-center">
                                 <img src={`/assets/icons/${item.standard_category}.png`} className="w-auto h-8" />
                                 <div>

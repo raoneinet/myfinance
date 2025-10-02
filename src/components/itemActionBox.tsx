@@ -44,7 +44,7 @@ export const ItemActionBox = ({
     return (
         <>
             <div 
-                className="flex flex-col justify-center w-fit shadow shadow-gray-400 rounded-md mt-2 absolute z-50 bg-white -ml-20">
+                className="flex flex-col justify-center w-fit shadow shadow-gray-400 rounded-md mt-2 absolute z-20 bg-white -ml-20">
                 <div
                     onClick={() => editTransaction(id)}
                     className="rounded-md hover:bg-gray-200 w-full flex gap-2 cursor-pointer font-semibold px-4 py-2 ">
