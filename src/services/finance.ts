@@ -16,6 +16,22 @@ type TotalsProps = {
     salary: number
 }
 
+type FinanceMonthType = {
+    month: number 
+    year: number
+    setFinance: (arg: any)=>void 
+    getTotalsByMonth: ({})=>void
+}
+
+type TotalValuesMonthType = {
+    month: number
+    year: number
+    salary: number
+    setExpenseTotals: (arg: number)=>void
+    setExtraIncomeTotal: (arg: number)=>void
+    setExpenseBalance: (arg: number)=>void
+}
+
 //Request salary api
 export const requestSalary = async ({ month, year, setSalary }: SalaryProps) => {
     try {
@@ -49,8 +65,7 @@ export const requestFinance = async ({ setFinance }: FinanceProps) => {
 
 //Request Total values of all finance
 export const requestTotalValues = async (
-    { setExpenseTotals, setExtraIncomeTotal, 
-        setExpenseBalance, salary }: any) => {
+        { setExpenseTotals, setExtraIncomeTotal, setExpenseBalance, salary }: TotalsProps) => {
 
     try {
         const totalFinance = await api.get("/get_totals.php")
@@ -74,7 +89,7 @@ export const requestTotalValues = async (
 
 //Request  all finance by filtered month and year
 export const requestFinanceByMonth = async (
-    { month, year, setFinance, getTotalsByMonth }: any) => {
+    { month, year, setFinance, getTotalsByMonth }: FinanceMonthType) => {
 
     try {
         const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
@@ -91,7 +106,7 @@ export const requestFinanceByMonth = async (
 //Request total values filtered by month and year
 export const requestTotalValuesByMonth = async (
     { month, year, salary, setExpenseTotals, 
-    setExtraIncomeTotal, setExpenseBalance }: any) => {
+    setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType) => {
 
     try {
         const totalFinance = await api.get(`/totals_month.php?month=${month}&year=${year}`)
