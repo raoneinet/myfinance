@@ -1,36 +1,9 @@
 import api from "@/app/api/api"
-
-type SalaryProps = {
-    month: any
-    year: any
-    setSalary: (arg: number) => void
-}
-type FinanceProps = {
-    setFinance: (arg: any) => void
-}
-
-type TotalsProps = {
-    setExpenseTotals: (arg: number) => void
-    setExtraIncomeTotal: (arg: number) => void
-    setExpenseBalance: (arg: number) => void
-    salary: number
-}
-
-type FinanceMonthType = {
-    month: number 
-    year: number
-    setFinance: (arg: any)=>void 
-    getTotalsByMonth: ({})=>void
-}
-
-type TotalValuesMonthType = {
-    month: number
-    year: number
-    salary: number
-    setExpenseTotals: (arg: number)=>void
-    setExtraIncomeTotal: (arg: number)=>void
-    setExpenseBalance: (arg: number)=>void
-}
+import { SalaryProps,
+        FinanceProps,
+        TotalsProps,
+        FinanceMonthType,
+        TotalValuesMonthType } from "@/types/financeServiceTypes"
 
 //Request salary api
 export const requestSalary = async ({ month, year, setSalary }: SalaryProps) => {
