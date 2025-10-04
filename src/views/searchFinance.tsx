@@ -2,9 +2,11 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/components/addSalaryBtn"
+import {CurrentFinanceBtn} from "@/components/currentFinanceBtn"
+import {AllFinanceBtn} from "@/components/allFinaneBtn"
 import api from "@/app/api/api"
 
-export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handleShowAddSalay }: any) => {
+export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handleShowAddSalay, getCurrent }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
@@ -49,11 +51,8 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
                 <form
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
-                    <input
-                        type="button"
-                        onClick={getFinance}
-                        className="w-full px-3 py-2 bg-gray-50 hover:bg-gray-300 text-center md:w-fit rounded-xl text-gray-600 cursor-pointer outline-0"
-                        value="Todas as transações" />
+                    <AllFinanceBtn allFinance={getFinance}/>
+                    <CurrentFinanceBtn currentFinance={getCurrent}/>
                     <select
                         {...register("month")}
                         className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0"
