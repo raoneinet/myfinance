@@ -1,11 +1,13 @@
 import api from "@/app/api/api"
-import { SalaryProps,
-        FinanceProps,
-        TotalsProps,
-        FinanceMonthType,
-        TotalValuesMonthType } from "@/types/financeServiceTypes"
+import {
+    SalaryProps,
+    FinanceProps,
+    TotalsProps,
+    FinanceMonthType,
+    TotalValuesMonthType
+} from "@/types/financeServiceTypes"
 
-//Request salary api
+//Request salary
 export const requestSalary = async ({ month, year, setSalary }: SalaryProps) => {
     try {
         const res = await api.get(`/get_salary.php?month=${month}&year=${year}`)
@@ -19,7 +21,7 @@ export const requestSalary = async ({ month, year, setSalary }: SalaryProps) => 
     }
 }
 
-//Request finance api
+//Request all transactions without filter
 export const requestFinance = async ({ setFinance }: FinanceProps) => {
     try {
         const res = await api.get("/finance.php")
@@ -36,9 +38,9 @@ export const requestFinance = async ({ setFinance }: FinanceProps) => {
     }
 }
 
-//Request Total values of all finance
+//Request Total values of all finance without filter
 export const requestTotalValues = async (
-        { setExpenseTotals, setExtraIncomeTotal, setExpenseBalance, salary }: TotalsProps) => {
+    { setExpenseTotals, setExtraIncomeTotal, setExpenseBalance, salary }: TotalsProps) => {
 
     try {
         const totalFinance = await api.get("/get_totals.php")
@@ -51,7 +53,7 @@ export const requestTotalValues = async (
 
         if (!isNaN(total_expense) && !isNaN(extra_income)) {
             const expenseMath = (extra_income + Number(salary)) - total_expense
-            console.log("SALARIO EM SERVICES",salary)
+            console.log("SALARIO EM SERVICES", salary)
             setExpenseBalance(expenseMath)
         }
 
@@ -60,7 +62,7 @@ export const requestTotalValues = async (
     }
 }
 
-//Request  all finance by filtered month and year
+//Request transactions by filtered month and year
 export const requestFinanceByMonth = async (
     { month, year, setFinance, getTotalsByMonth }: FinanceMonthType) => {
 
@@ -78,8 +80,8 @@ export const requestFinanceByMonth = async (
 
 //Request total values filtered by month and year
 export const requestTotalValuesByMonth = async (
-    { month, year, salary, setExpenseTotals, 
-    setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType) => {
+    { month, year, salary, setExpenseTotals,
+        setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType) => {
 
     try {
         const totalFinance = await api.get(`/totals_month.php?month=${month}&year=${year}`)
@@ -98,5 +100,24 @@ export const requestTotalValuesByMonth = async (
 
     } catch (error: any) {
         console.log("Erro ao buscar totais: ", error)
+    }
+}
+
+//When adding a transaction, inserts the year in the filter list if no exist
+export const getUniqueYear = async (setSelectYear: (arg: any)=>void) => {
+    try {
+        const date = await api.get("get_year.php")
+
+        const yearList = date.data.map((item: any) => {
+            return new Date(item.transaction_date).getFullYear()
+        })
+
+        const uniqueYears: any = Array.from(new Set(yearList)).sort(({ a, b }: any) => b - a)
+        console.log(uniqueYears)
+
+        setSelectYear(uniqueYears)
+
+    } catch (error: any) {
+        console.log("Erro ao buscar ano: ", error)
     }
 }

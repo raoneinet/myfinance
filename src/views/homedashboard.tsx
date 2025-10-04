@@ -4,7 +4,7 @@ import { ExpenseTable } from "./expenseTable"
 import { InsertExpense } from "./insertExpense"
 import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/types/financeTypes"
-import { BtnType } from "./btnType"
+import { BtnType } from "../types/btnType"
 import { dateTime } from "@/utils/formatDate"
 import {
     requestSalary, requestFinance, requestTotalValues,
@@ -137,6 +137,7 @@ export const HomeDashboard = () => {
                     setModal={handleShowModal}
                     getFinance={getFinance}
                     getFinancePerMonth={getFinancePerMonth}
+                    getCurrent={getDateTime}
                 />
                 {showModal &&
                     <InsertExpense
