@@ -1,13 +1,14 @@
 import api from "@/app/api/api"
 import {
     SalaryProps,
+    FinanceProps,
     TotalsProps,
     FinanceMonthType,
     TotalValuesMonthType
 } from "@/types/financeServiceTypes"
 
 //Request salary
-export const requestSalary = async ({ month, year }: SalaryProps) => {
+export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Promise<number> => {
     try {
         const res = await api.get(`/get_salary.php?month=${month}&year=${year}`)
 
@@ -15,31 +16,36 @@ export const requestSalary = async ({ month, year }: SalaryProps) => {
 
         console.log("Salario atual: ", actual_salary)
 
+        setSalary(actual_salary)
+
         return actual_salary
         
     } catch (error: any) {
         console.log("Erro ao buscar sálario: ", error)
+        setSalary(0)
+        return 0 // Always return a value, even on error
     }
 }
 
 //Request all transactions without filter
-export const requestFinance = async () => {
+export const requestFinance = async ({setFinance}: FinanceProps): Promise<void> => {
     try {
         const res = await api.get("/finance.php")
 
-        const data = res.data.finance
+        const data = res.data.finance || []
         console.log(data)
 
-        return data
+        setFinance(data)
     } catch (error: any) {
         console.log("Erro ao buscar por finanças: ", error)
+        setFinance([]) // Set empty array on error to prevent undefined issues
     }
 }
 
 //Request sums of Total values without filter
 export const requestTotalValues = async (
-    { setExpenseTotals, setExtraIncomeTotal, setExpenseBalance, salary }: TotalsProps) => {
-
+    { setExpenseTotals, setExtraIncomeTotal, setExpenseBalance, salary }: TotalsProps
+): Promise<void> => {
     try {
         const totalFinance = await api.get("/get_totals.php")
 
@@ -56,35 +62,42 @@ export const requestTotalValues = async (
 
     } catch (error: any) {
         console.log("Erro ao buscar os totais: ", error)
+        // Set defaults on error
+        setExpenseTotals(0)
+        setExtraIncomeTotal(0)
+        setExpenseBalance(0)
     }
 }
 
 //Request transactions by filtered month and year
 export const requestFinanceByMonth = async (
-    { month, year, setFinance, getTotalsByMonth }: FinanceMonthType) => {
-
+    { month, year, setFinance }: FinanceMonthType
+): Promise<void> => {
     try {
         const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
 
-        if (res.status !== 200) return console.log("Erro ao buscar movimentos")
+        if (res.status !== 200) {
+            console.log("Erro ao buscar movimentos")
+            setFinance([])
+            return
+        }
 
-        setFinance(res.data)
-        await getTotalsByMonth({ month, year })
+        setFinance(res.data || [])
     } catch (error: any) {
         console.log("Erro ao buscar movimentos: ", error)
+        setFinance([]) // Set empty array on error
     }
 }
 
 //Request total values filtered by month and year
 export const requestTotalValuesByMonth = async (
-    { month, year, salary, setExpenseTotals,
-        setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType) => {
-
+    { month, year, salary, setExpenseTotals, setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType
+): Promise<void> => {
     try {
         const totalFinance = await api.get(`/totals_month.php?month=${month}&year=${year}`)
 
-        const total_expense = Number(totalFinance.data.total_geral)
-        const extra_income = Number(totalFinance.data.extra_income)
+        const total_expense = Number(totalFinance.data.total_geral ?? 0)
+        const extra_income = Number(totalFinance.data.extra_income ?? 0)
 
         setExpenseTotals(total_expense)
         setExtraIncomeTotal(extra_income)
@@ -94,11 +107,15 @@ export const requestTotalValuesByMonth = async (
 
     } catch (error: any) {
         console.log("Erro ao buscar totais: ", error)
+        // Set defaults on error
+        setExpenseTotals(0)
+        setExtraIncomeTotal(0)
+        setExpenseBalance(0)
     }
 }
 
 //When adding a transaction, inserts the year in the filter list if no exist
-export const getUniqueYear = async (setSelectYear: (arg: any) => void) => {
+export const getUniqueYear = async (setSelectYear: (arg: any) => void): Promise<void> => {
     try {
         const date = await api.get("get_year.php")
 
@@ -106,12 +123,13 @@ export const getUniqueYear = async (setSelectYear: (arg: any) => void) => {
             return new Date(item.transaction_date).getFullYear()
         })
 
-        const uniqueYears: any = Array.from(new Set(yearList)).sort((a:any, b:any) => b - a)
+        const uniqueYears: any[] = Array.from(new Set(yearList)).sort((a:any, b:any) => b - a)
         console.log(uniqueYears)
 
         setSelectYear(uniqueYears)
 
     } catch (error: any) {
         console.log("Erro ao buscar ano: ", error)
+        setSelectYear([]) // Set empty array on error
     }
 }

@@ -6,17 +6,18 @@ import { CurrentFinanceBtn } from "@/components/currentFinanceBtn"
 import { AllFinanceBtn } from "@/components/allFinaneBtn"
 import {getUniqueYear} from "@/services/finance"
 
-export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
+export const SearchExpense = ({ getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
 
     const handleFilterExpense = (data: any) => {
-        console.log("VALOR FILTRADO", data.month)
+        console.log("Valores filtrado para: mês, "+ data.month + " e ano, "+data.year)
 
         if (data.month === "Mês" && data.year === "Ano") return console.log("Obrigatório informar Mês e Ano")
 
         getFinancePerMonth({ month: data.month, year: data.year })
+        getSalary(data.month, data.year)
     }
 
     //When adding a transaction, inserts the year in the filter list if no exist
