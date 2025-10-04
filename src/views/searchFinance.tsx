@@ -42,7 +42,7 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, getCur
 
     useEffect(() => {
         getYear()
-    }, [selectYear])
+    }, [])
 
 
     return (
