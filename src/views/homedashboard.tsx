@@ -37,18 +37,22 @@ export const HomeDashboard = () => {
     }
 
     //Get salary according to current month
-    const getSalary = (month?: number, year?: number) => {
+    const getSalary = async (month: number, year: number) => {
         try {
-            requestSalary({ month, year, setSalary })
+            const actualSalary: any = await requestSalary({ month, year})
+            setSalary(actualSalary)
+            console.log("SALARIO QUE PEGUE:", actualSalary)
+            console.log("SALARIO QUE PEGUE:", salary)
         } catch (error: any) {
             console.log("Erro ao buscar sálario: ", error)
         }
     }
 
     //Gets all finance with no filter
-    const getFinance = () => {
+    const getFinance = async () => {
         try {
-            requestFinance({ setFinance })
+            const dataFinance = await requestFinance()
+            setFinance(dataFinance)
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
@@ -64,6 +68,7 @@ export const HomeDashboard = () => {
                 setExpenseBalance,
                 salary}
             )
+            console.log("ESTE É O SALARIO EM TOTALS",salary)
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
         }
@@ -99,7 +104,7 @@ export const HomeDashboard = () => {
         try {
             if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
 
-            requestTotalValuesByMonth(
+            await requestTotalValuesByMonth(
                 {month, year, salary, setExpenseTotals,
                 setExtraIncomeTotal, setExpenseBalance}
             )
@@ -115,7 +120,8 @@ export const HomeDashboard = () => {
     }
 
     useEffect(() => {
-        handleUpdateAll()
+        getTotals()
+        getDateTime()
     }, [salary])
 
     return (

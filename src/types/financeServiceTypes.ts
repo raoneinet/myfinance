@@ -1,11 +1,12 @@
 export type SalaryProps = {
-    month: any
-    year: any
-    setSalary: (arg: number) => void
+    month: number
+    year: number
+    //setSalary: (arg: number) => void
 }
-export type FinanceProps = {
-    setFinance: (arg: any) => void
-}
+
+// export type FinanceProps = {
+//     setFinance: (arg: any) => void
+// }
 
 export type TotalsProps = {
     setExpenseTotals: (arg: number) => void

@@ -1,61 +1,58 @@
 import api from "@/app/api/api"
 import {
     SalaryProps,
-    FinanceProps,
     TotalsProps,
     FinanceMonthType,
     TotalValuesMonthType
 } from "@/types/financeServiceTypes"
 
 //Request salary
-export const requestSalary = async ({ month, year, setSalary }: SalaryProps) => {
+export const requestSalary = async ({ month, year }: SalaryProps) => {
     try {
         const res = await api.get(`/get_salary.php?month=${month}&year=${year}`)
 
-        const actual_salary = Number(res.data.salary_amount)
+        const actual_salary = Number(res.data.salary_amount ?? 0)
 
-        setSalary(actual_salary)
         console.log("Salario atual: ", actual_salary)
+
+        return actual_salary
+        
     } catch (error: any) {
         console.log("Erro ao buscar sálario: ", error)
     }
 }
 
 //Request all transactions without filter
-export const requestFinance = async ({ setFinance }: FinanceProps) => {
+export const requestFinance = async () => {
     try {
         const res = await api.get("/finance.php")
-        console.log("Finanças: ", res)
-
-        if (res.status !== 200) throw new Error("Erro ao buscar finanças")
 
         const data = res.data.finance
         console.log(data)
 
-        setFinance(data)
+        return data
     } catch (error: any) {
         console.log("Erro ao buscar por finanças: ", error)
     }
 }
 
-//Request Total values of all finance without filter
+//Request sums of Total values without filter
 export const requestTotalValues = async (
     { setExpenseTotals, setExtraIncomeTotal, setExpenseBalance, salary }: TotalsProps) => {
 
     try {
         const totalFinance = await api.get("/get_totals.php")
 
-        const total_expense = Number(totalFinance.data.total_geral)
-        const extra_income = Number(totalFinance.data.extra_income)
+        const total_expense = Number(totalFinance.data.total_geral ?? 0)
+        const extra_income = Number(totalFinance.data.extra_income ?? 0)
 
         setExpenseTotals(total_expense)
         setExtraIncomeTotal(extra_income)
 
-        if (!isNaN(total_expense) && !isNaN(extra_income)) {
-            const expenseMath = (extra_income + Number(salary)) - total_expense
-            console.log("SALARIO EM SERVICES", salary)
-            setExpenseBalance(expenseMath)
-        }
+        const expenseMath = (extra_income + salary) - total_expense
+
+        console.log("SALARIO EM SERVICES", salary)
+        setExpenseBalance(expenseMath)
 
     } catch (error: any) {
         console.log("Erro ao buscar os totais: ", error)
@@ -72,7 +69,7 @@ export const requestFinanceByMonth = async (
         if (res.status !== 200) return console.log("Erro ao buscar movimentos")
 
         setFinance(res.data)
-        getTotalsByMonth({ month, year })
+        await getTotalsByMonth({ month, year })
     } catch (error: any) {
         console.log("Erro ao buscar movimentos: ", error)
     }
@@ -88,15 +85,12 @@ export const requestTotalValuesByMonth = async (
 
         const total_expense = Number(totalFinance.data.total_geral)
         const extra_income = Number(totalFinance.data.extra_income)
-        const salaryValue = salary ?? console.log("Erro no salario")
 
         setExpenseTotals(total_expense)
         setExtraIncomeTotal(extra_income)
 
-        if (!isNaN(total_expense) && !isNaN(extra_income) && !isNaN(salary)) {
-            const balance = (extra_income + salaryValue) - total_expense
-            setExpenseBalance(balance)
-        }
+        const balance = (extra_income + salary) - total_expense
+        setExpenseBalance(balance)
 
     } catch (error: any) {
         console.log("Erro ao buscar totais: ", error)
@@ -104,7 +98,7 @@ export const requestTotalValuesByMonth = async (
 }
 
 //When adding a transaction, inserts the year in the filter list if no exist
-export const getUniqueYear = async (setSelectYear: (arg: any)=>void) => {
+export const getUniqueYear = async (setSelectYear: (arg: any) => void) => {
     try {
         const date = await api.get("get_year.php")
 
@@ -112,7 +106,7 @@ export const getUniqueYear = async (setSelectYear: (arg: any)=>void) => {
             return new Date(item.transaction_date).getFullYear()
         })
 
-        const uniqueYears: any = Array.from(new Set(yearList)).sort(({ a, b }: any) => b - a)
+        const uniqueYears: any = Array.from(new Set(yearList)).sort((a:any, b:any) => b - a)
         console.log(uniqueYears)
 
         setSelectYear(uniqueYears)
