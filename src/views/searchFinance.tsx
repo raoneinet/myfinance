@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/components/addSalaryBtn"
-import {CurrentFinanceBtn} from "@/components/currentFinanceBtn"
-import {AllFinanceBtn} from "@/components/allFinaneBtn"
+import { CurrentFinanceBtn } from "@/components/currentFinanceBtn"
+import { AllFinanceBtn } from "@/components/allFinaneBtn"
+import {getUniqueYear} from "@/services/finance"
 import api from "@/app/api/api"
 
-export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handleShowAddSalay, getCurrent }: any) => {
+export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
@@ -19,18 +20,20 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
         getFinancePerMonth({ month: data.month, year: data.year })
     }
 
+    //When adding a transaction, inserts the year in the filter list if no exist
     const getYear = async () => {
         try {
-            const date = await api.get("get_year.php")
+            // const date = await api.get("get_year.php")
 
-            const yearList = date.data.map((item: any) => {
-                return new Date(item.transaction_date).getFullYear()
-            })
+            // const yearList = date.data.map((item: any) => {
+            //     return new Date(item.transaction_date).getFullYear()
+            // })
 
-            const uniqueYears: any = Array.from(new Set(yearList)).sort(({ a, b }: any) => b - a)
-            console.log(uniqueYears)
+            // const uniqueYears: any = Array.from(new Set(yearList)).sort(({ a, b }: any) => b - a)
+            // console.log(uniqueYears)
 
-            setSelectYear(uniqueYears)
+            // setSelectYear(uniqueYears)
+            getUniqueYear(setSelectYear)
 
         } catch (error: any) {
             console.log("Erro ao buscar ano: ", error)
@@ -39,7 +42,7 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
 
     useEffect(() => {
         getYear()
-    }, [])
+    }, [selectYear])
 
 
     return (
@@ -51,11 +54,11 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
                 <form
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
-                    <AllFinanceBtn allFinance={getFinance}/>
-                    <CurrentFinanceBtn currentFinance={getCurrent}/>
+                    <AllFinanceBtn allFinance={getFinance} />
+                    <CurrentFinanceBtn currentFinance={getCurrent} />
                     <select
                         {...register("month")}
-                        className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0"
+                        className="px-3 py-2 bg-gray-50 border text-gray-600 border-gray-200 rounded-xl outline-0"
                         defaultValue="Mês">
                         <option disabled>Mês</option>
                         <option value="1">Janeiro</option>
@@ -73,7 +76,7 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
                     </select>
                     <select
                         {...register("year")}
-                        className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl outline-0"
+                        className="px-3 py-2 bg-gray-50 border text-gray-600 border-gray-200 rounded-xl outline-0"
                         defaultValue="Ano">
                         <option disabled>Ano</option>
                         {selectYear?.map((year: number) => (
@@ -85,7 +88,7 @@ export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, handle
                     <div>
                         <input
                             type="submit"
-                            className="w-full px-3 py-3 text-center bg-gray-50 border border-gray-200 rounded-xl cursor-pointer outline-0"
+                            className="px-3 py-3 text-center bg-gray-50 hover:bg-gray-300 border border-gray-200 rounded-xl cursor-pointer outline-0"
                             value="Buscar" />
                     </div>
                 </form>
