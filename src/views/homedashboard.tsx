@@ -59,12 +59,10 @@ export const HomeDashboard = () => {
     const getTotals = () => {
         try {
             requestTotalValues(
-                {
-                    setExpenseTotals,
-                    setExtraIncomeTotal,
-                    setExpenseBalance,
-                    salary
-                }
+                {setExpenseTotals,
+                setExtraIncomeTotal,
+                setExpenseBalance,
+                salary}
             )
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
@@ -88,10 +86,8 @@ export const HomeDashboard = () => {
             if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
 
             requestFinanceByMonth(
-                {
-                    month, year, setFinance,
-                    getTotalsByMonth
-                }
+                {month, year, setFinance,
+                getTotalsByMonth}
             )
         } catch (error: any) {
             console.log("Erro ao buscar movimentos: ", error)
@@ -104,10 +100,8 @@ export const HomeDashboard = () => {
             if (!month && !year) return console.log("Obrigatório passar Mês e Ano")
 
             requestTotalValuesByMonth(
-                {
-                    month, year, salary, setExpenseTotals,
-                    setExtraIncomeTotal, setExpenseBalance
-                }
+                {month, year, salary, setExpenseTotals,
+                setExtraIncomeTotal, setExpenseBalance}
             )
         } catch (error: any) {
             console.log("Erro ao buscar totais: ", error)

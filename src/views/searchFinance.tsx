@@ -5,7 +5,6 @@ import { AddSalaryBtn } from "@/components/addSalaryBtn"
 import { CurrentFinanceBtn } from "@/components/currentFinanceBtn"
 import { AllFinanceBtn } from "@/components/allFinaneBtn"
 import {getUniqueYear} from "@/services/finance"
-import api from "@/app/api/api"
 
 export const SearchExpense = ({ setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
 
