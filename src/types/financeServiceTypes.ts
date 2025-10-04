@@ -1,10 +1,11 @@
 export type SalaryProps = {
-    month: any
-    year: any
+    month: number
+    year: number
     setSalary: (arg: number) => void
 }
+
 export type FinanceProps = {
-    setFinance: (arg: any) => void
+     setFinance: (arg: any) => void
 }
 
 export type TotalsProps = {
@@ -18,7 +19,7 @@ export type FinanceMonthType = {
     month: number 
     year: number
     setFinance: (arg: any)=>void 
-    getTotalsByMonth: ({})=>void
+    //getTotalsByMonth: ({})=>void
 }
 
 export type TotalValuesMonthType = {
