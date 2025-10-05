@@ -8,7 +8,7 @@ import { BtnType } from "../types/btnType"
 import { dateTime } from "@/utils/formatDate"
 import {
     requestSalary, requestFinance, requestTotalValues,
-    requestFinanceByMonth, requestTotalValuesByMonth
+    requestFinanceByMonth, requestTotalValuesByMonth, requestSalarySum
 } from "@/services/finance"
 
 
@@ -70,6 +70,20 @@ export const HomeDashboard = () => {
         }
     }
 
+    //Get sum of all salaries (for unfiltered view)
+    const getSalarySum = async (): Promise<number> => {
+        try {
+            const salarySum = await requestSalarySum(setSalary)
+
+            console.log("SOMA DOS SALÁRIOS QUE PEGUEI:", salarySum)
+
+            return salarySum ?? 0
+        } catch (error: any) {
+            console.log("Erro ao buscar soma dos salários:", error)
+            return 0
+        }
+    }
+
     //Gets all finance with no filter
     const getFinance = async () => {
         try {
@@ -79,12 +93,13 @@ export const HomeDashboard = () => {
             
             await requestFinance({setFinance})
             
-            // For unfiltered view, we need to get salary for current month
-            const filterDate = dateTime()
-            const currentSalary = await getSalary(filterDate.month, filterDate.year)
+            // For unfiltered view, get TOTAL of all salaries (not just current month)
+            // Use requestSalarySum which updates the salary state AND returns the value
+            const totalSalaries = await requestSalarySum(setSalary)
+            console.log("Total de todos os salários:", totalSalaries)
             
-            // Get totals without month filter - uses all-time data
-            await getTotals(currentSalary)
+            // Get totals without month filter - uses all-time data with total salaries
+            await getTotals(totalSalaries)
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
