@@ -1,4 +1,9 @@
-export const AllFinanceBtn = ({ allFinance, getSalarySum }: any) => {
+type Props = {
+    allFinance: ()=>void
+    getSalarySum: ()=>void
+}
+
+export const AllFinanceBtn = ({ allFinance, getSalarySum }: Props) => {
 
     const getAllFinance = () => {
         allFinance()
