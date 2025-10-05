@@ -12,7 +12,7 @@ const SignupForm = () => {
     const router = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm<SignupTypes>()
 
-    const generateHash = ({ password }: any) => {
+    const generateHash = ({ password }: {password: string}) => {
         let shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" })
         shaObj.update(password)
         return shaObj.getHash("HEX")

@@ -1,5 +1,8 @@
 
-export const AddFinanceBtn = ({setModal}:any)=>{
+type Props = {
+    setModal: (arg: string)=>void
+}
+export const AddFinanceBtn = ({setModal}:Props)=>{
 
     const handleOpenTransactionModal = () => setModal("finance")
 
