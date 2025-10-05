@@ -1,6 +1,13 @@
 import { TotalCards } from "@/components/totalCards"
 
-export const TotalFinancing = ({salary, expenseTotals, extraIncomeTotal, expenseBalance}: any) => {
+type Props = {
+    salary: number
+    expenseTotals: number
+    extraIncomeTotal: number
+    expenseBalance: number
+}
+
+export const TotalFinancing = ({salary, expenseTotals, extraIncomeTotal, expenseBalance}: Props) => {
 
     return (
         <div className="px-5 py-5 grid md:grid-cols-4 gap-4">
