@@ -4,7 +4,7 @@ import { AddFinanceBtn } from "@/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/components/addSalaryBtn"
 import { CurrentFinanceBtn } from "@/components/currentFinanceBtn"
 import { AllFinanceBtn } from "@/components/allFinaneBtn"
-import {getUniqueYear} from "@/services/finance"
+import { getUniqueYear } from "@/services/finance"
 
 export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
 
@@ -12,7 +12,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
     const [selectYear, setSelectYear] = useState<number[]>()
 
     const handleFilterExpense = (data: any) => {
-        console.log("Valores filtrado para: mês, "+ data.month + " e ano, "+data.year)
+        console.log("Valores filtrado para: mês, " + data.month + " e ano, " + data.year)
 
         if (data.month === "Mês" && data.year === "Ano") return console.log("Obrigatório informar Mês e Ano")
 
@@ -21,18 +21,9 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
     }
 
     //When adding a transaction, inserts the year in the filter list if no exist
-    const getYear = async () => {
+    const getYear = () => {
         try {
-            // const date = await api.get("get_year.php")
 
-            // const yearList = date.data.map((item: any) => {
-            //     return new Date(item.transaction_date).getFullYear()
-            // })
-
-            // const uniqueYears: any = Array.from(new Set(yearList)).sort(({ a, b }: any) => b - a)
-            // console.log(uniqueYears)
-
-            // setSelectYear(uniqueYears)
             getUniqueYear(setSelectYear)
 
         } catch (error: any) {
@@ -54,7 +45,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
                 <form
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
-                    <AllFinanceBtn allFinance={getFinance} getSalarySum={getSalarySum}/>
+                    <AllFinanceBtn allFinance={getFinance} getSalarySum={getSalarySum} />
                     <CurrentFinanceBtn currentFinance={getCurrent} />
                     <select
                         {...register("month")}
