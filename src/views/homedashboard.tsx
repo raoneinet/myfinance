@@ -46,7 +46,7 @@ export const HomeDashboard = () => {
 
         // Get salary first and wait for the actual value
         const currentSalary = await getSalary(filterDate.month, filterDate.year)
-        
+
         // Pass the returned salary value instead of relying on state
         await getFinancePerMonth({
             month: filterDate.month,
@@ -61,7 +61,7 @@ export const HomeDashboard = () => {
             const newSalary = await requestSalary({ month, year, setSalary })
 
             console.log("SALÁRIO QUE PEGUEI:", newSalary)
-            
+
             // Return the actual salary value so it can be used immediately
             return newSalary ?? 0
         } catch (error: any) {
@@ -90,14 +90,14 @@ export const HomeDashboard = () => {
             // Clear month/year filter
             setCurrentMonth(null)
             setCurrentYear(null)
-            
-            await requestFinance({setFinance})
-            
+
+            await requestFinance({ setFinance })
+
             // For unfiltered view, get TOTAL of all salaries (not just current month)
             // Use requestSalarySum which updates the salary state AND returns the value
             const totalSalaries = await requestSalarySum(setSalary)
             console.log("Total de todos os salários:", totalSalaries)
-            
+
             // Get totals without month filter - uses all-time data with total salaries
             await getTotals(totalSalaries)
         } catch (error: any) {
@@ -110,7 +110,7 @@ export const HomeDashboard = () => {
         try {
             // Use provided salary or fallback to state
             const currentSalary = salaryValue ?? salary
-            
+
             await requestTotalValues(
                 {
                     setExpenseTotals,
@@ -131,18 +131,18 @@ export const HomeDashboard = () => {
             // Set current filter
             setCurrentMonth(month)
             setCurrentYear(year)
-            
+
             // Get finance data for the specific month
-            await requestFinanceByMonth({month, year, setFinance})
-            
+            await requestFinanceByMonth({ month, year, setFinance })
+
             // Get or use salary
             let currentSalary = salaryParam
             if (currentSalary === undefined || currentSalary === null) {
                 currentSalary = await getSalary(month, year)
             }
-            
+
             // Get totals ONLY for this specific month
-            await getTotalsByMonth({month, year, salary: currentSalary})
+            await getTotalsByMonth({ month, year, salary: currentSalary })
 
         } catch (error: any) {
             console.log("Erro ao buscar movimentos: ", error)
@@ -154,16 +154,16 @@ export const HomeDashboard = () => {
         try {
             // Use the salary parameter that was passed in
             const currentSalary = salaryParam ?? salary
-            
+
             console.log(`Buscando totais para ${month}/${year} com salário: ${currentSalary}`)
-            
+
             await requestTotalValuesByMonth(
                 {
-                    month, 
-                    year, 
-                    salary: currentSalary, 
+                    month,
+                    year,
+                    salary: currentSalary,
                     setExpenseTotals,
-                    setExtraIncomeTotal, 
+                    setExtraIncomeTotal,
                     setExpenseBalance
                 }
             )
@@ -176,9 +176,9 @@ export const HomeDashboard = () => {
     const handleUpdateAll = () => {
         // If there's a current filter, refresh with that filter
         if (currentMonth !== null && currentYear !== null) {
-            getFinancePerMonth({ 
-                month: currentMonth, 
-                year: currentYear 
+            getFinancePerMonth({
+                month: currentMonth,
+                year: currentYear
             })
         } else {
             // Otherwise refresh with current date

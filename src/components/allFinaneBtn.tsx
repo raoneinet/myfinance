@@ -1,6 +1,6 @@
-export const AllFinanceBtn = ({allFinance, getSalarySum}: any) => {
+export const AllFinanceBtn = ({ allFinance, getSalarySum }: any) => {
 
-    const getAllFinance = ()=> {
+    const getAllFinance = () => {
         allFinance()
         getSalarySum()
     }
@@ -10,7 +10,7 @@ export const AllFinanceBtn = ({allFinance, getSalarySum}: any) => {
             onClick={getAllFinance}
             className="px-3 py-2 bg-gray-50 hover:bg-gray-300 text-center md:w-fit rounded-xl text-gray-600 cursor-pointer outline-0"
         >
-                Todas as transações
+            Todas as transações
         </button>
     )
 }

@@ -19,7 +19,7 @@ export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Pr
         setSalary(actual_salary)
 
         return actual_salary
-        
+
     } catch (error: any) {
         console.log("Erro ao buscar sálario: ", error)
         setSalary(0)
@@ -27,9 +27,9 @@ export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Pr
     }
 }
 
-export const requestSalarySum = async (setSalary: (arg:number)=>void)=>{
-    try{
-        const res  = await api.get("/get_totals_salary.php")
+export const requestSalarySum = async (setSalary: (arg: number) => void) => {
+    try {
+        const res = await api.get("/get_totals_salary.php")
 
         const sumSalaries = Number(res.data.total_salaries)
 
@@ -38,7 +38,7 @@ export const requestSalarySum = async (setSalary: (arg:number)=>void)=>{
         setSalary(sumSalaries)
         return sumSalaries
 
-    }catch(error: any){
+    } catch (error: any) {
         console.log("Erro ao buscar soma dos salários: ", error)
         setSalary(0)
         return 0
@@ -46,7 +46,7 @@ export const requestSalarySum = async (setSalary: (arg:number)=>void)=>{
 }
 
 //Request all transactions without filter
-export const requestFinance = async ({setFinance}: FinanceProps): Promise<void> => {
+export const requestFinance = async ({ setFinance }: FinanceProps): Promise<void> => {
     try {
         const res = await api.get("/finance.php")
 
@@ -141,7 +141,7 @@ export const getUniqueYear = async (setSelectYear: (arg: any) => void): Promise<
             return new Date(item.transaction_date).getFullYear()
         })
 
-        const uniqueYears: any[] = Array.from(new Set(yearList)).sort((a:any, b:any) => b - a)
+        const uniqueYears: any[] = Array.from(new Set(yearList)).sort((a: any, b: any) => b - a)
         console.log(uniqueYears)
 
         setSelectYear(uniqueYears)
