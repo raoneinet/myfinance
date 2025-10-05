@@ -1,6 +1,9 @@
-export const AllFinanceBtn = ({allFinance}: {allFinance: ()=>void}) => {
+export const AllFinanceBtn = ({allFinance, getSalarySum}: any) => {
 
-    const getAllFinance = ()=> allFinance()
+    const getAllFinance = ()=> {
+        allFinance()
+        getSalarySum()
+    }
     return (
         <button
             type="button"

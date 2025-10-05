@@ -6,7 +6,7 @@ import { CurrentFinanceBtn } from "@/components/currentFinanceBtn"
 import { AllFinanceBtn } from "@/components/allFinaneBtn"
 import {getUniqueYear} from "@/services/finance"
 
-export const SearchExpense = ({ getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
+export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
@@ -54,7 +54,7 @@ export const SearchExpense = ({ getSalary, setModal, getFinance, getFinancePerMo
                 <form
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
-                    <AllFinanceBtn allFinance={getFinance} />
+                    <AllFinanceBtn allFinance={getFinance} getSalarySum={getSalarySum}/>
                     <CurrentFinanceBtn currentFinance={getCurrent} />
                     <select
                         {...register("month")}

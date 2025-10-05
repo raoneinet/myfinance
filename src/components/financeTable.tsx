@@ -73,8 +73,8 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                                 </div>
                             </td>
                             <td className="">
-                                {(item.fixed_expense === 'fixed') && "Gasto Fixo"}
-                                {(item.fixed_expense === 'notFixed') && "Gasto Variável"}
+                                {(item.fixed_expense === 'fixed') && "Fixo"}
+                                {(item.fixed_expense === 'notFixed') && "Variável"}
                             </td>
                             <td>{item.transaction_type}</td>
                             <td>{item.transaction_date}</td>

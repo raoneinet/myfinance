@@ -27,6 +27,24 @@ export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Pr
     }
 }
 
+export const requestSalarySum = async (setSalary: (arg:number)=>void)=>{
+    try{
+        const res  = await api.get("/get_totals_salary.php")
+
+        const sumSalaries = Number(res.data.total_salaries)
+
+        console.log("Soma de todos os salários: ", sumSalaries)
+
+        setSalary(sumSalaries)
+        return sumSalaries
+
+    }catch(error: any){
+        console.log("Erro ao buscar soma dos salários: ", error)
+        setSalary(0)
+        return 0
+    }
+}
+
 //Request all transactions without filter
 export const requestFinance = async ({setFinance}: FinanceProps): Promise<void> => {
     try {
