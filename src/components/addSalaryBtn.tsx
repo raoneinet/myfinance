@@ -1,5 +1,8 @@
+type Props = {
+    setModal: (arg: string)=>void
+}
 
-export const AddSalaryBtn = ({setModal}: any) => {
+export const AddSalaryBtn = ({setModal}: Props) => {
 
     const handleOpenSalaryModal = ()=> setModal("salary")
 
