@@ -2,7 +2,6 @@
 import { useEffect } from "react"
 import { FinanceType } from "@/types/financeTypes"
 import { FinanceTable } from "@/components/financeTable"
-import {FinanceCalendar} from "@/components/financeCalendar"
 
 type Props = {
     finance: FinanceType[]
@@ -22,8 +21,6 @@ export const ExpenseTable = ({finance, getFinance, handleUpdateAll}: Props) => {
                 finance={finance}
                 handleUpdateAll={handleUpdateAll}
             />
-
-            <FinanceCalendar/>
         </div>
     )
 }
