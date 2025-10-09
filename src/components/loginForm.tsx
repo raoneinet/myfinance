@@ -28,13 +28,13 @@ const LoginForm = () => {
                     <input type="email" {...register("email", { required: "Campo obrigatório" })}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg`}
                         placeholder="Email" />
-                    {errors.email && <p>{errors.email.message}</p>}
+                    {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
                 </div>
                 <div>
                     <input type="password" {...register("password", { required: "Campo obrigatório", minLength: 6, maxLength: 20 })}
                         className={`w-82 px-3 py-2 bg-gray-200 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg`}
                         placeholder="Senha" />
-                    {errors.password && <p>{errors.password.message}</p>}
+                    {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
                 </div>
                 <div className="place-self-end">
                     <input type="submit" value="Entrar" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer" />
