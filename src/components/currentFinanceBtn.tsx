@@ -1,6 +1,12 @@
 
-export const CurrentFinanceBtn = ({currentFinance}: {currentFinance: ()=>void}) => {
-    const getCurrentFinance = ()=> currentFinance() 
+type Props = {
+    currentFinance: ()=>void
+}
+
+export const CurrentFinanceBtn = ({currentFinance}: Props) => {
+    const getCurrentFinance = ()=> {
+        currentFinance()
+    }
     return (
         <button
             type="button"
