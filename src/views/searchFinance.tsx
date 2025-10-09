@@ -23,9 +23,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
     //When adding a transaction, inserts the year in the filter list if no exist
     const getYear = () => {
         try {
-
             getUniqueYear(setSelectYear)
-
         } catch (error: any) {
             console.log("Erro ao buscar ano: ", error)
         }
@@ -83,7 +81,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
                             value="Buscar" />
                     </div>
                 </form>
-                <AddFinanceBtn setModal={setModal} />
+                <AddFinanceBtn setModal={setModal}/>
                 <AddSalaryBtn setModal={setModal} />
             </div>
         </div>
