@@ -20,17 +20,8 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
         getSalary(data.month, data.year)
     }
 
-    //When adding a transaction, inserts the year in the filter list if no exist
-    const getYear = () => {
-        try {
-            getUniqueYear(setSelectYear)
-        } catch (error: any) {
-            console.log("Erro ao buscar ano: ", error)
-        }
-    }
-
     useEffect(() => {
-        getYear()
+        if(selectYear?.length != 0) getUniqueYear(setSelectYear)
     }, [])
 
 
