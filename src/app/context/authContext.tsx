@@ -3,6 +3,7 @@ import { createContext, useContext, ReactNode, useState, useEffect } from "react
 import { LoginTypes } from "@/types/loginTypes"
 import { UserType } from "@/types/userType"
 import api from "../api/api"
+import { loginAPI } from "@/services/auth"
 
 type AuthContextType = {
     user: UserType | null;
@@ -22,12 +23,7 @@ export const AuthProvider = ({ children }: Props) => {
 
     const login = async ({ email, password }: LoginTypes) => {
         try {
-            const res = await api.post("/login_user.php",
-                {
-                    email,
-                    password
-                }
-            )
+            const res = await loginAPI({ email, password })
             setUser(res.data.user)
         } catch (error: any) {
             console.log("Erro ao fazer login: ", error.response.data || error.message)
