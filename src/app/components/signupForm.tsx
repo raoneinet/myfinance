@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { SignupTypes } from "@/types/signupTypes"
+import { SignupTypes } from "@/app/types/signupTypes"
 import { useRouter } from "next/navigation"
 import api from "@/app/api/api"
 import jsSHA from "jssha"

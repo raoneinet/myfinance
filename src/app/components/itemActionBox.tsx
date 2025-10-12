@@ -1,5 +1,5 @@
 import api from "@/app/api/api"
-import { FinanceType } from "@/types/financeTypes"
+import { FinanceType } from "@/app/types/financeTypes"
 
 type Props = {
     handleUpdateAll: () => void

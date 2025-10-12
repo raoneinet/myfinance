@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { FinanceType } from "@/types/financeTypes"
-import { ItemActionBox } from "@/components/itemActionBox"
-import { EditFinanceModal } from "@/components/editFinanceModal"
-import { ModalDeleteConfirmation } from "@/components/modalDeleteConfirmation"
+import { FinanceType } from "@/app/types/financeTypes"
+import { ItemActionBox } from "@/app/components/itemActionBox"
+import { EditFinanceModal } from "@/app/components/editFinanceModal"
+import { ModalDeleteConfirmation } from "@/app/components/modalDeleteConfirmation"
 
 
 type Props = {

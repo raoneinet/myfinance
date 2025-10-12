@@ -1,7 +1,7 @@
 "use client"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useAuthContext } from "@/app/context/authContext"
-import { LoginTypes } from "@/types/loginTypes"
+import { LoginTypes } from "@/app/types/loginTypes"
 import { useRouter } from "next/navigation"
 
 const LoginForm = () => {

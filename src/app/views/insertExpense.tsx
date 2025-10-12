@@ -1,8 +1,8 @@
-import { ModalAddFinance } from "@/components/modalAddfinance"
+import { ModalAddFinance } from "@/app/components/modalAddfinance"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { SendFinanceType } from "@/types/sendFinanceType"
-import { ModalAddSalary } from "@/components/modalAddSalay"
-import { SalaryTypes } from "@/types/salaryTypes"
+import { SendFinanceType } from "@/app/types/sendFinanceType"
+import { ModalAddSalary } from "@/app/components/modalAddSalay"
+import { SalaryTypes } from "@/app/types/salaryTypes"
 import api from "@/app/api/api"
 
 type Props = {

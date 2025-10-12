@@ -1,7 +1,5 @@
-"use client"
-import { useEffect } from "react"
-import { FinanceType } from "@/types/financeTypes"
-import { FinanceTable } from "@/components/financeTable"
+import { FinanceType } from "@/app/types/financeTypes"
+import { FinanceTable } from "@/app/components/financeTable"
 
 type Props = {
     finance: FinanceType[]

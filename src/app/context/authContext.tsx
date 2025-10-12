@@ -1,7 +1,7 @@
 "use client"
 import { createContext, useContext, ReactNode, useState, useEffect } from "react"
-import { LoginTypes } from "@/types/loginTypes"
-import { UserType } from "@/types/userType"
+import { LoginTypes } from "@/app/types/loginTypes"
+import { UserType } from "@/app/types/userType"
 import api from "../api/api"
 
 type AuthContextType = {
