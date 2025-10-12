@@ -5,7 +5,7 @@ import {
     TotalsProps,
     FinanceMonthType,
     TotalValuesMonthType
-} from "@/types/financeServiceTypes"
+} from "@/app/types/financeServiceTypes"
 
 //Request salary
 export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Promise<number> => {

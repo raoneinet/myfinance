@@ -1,4 +1,4 @@
-import {HomeDashboard} from "@/views/homedashboard"
+import {HomeDashboard} from "../../views/homedashboard"
 
 const WelcomePage = ()=>{
     return (

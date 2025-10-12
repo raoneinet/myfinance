@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { FinanceType } from "@/types/financeTypes"
+import { FinanceType } from "@/app/types/financeTypes"
 import api from "@/app/api/api"
 import { ModalButtons } from "./modalButtons"
 

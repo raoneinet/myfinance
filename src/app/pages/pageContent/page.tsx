@@ -1,9 +1,8 @@
 "use client"
 import WelcomePage from "../welcome/page"
-import { SignedIn } from "@/components/signedin"
-import { SignedOut } from "@/components/signedout"
-import { Header } from "@/views/header"
-import { LoadingSpinner } from "@/components/loadingSpinner"
+import { SignedIn } from "@/app/components/signedin"
+import { SignedOut } from "@/app/components/signedout"
+import { LoadingSpinner } from "@/app/components/loadingSpinner"
 import { useAuthContext } from "@/app/context/authContext"
 
 const PageContent = () => {

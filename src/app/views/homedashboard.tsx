@@ -3,13 +3,13 @@ import { TotalFinancing } from "./totalFinancing"
 import { ExpenseTable } from "./expenseTable"
 import { InsertExpense } from "./insertExpense"
 import { SearchExpense } from "./searchFinance"
-import { FinanceType } from "@/types/financeTypes"
-import { BtnType } from "../types/btnType"
-import { dateTime } from "@/utils/formatDate"
+import { FinanceType } from "@/app/types/financeTypes"
+import { BtnType } from "@/app/types/btnType"
+import { dateTime } from "@/app/utils/formatDate"
 import {
     requestSalary, requestFinance, requestTotalValues,
     requestFinanceByMonth, requestTotalValuesByMonth, requestSalarySum
-} from "@/services/finance"
+} from "@/app/services/finance"
 
 
 export const HomeDashboard = () => {

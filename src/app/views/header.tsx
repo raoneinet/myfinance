@@ -1,10 +1,9 @@
-"use client"
-import SignInAndOutButtons from "@/components/signInandOutButtons"
+import SignInAndOutButtons from "@/app/components/signInandOutButtons"
 import { useAuthContext } from "@/app/context/authContext"
-import SignOutButton from "@/components/signOutButton"
+import SignOutButton from "@/app/components/signOutButton"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { useEffect } from "react"
+
 
 export const Header = () => {
     const router = useRouter()

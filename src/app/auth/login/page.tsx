@@ -1,7 +1,7 @@
 "use client"
-import LoginForm from "@/components/loginForm"
-import { Header } from "@/views/header"
-import GoToHomeButton from "@/components/goToHomeBtn"
+import LoginForm from "@/app/components/loginForm"
+import { Header } from "../../views/header"
+import GoToHomeButton from "@/app/components/goToHomeBtn"
 import Link from "next/link"
 
 const Login = () => {

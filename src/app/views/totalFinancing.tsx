@@ -1,4 +1,4 @@
-import { TotalCards } from "@/components/totalCards"
+import { TotalCards } from "@/app/components/totalCards"
 
 type Props = {
     salary: number

@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { SignedOut } from "@/components/signedout"
+import { SignedOut } from "@/app/components/signedout"
 import Login from "../../auth/login/page"
 import { useAuthContext } from "@/app/context/authContext"
 
