@@ -21,7 +21,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
     }
 
     useEffect(() => {
-        if(selectYear?.length != 0) getUniqueYear(setSelectYear)
+        if (selectYear?.length != 0) getUniqueYear(setSelectYear)
     }, [])
 
 
@@ -72,7 +72,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
                             value="Buscar" />
                     </div>
                 </form>
-                <AddFinanceBtn setModal={setModal}/>
+                <AddFinanceBtn setModal={setModal} />
                 <AddSalaryBtn setModal={setModal} />
             </div>
         </div>
