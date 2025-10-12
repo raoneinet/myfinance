@@ -182,10 +182,6 @@ export const HomeDashboard = () => {
             })
         }
 
-        if(finance){
-            getFinance()
-        }
-        
         // Otherwise refresh with current date
         getDateTime()
     }
