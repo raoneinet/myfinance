@@ -37,7 +37,9 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
             setOpenActionBox(false)
             handleUpdateAll()
             
-            console.log("Movimentação atualizada:", response.data);
+            console.log("Movimentação atualizada:", response);
+            
+            if(response.status === 200) return console.log(data)
         } catch (error) {
             console.error("Erro ao atualizar:", error);
         }   
