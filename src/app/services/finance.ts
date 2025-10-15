@@ -88,10 +88,10 @@ export const requestTotalValues = async (
 }
 
 //Request transactions by filtered month and year
-export const requestFinanceByMonth = async (
-    { month, year, setFinance }: FinanceMonthType
-): Promise<void> => {
+export const requestFinanceByMonth = async ({ month, year, setFinance }: FinanceMonthType): Promise<void> => {
     try {
+        if(!month || !year) return
+
         const res = await api.get(`/finance_month.php?month=${month}&year=${year}`)
 
         if (res.status !== 200) {

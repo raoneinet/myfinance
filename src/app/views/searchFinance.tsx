@@ -14,7 +14,8 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
     const handleFilterExpense = (data: any) => {
         console.log("Valores filtrado para: mês, " + data.month + " e ano, " + data.year)
 
-        if (data.month === "Mês" && data.year === "Ano") return console.log("Obrigatório informar Mês e Ano")
+        if (!data.month || !data.year) return console.log("Obrigatório informar Mês e Ano")
+        if (data.month !== typeof Number || data.year !== typeof Number) return console.log("Sem Mes ou Ano")
 
         getFinancePerMonth({ month: data.month, year: data.year })
         getSalary(data.month, data.year)
