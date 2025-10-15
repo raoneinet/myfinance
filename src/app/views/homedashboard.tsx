@@ -180,10 +180,10 @@ export const HomeDashboard = () => {
                 month: currentMonth,
                 year: currentYear
             })
-        } else {
-            // Otherwise refresh with current date
-            getDateTime()
         }
+
+        // Otherwise refresh with current date
+        getDateTime()
     }
 
     useEffect(() => {
