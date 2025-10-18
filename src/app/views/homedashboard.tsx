@@ -219,8 +219,8 @@ export const HomeDashboard = () => {
                 }
                 <ExpenseTable
                     finance={finance}
-                    getFinance={getFinance}
                     handleUpdateAll={handleUpdateAll}
+                    getFinancePerMonth={getFinancePerMonth}
                 />
             </div>
         </>
