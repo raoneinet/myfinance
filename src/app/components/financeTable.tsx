@@ -8,9 +8,10 @@ import { ModalDeleteConfirmation } from "@/app/components/modalDeleteConfirmatio
 type Props = {
     finance: FinanceType[]
     handleUpdateAll: () => void
+    getFinancePerMonth: any
 }
 
-export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
+export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: Props) => {
 
     const [openActionBox, setOpenActionBox] = useState(false)
     const [openIdBox, setOpenIdBox] = useState<number | null>()
@@ -117,6 +118,7 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                     setOpenActionBox={setOpenActionBox}
                     setOpenModal={setOpenModal}
                     setOpenIdBox={setOpenIdBox}
+                    getFinancePerMonth={getFinancePerMonth}
                 />
             }
             {deleteModal && deleFinance &&

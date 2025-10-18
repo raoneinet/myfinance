@@ -9,9 +9,10 @@ type Props = {
     setOpenActionBox: (arg: boolean)=>void
     setOpenModal: (arg: boolean)=>void
     setOpenIdBox: (arg: number | null)=>void
+    getFinancePerMonth: any
 }
 
-export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
+export const EditFinanceModal = ({ getFinancePerMonth, finance, handleUpdateAll, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -35,11 +36,16 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
             setOpenIdBox(null)
             setOpenModal(false)
             setOpenActionBox(false)
-            handleUpdateAll()
-            
+            //handleUpdateAll()
+
             console.log("Movimentação atualizada:", response);
+            console.log("VALORES ATUALIZADOS: ", data)
             
-            if(response.status === 200) return console.log(data)
+            if(response.status === 200){
+                const filterDate = data.expense_date.split("-")
+                getFinancePerMonth({month: filterDate[1], year: filterDate[0]})
+                console.log(filterDate)
+            }
         } catch (error) {
             console.error("Erro ao atualizar:", error);
         }   

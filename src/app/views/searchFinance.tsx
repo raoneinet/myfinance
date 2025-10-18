@@ -15,8 +15,12 @@ export const SearchExpense = ({ currentMonth, currentYear, getSalarySum, getSala
     const handleFilterExpense = (data: any) => {
         console.log("Valores filtrado para: mês, " + data.month + " e ano, " + data.year)
 
-        if (!data.month || !data.year) return console.log("Obrigatório informar Mês e Ano")
-        if (data.month === "Mês" || data.year === "Ano") return console.log("Sem Mes ou Ano")
+        if (!data.month || !data.year){
+            console.log("Obrigatório informar Mês e Ano")
+            return
+        }
+        
+        if (data.month === "Mês" || data.year === "Ano") return alert("Obrigatório informar Mês e Ano")
 
         getFinancePerMonth({ month: data.month, year: data.year })
         getSalary(data.month, data.year)
@@ -24,7 +28,10 @@ export const SearchExpense = ({ currentMonth, currentYear, getSalarySum, getSala
     }
 
     const handleFormatMonth = () => {
-        const monthOfYear = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+        const monthOfYear = ["Janeiro", "Fevereiro", "Março", "Abril",
+                             "Maio", "Junho", "Julho", "Agosto", "Setembro",
+                              "Outubro", "Novembro", "Dezembro"]
+
         const index = Math.max(1, Math.min(currentMonth, 12)) - 1;
         setNewMonth(monthOfYear[index]);
     }
