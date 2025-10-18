@@ -71,18 +71,18 @@ export const HomeDashboard = () => {
     }
 
     //Get sum of all salaries (for unfiltered view)
-    // const getSalarySum = async (): Promise<number> => {
-    //     try {
-    //         const salarySum = await requestSalarySum(setSalary)
+     const getSalarySum = async (): Promise<number> => {
+         try {
+             const salarySum = await requestSalarySum(setSalary)
 
-    //         console.log("SOMA DOS SALÁRIOS QUE PEGUEI:", salarySum)
+             console.log("SOMA DOS SALÁRIOS QUE PEGUEI:", salarySum)
 
-    //         return salarySum ?? 0
-    //     } catch (error: any) {
-    //         console.log("Erro ao buscar soma dos salários:", error)
-    //         return 0
-    //     }
-    // }
+             return salarySum ?? 0
+         } catch (error: any) {
+             console.log("Erro ao buscar soma dos salários:", error)
+             return 0
+         }
+     }
 
     //Gets all finance with no filter
     const getFinance = async () => {
