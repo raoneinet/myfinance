@@ -42,8 +42,9 @@ export const SearchExpense = ({ currentMonth, currentYear, getSalarySum, getSala
         <div className="px-5 pt-5 w-full flex items-center gap-3 flex-col md:flex-row">
             <div>
                 <h1 className="text-3xl font-bold text-gray-600">Transações</h1>
-                {currentMonth &&
+                {currentMonth ?
                     <p className="mt-2 font-bold text-gray-500">{newMonth} de {currentYear}</p>
+                    : <p className="mt-2 font-bold text-gray-500">Todas as transações</p>
                 }
             </div>
             <div className="w-full flex justify-end gap-3 flex-col md:flex-row">
