@@ -63,8 +63,15 @@ export const SearchExpense = ({ currentMonth, currentYear, getSalarySum, getSala
                 <form
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
-                    <AllFinanceBtn allFinance={getFinance} getSalarySum={getSalarySum} btnThemeBg={btnThemeBg}/>
-                    <CurrentFinanceBtn currentFinance={getCurrent} btnThemeBg={btnThemeBg}/>
+                    <AllFinanceBtn 
+                        allFinance={getFinance} 
+                        getSalarySum={getSalarySum} 
+                        btnThemeBg={btnThemeBg}
+                    />
+                    <CurrentFinanceBtn 
+                        currentFinance={getCurrent} 
+                        btnThemeBg={btnThemeBg}
+                    />
                     <select
                         {...register("month")}
                         className={`px-3 py-2 border text-gray-800 border-gray-200 rounded-xl outline-0 ${btnThemeBg}`}
@@ -97,8 +104,10 @@ export const SearchExpense = ({ currentMonth, currentYear, getSalarySum, getSala
                     <div>
                         <input
                             type="submit"
-                            className={`px-3 py-3 text-center ${btnThemeBg} hover:bg-gray-300 border border-gray-200 rounded-xl cursor-pointer outline-0`}
-                            value="Buscar" />
+                            className={`px-3 py-3 text-center 
+                                ${btnThemeBg} hover:bg-gray-300 border border-gray-200 rounded-xl cursor-pointer outline-0`}
+                            value="Buscar" 
+                        />
                     </div>
                 </form>
                 <AddFinanceBtn setModal={setModal} />

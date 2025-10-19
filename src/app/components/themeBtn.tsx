@@ -18,7 +18,12 @@ export const ChangeThemeBtn = () => {
 
     return (
         <div>
-            <div onClick={handleThemeChange} className={`w-3 h-3 rounded-full cursor-pointer ${theme.themeStatus === "light" ? "bg-gray-50" : "bg-gray-500"}`}></div>
+            <div
+                onClick={handleThemeChange}
+                className={`w-3 h-3 rounded-full cursor-pointer 
+                    ${theme.themeStatus === "light" ? "bg-gray-50" : "bg-gray-500"}`}
+            >
+            </div>
         </div>
     )
 }

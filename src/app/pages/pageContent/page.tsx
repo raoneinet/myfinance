@@ -15,7 +15,9 @@ const PageContent = () => {
     if (loading) return <LoadingSpinner />
 
     return (
-        <div className={`w-full min-h-screen ${theme.themeStatus === "light" ? "bg-gray-800": "bg-indigo-50"}`} >
+        <div 
+            className={`w-full min-h-screen ${theme.themeStatus === "light" ? "bg-gray-800": "bg-indigo-50"}`} 
+        >
             {!loading && user &&
                 <SignedIn>
                     <WelcomePage />
