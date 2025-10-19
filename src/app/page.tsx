@@ -4,16 +4,17 @@ import PageContent from "./pages/pageContent/page"
 import { useAuthContext } from "./context/authContext"
 import { LoadingSpinner } from "@/app/components/loadingSpinner"
 
+
 const Page = () => {
 
-  const {loading} = useAuthContext()
+  const { loading } = useAuthContext()
 
   if (loading) return <LoadingSpinner />
 
   return (
     <>
-      <Header />
-      <PageContent />
+        <Header />
+        <PageContent />
     </>
   )
 }
