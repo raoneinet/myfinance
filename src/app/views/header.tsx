@@ -1,8 +1,11 @@
 import SignInAndOutButtons from "@/app/components/signInandOutButtons"
+import { ChangeThemeBtn } from "../components/themeBtn"
 import { useAuthContext } from "@/app/context/authContext"
 import SignOutButton from "@/app/components/signOutButton"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+
+
 
 
 export const Header = () => {
@@ -16,7 +19,8 @@ export const Header = () => {
                     <Link href="/">MyFinance</Link>
                 </div>
                 {!loading && user && (
-                    <div className="flex gap-3 text-white">
+                    <div className="flex gap-3 text-white items-center">
+                        <ChangeThemeBtn />
                         <div>{user.fullname}</div>
                         <div>
                             <SignOutButton

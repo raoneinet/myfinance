@@ -3,6 +3,8 @@ import { FinanceType } from "@/app/types/financeTypes"
 import { ItemActionBox } from "@/app/components/itemActionBox"
 import { EditFinanceModal } from "@/app/components/editFinanceModal"
 import { ModalDeleteConfirmation } from "@/app/components/modalDeleteConfirmation"
+import { useSelector } from "react-redux"
+import { RootState } from "@/redux/store"
 
 
 type Props = {
@@ -20,6 +22,8 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
     const [deleFinance, setDeleteFinance] = useState<number>()
     const [openModal, setOpenModal] = useState(false)
 
+    const theme = useSelector((state: RootState)=>state.theme)
+
     const handleOpenActionBox = (id: number) => {
         const openId = finance.find(item => item.id === id)
         if (openId?.id) {
@@ -36,12 +40,15 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
         }
     }
 
+    const bgTheme = theme.themeStatus === "light" ? "bg-gray-700" : "bg-white"
+    const textTheme = theme.themeStatus === "light" ? "text-gray-400" : "text-gray-600"
+
     return (
         <div className="lg:w-4/5 max-h-[600px] h-full overflow-y-auto rounded-2xl flex-1 
                     [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400
                     [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-500">
-            <table className="w-full bg-white shadow relative">
-                <thead className="bg-gray-50 text-left text-xs md:text-base sticky top-0">
+            <table className={`w-full shadow relative ${bgTheme}`}>
+                <thead className={`text-left text-xs md:text-base sticky top-0 ${theme.themeStatus === "light" ? "bg-gray-600" : "bg-gray-200"}`}>
                     <tr className="align-middle">
                         <th className="py-3 pl-2 mb-5">Descrição</th>
                         <th>valor</th>
@@ -54,8 +61,8 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
                 <tbody>
                     {finance.map((item) => (
                         <tr
-                            className="border-b border-gray-200 hover:bg-gray-200 text-xs 
-                                    text-gray-600 md:text-base align-middle" key={item.id}>
+                            className={`border-b border-gray-200 hover:bg-gray-200 text-xs 
+                                     md:text-base align-middle ${textTheme}`} key={item.id}>
                             <td className="py-3 pl-2 flex gap-2 items-center">
                                 <img src={`/assets/icons/${item.standard_category}.png`} className="w-auto h-8" />
                                 <div>
