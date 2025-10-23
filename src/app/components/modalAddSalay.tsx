@@ -1,11 +1,17 @@
 import { ModalButtons } from "./modalButtons"
+import { useSelector } from "react-redux"
+import { RootState } from "@/redux/store"
 
 export const ModalAddSalary = ({ closeModal, register, handleSubmit, handleInsertSalary, errors }: any) => {
 
+    const theme = useSelector((state:RootState)=>state.theme)
+
+    const bgThme = theme.themeStatus === "light" ? "bg-gray-400" : "bg-white"
+
     return (
-        <div className="shadow shadow-gray-700 p-4 bg-white rounded-lg w-fit px-6">
+        <div className={`shadow shadow-gray-700 p-4 rounded-lg w-fit px-6 ${bgThme}`}>
             <div className="border-b border-gray-200 mb-3">
-                <p className="py-3">Adicionar sálario</p>
+                <p className="py-3 font-bold">Adicionar sálario</p>
             </div>
             <div>
                 <form

@@ -6,10 +6,9 @@ import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/app/types/financeTypes"
 import { BtnType } from "@/app/types/btnType"
 import { dateTime } from "@/app/utils/formatDate"
-import {
-    requestSalary, requestFinance, requestTotalValues,
-    requestFinanceByMonth, requestTotalValuesByMonth, requestSalarySum
-} from "@/app/services/finance"
+import {requestTotalValuesByMonth} from "@/app/services/finance"
+import { getAllFinanceApi } from "@/redux/reducers/allFinance"
+import { store } from '../../redux/store';
 
 
 export const HomeDashboard = () => {
@@ -23,6 +22,9 @@ export const HomeDashboard = () => {
     const [salary, setSalary] = useState<number>(0)
     const [currentMonth, setCurrentMonth] = useState<number | null>(null)
     const [currentYear, setCurrentYear] = useState<number | null>(null)
+
+    //const {data} = useGetAllFinanceQuery()
+    //console.log("VALORES RTK: ",data)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
@@ -58,12 +60,18 @@ export const HomeDashboard = () => {
     //Get salary according to current month
     const getSalary = async (month: number, year: number): Promise<number> => {
         try {
-            const newSalary = await requestSalary({ month, year, setSalary })
+            const salaryPromise = store.dispatch(getAllFinanceApi.endpoints.getSalary.initiate({month, year}))
+
+            const newSalary = await salaryPromise
+
+            setSalary(Number(newSalary.data.salary_amount))
+            console.log("Este é o nooovo salario: ", newSalary.data.salary_amount)
+            //const newSalary = await requestSalary({ month, year, setSalary })
 
             console.log("SALÁRIO QUE PEGUEI:", newSalary)
 
             // Return the actual salary value so it can be used immediately
-            return newSalary ?? 0
+            return newSalary.data.salary_amount ?? 0
         } catch (error: any) {
             console.log("Erro ao buscar sálario: ", error)
             return 0
@@ -71,18 +79,21 @@ export const HomeDashboard = () => {
     }
 
     //Get sum of all salaries (for unfiltered view)
-     const getSalarySum = async (): Promise<number> => {
-         try {
-             const salarySum = await requestSalarySum(setSalary)
+    const getSalarySum = async () => {
+        try {
+            const salarySumPromise = store.dispatch(getAllFinanceApi.endpoints.getSalarySum.initiate())
 
-             console.log("SOMA DOS SALÁRIOS QUE PEGUEI:", salarySum)
+            const salarySum = await salarySumPromise
 
-             return salarySum ?? 0
-         } catch (error: any) {
-             console.log("Erro ao buscar soma dos salários:", error)
-             return 0
-         }
-     }
+            setSalary(salarySum.data.total_salaries)
+
+            return salarySum.data.total_salaries || 0
+            
+        } catch (error: any) {
+            console.log("Erro ao buscar soma dos salários:", error)
+            return 0
+        }
+    }
 
     //Gets all finance with no filter
     const getFinance = async () => {
@@ -91,34 +102,40 @@ export const HomeDashboard = () => {
             setCurrentMonth(null)
             setCurrentYear(null)
 
-            await requestFinance({ setFinance })
+            store.dispatch(getAllFinanceApi.endpoints.getAllFinance.initiate())
+                .then((response)=>{
+                    setFinance(response.data.finance)
+                })
 
-            // For unfiltered view, get TOTAL of all salaries (not just current month)
-            // Use requestSalarySum which updates the salary state AND returns the value
-            const totalSalaries = await requestSalarySum(setSalary)
+            const totalSalaries = await getSalarySum()
             console.log("Total de todos os salários:", totalSalaries)
 
             // Get totals without month filter - uses all-time data with total salaries
             await getTotals(totalSalaries)
+
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
     }
 
     //Get the total sum for income, salary, expense and balance
-    const getTotals = async (salaryValue?: number) => {
+    const getTotals = async (salaryValue?: number): Promise<void> => {
         try {
             // Use provided salary or fallback to state
             const currentSalary = salaryValue ?? salary
 
-            await requestTotalValues(
-                {
-                    setExpenseTotals,
-                    setExtraIncomeTotal,
-                    setExpenseBalance,
-                    salary: currentSalary
-                }
-            )
+            await store.dispatch(getAllFinanceApi.endpoints.getTotalFinanceValues.initiate())
+                    .then((response: any) =>{
+                        const extra_income = Number(response.data.extra_income)
+                        const total_geral = Number(response.data.total_geral)
+
+                        const balanceMath = (extra_income + currentSalary) - total_geral
+
+                        setExtraIncomeTotal(extra_income)
+                        setExpenseTotals(total_geral)
+                        setExpenseBalance(balanceMath)
+                    })
+
             console.log("ESTE É O SALARIO EM TOTALS", currentSalary)
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
@@ -128,12 +145,23 @@ export const HomeDashboard = () => {
     //Gets finance by month and year
     const getFinancePerMonth = async ({ month, year, salary: salaryParam }: any) => {
         try {
+            if(!month || !year) return
+
+            await store.dispatch(getAllFinanceApi.endpoints.getFilteredFinanceByMonth.initiate({month, year}))
+                    .then(response => {
+                        console.log("VALORES FILTRADOS POR MêS: ", response.data)
+                        setFinance(response.data)
+                    }).catch(error =>{
+                        setFinance([])
+                        return
+                    })
+
             // Set current filter
             setCurrentMonth(month)
             setCurrentYear(year)
 
             // Get finance data for the specific month
-            await requestFinanceByMonth({ month, year, setFinance })
+            //await requestFinanceByMonth({ month, year, setFinance })
 
             // Get or use salary
             let currentSalary = salaryParam

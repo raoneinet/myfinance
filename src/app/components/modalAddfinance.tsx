@@ -1,9 +1,15 @@
 import { ModalButtons } from "./modalButtons"
+import { useSelector } from "react-redux"
+import { RootState } from "@/redux/store"
 
 export const ModalAddFinance = ({ closeModal, register, handleSubmit, handleExpenseInsert, errors }: any) => {
 
+    const theme = useSelector((state:RootState)=>state.theme)
+
+    const bgThme = theme.themeStatus === "light" ? "bg-gray-400" : "bg-white"
+
     return (
-        <div className="shadow shadow-gray-700 p-4 bg-white rounded-lg w-fit px-6">
+        <div className={`shadow shadow-gray-700 p-4 rounded-lg w-fit px-6 ${bgThme}`}>
             <div className="border-b border-gray-200 mb-3">
                 <p className="py-3 text-lg">Adicionar transação na tabela financeira</p>
             </div>
