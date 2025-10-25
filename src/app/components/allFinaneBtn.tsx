@@ -8,7 +8,7 @@ export const AllFinanceBtn = ({ btnThemeBg, allFinance, getSalarySum }: Props) =
 
     const getAllFinance = () => {
         allFinance()
-        getSalarySum()
+        //getSalarySum()
     }
     return (
         <button

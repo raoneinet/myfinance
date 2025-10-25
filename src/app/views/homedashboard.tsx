@@ -22,9 +22,6 @@ export const HomeDashboard = () => {
     const [currentMonth, setCurrentMonth] = useState<number | null>(null)
     const [currentYear, setCurrentYear] = useState<number | null>(null)
 
-    //const {data} = useGetAllFinanceQuery()
-    //console.log("VALORES RTK: ",data)
-
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
         setClickedBtn(button)

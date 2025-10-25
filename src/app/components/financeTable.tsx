@@ -59,7 +59,7 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
                     </tr>
                 </thead>
                 <tbody>
-                    {finance.map((item) => (
+                    {Array.isArray(finance) && finance.map((item) => (
                         <tr
                             className={`border-b border-gray-200 hover:bg-gray-200 text-xs 
                                      md:text-base align-middle ${textTheme}`} key={item.id}>
