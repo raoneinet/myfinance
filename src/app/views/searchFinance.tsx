@@ -4,11 +4,12 @@ import { AddFinanceBtn } from "@/app/components/addFinanceBtn"
 import { AddSalaryBtn } from "@/app/components/addSalaryBtn"
 import { CurrentFinanceBtn } from "@/app/components/currentFinanceBtn"
 import { AllFinanceBtn } from "@/app/components/allFinaneBtn"
-import { getUniqueYear } from "@/app/services/finance"
 import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
 
-export const SearchExpense = ({ currentMonth, currentYear, getSalarySum, getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
+export const SearchExpense = (
+                    {getUniqueYear, currentMonth, currentYear, getSalarySum, 
+                    getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
