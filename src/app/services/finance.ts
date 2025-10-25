@@ -1,4 +1,4 @@
-import api from "@/app/api/api"
+//import api from "@/app/api/api"
 
 // //Request salary
 // export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Promise<number> => {
