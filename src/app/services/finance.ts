@@ -126,21 +126,21 @@ import api from "@/app/api/api"
 // }
 
 //When adding a transaction, inserts the year in the filter list if no exist
-export const getUniqueYear = async (setSelectYear: (arg: any) => void): Promise<void> => {
-    try {
-        const date = await api.get("get_year.php")
+// export const getUniqueYear = async (setSelectYear: (arg: any) => void): Promise<void> => {
+//     try {
+//         //const date = await api.get("get_year.php")
 
-        const yearList = date.data.map((item: any) => {
-            return new Date(item.transaction_date).getFullYear()
-        })
+//         const yearList = date.data.map((item: any) => {
+//             return new Date(item.transaction_date).getFullYear()
+//         })
 
-        const uniqueYears: any[] = Array.from(new Set(yearList)).sort((a: any, b: any) => b - a)
-        console.log(uniqueYears)
+//         const uniqueYears: any[] = Array.from(new Set(yearList)).sort((a: any, b: any) => b - a)
+//         console.log(uniqueYears)
 
-        setSelectYear(uniqueYears)
+//         setSelectYear(uniqueYears)
 
-    } catch (error: any) {
-        console.log("Erro ao buscar ano: ", error)
-        setSelectYear([]) // Set empty array on error
-    }
-}
+//     } catch (error: any) {
+//         console.log("Erro ao buscar ano: ", error)
+//         setSelectYear([]) // Set empty array on error
+//     }
+// }

@@ -59,7 +59,7 @@ export const HomeDashboard = () => {
     //Get salary according to current month
     const getSalary = async (month: number, year: number): Promise<number> => {
         try {
-            const salaryPromise = store.dispatch(getAllFinanceApi.endpoints.getSalary.initiate({month, year}))
+            const salaryPromise = store.dispatch(getAllFinanceApi.endpoints.getSalary.initiate({ month, year }))
 
             const newSalary = await salaryPromise
 
@@ -87,7 +87,7 @@ export const HomeDashboard = () => {
             setSalary(salarySum.data.total_salaries)
 
             return salarySum.data.total_salaries || 0
-            
+
         } catch (error: any) {
             console.log("Erro ao buscar soma dos salários:", error)
             return 0
@@ -102,7 +102,7 @@ export const HomeDashboard = () => {
             setCurrentYear(null)
 
             store.dispatch(getAllFinanceApi.endpoints.getAllFinance.initiate())
-                .then((response)=>{
+                .then((response) => {
                     setFinance(response.data.finance)
                 })
 
@@ -124,16 +124,16 @@ export const HomeDashboard = () => {
             const currentSalary = salaryValue ?? salary
 
             await store.dispatch(getAllFinanceApi.endpoints.getTotalFinanceValues.initiate())
-                    .then((response: any) =>{
-                        const extra_income = Number(response.data.extra_income)
-                        const total_geral = Number(response.data.total_geral)
+                .then((response: any) => {
+                    const extra_income = Number(response.data.extra_income)
+                    const total_geral = Number(response.data.total_geral)
 
-                        const balanceMath = (extra_income + currentSalary) - total_geral
+                    const balanceMath = (extra_income + currentSalary) - total_geral
 
-                        setExtraIncomeTotal(extra_income)
-                        setExpenseTotals(total_geral)
-                        setExpenseBalance(balanceMath)
-                    })
+                    setExtraIncomeTotal(extra_income)
+                    setExpenseTotals(total_geral)
+                    setExpenseBalance(balanceMath)
+                })
 
             console.log("ESTE É O SALARIO EM TOTALS", currentSalary)
         } catch (error: any) {
@@ -144,16 +144,16 @@ export const HomeDashboard = () => {
     //Gets finance by month and year
     const getFinancePerMonth = async ({ month, year, salary: salaryParam }: any) => {
         try {
-            if(!month || !year) return
+            if (!month || !year) return
 
-            await store.dispatch(getAllFinanceApi.endpoints.getFilteredFinanceByMonth.initiate({month, year}))
-                    .then(response => {
-                        console.log("VALORES FILTRADOS POR MêS: ", response.data)
-                        setFinance(response.data)
-                    }).catch(error =>{
-                        setFinance([])
-                        return
-                    })
+            await store.dispatch(getAllFinanceApi.endpoints.getFilteredFinanceByMonth.initiate({ month, year }))
+                .then(response => {
+                    console.log("VALORES FILTRADOS POR MêS: ", response.data)
+                    setFinance(response.data)
+                }).catch(error => {
+                    setFinance([])
+                    return
+                })
 
             // Set current filter
             setCurrentMonth(month)
@@ -181,22 +181,41 @@ export const HomeDashboard = () => {
         try {
             const currentSalary = salaryParam ?? salary
 
-           const totalFinanceValue = await store.dispatch(
-                                    getAllFinanceApi.endpoints.getFilteredTotalValuesByMonth.initiate({month, year})
-                                )
+            const totalFinanceValue = await store.dispatch(
+                getAllFinanceApi.endpoints.getFilteredTotalValuesByMonth.initiate({ month, year })
+            )
             const total_expense = Number(totalFinanceValue.data.total_geral ?? 0)
             const extra_income = Number(totalFinanceValue.data.extra_income)
 
             setExpenseTotals(total_expense)
             setExtraIncomeTotal(extra_income)
-            
+
             const balanceMath = (extra_income + currentSalary) - total_expense
             setExpenseBalance(balanceMath)
 
-            console.log("VALORES FILTRADOS POR MÊS EM RTK",totalFinanceValue.data)
+            console.log("VALORES FILTRADOS POR MÊS EM RTK", totalFinanceValue.data)
             console.log(`Buscando totais para ${month}/${year} com salário: ${currentSalary}`)
         } catch (error: any) {
             console.log("Erro ao buscar totais: ", error)
+        }
+    }
+
+    const getUniqueYear = async (setSelectYear:  (arg: any) => void): Promise<void> => {
+        try {
+            const uniqueYear = await store.dispatch(getAllFinanceApi.endpoints.getYearList.initiate())
+
+            const yearList = uniqueYear.data.map((item: any) => {
+                return new Date(item.transaction_date).getFullYear()
+            })
+
+            const uniqueYears: any[] = Array.from(new Set(yearList)).sort((a: any, b: any) => b - a)
+            console.log(uniqueYears)
+
+            setSelectYear(uniqueYears)
+            console.log("LISTA DE ANOS: ", uniqueYear.data)
+
+        } catch (error: any) {
+            console.log("Erro ao buscar pela lista de anos em banco de dados. ", error)
         }
     }
 
@@ -235,6 +254,7 @@ export const HomeDashboard = () => {
                     getSalary={getSalary}
                     currentMonth={currentMonth}
                     currentYear={currentYear}
+                    getUniqueYear={getUniqueYear}
                 />
                 {showModal &&
                     <InsertExpense

@@ -24,6 +24,9 @@ export const getAllFinanceApi = createApi({
         }),
         getFilteredTotalValuesByMonth: builder.query<any, {month: number, year: number}>({
             query: ({month, year})=> `/totals_month.php?month=${month}&year=${year}`
+        }),
+        getYearList: builder.query<any, void>({
+            query: ()=> "get_year.php"
         })
 
     })
