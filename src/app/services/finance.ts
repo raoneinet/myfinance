@@ -1,11 +1,4 @@
 import api from "@/app/api/api"
-import {
-    SalaryProps,
-    FinanceProps,
-    TotalsProps,
-    FinanceMonthType,
-    TotalValuesMonthType
-} from "@/app/types/financeServiceTypes"
 
 // //Request salary
 // export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Promise<number> => {
@@ -108,29 +101,29 @@ import {
 // }
 
 //Request total values filtered by month and year
-export const requestTotalValuesByMonth = async (
-    { month, year, salary, setExpenseTotals, setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType
-): Promise<void> => {
-    try {
-        const totalFinance = await api.get(`/totals_month.php?month=${month}&year=${year}`)
+// export const requestTotalValuesByMonth = async (
+//     { month, year, salary, setExpenseTotals, setExtraIncomeTotal, setExpenseBalance }: TotalValuesMonthType
+// ): Promise<void> => {
+//     try {
+//         const totalFinance = await api.get(`/totals_month.php?month=${month}&year=${year}`)
 
-        const total_expense = Number(totalFinance.data.total_geral ?? 0)
-        const extra_income = Number(totalFinance.data.extra_income ?? 0)
+//         const total_expense = Number(totalFinance.data.total_geral ?? 0)
+//         const extra_income = Number(totalFinance.data.extra_income ?? 0)
 
-        setExpenseTotals(total_expense)
-        setExtraIncomeTotal(extra_income)
+//         setExpenseTotals(total_expense)
+//         setExtraIncomeTotal(extra_income)
 
-        const balance = (extra_income + salary) - total_expense
-        setExpenseBalance(balance)
+//         const balance = (extra_income + salary) - total_expense
+//         setExpenseBalance(balance)
 
-    } catch (error: any) {
-        console.log("Erro ao buscar totais: ", error)
-        // Set defaults on error
-        setExpenseTotals(0)
-        setExtraIncomeTotal(0)
-        setExpenseBalance(0)
-    }
-}
+//     } catch (error: any) {
+//         console.log("Erro ao buscar totais: ", error)
+//         // Set defaults on error
+//         setExpenseTotals(0)
+//         setExtraIncomeTotal(0)
+//         setExpenseBalance(0)
+//     }
+// }
 
 //When adding a transaction, inserts the year in the filter list if no exist
 export const getUniqueYear = async (setSelectYear: (arg: any) => void): Promise<void> => {
