@@ -6,7 +6,6 @@ import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/app/types/financeTypes"
 import { BtnType } from "@/app/types/btnType"
 import { dateTime } from "@/app/utils/formatDate"
-import {requestTotalValuesByMonth} from "@/app/services/finance"
 import { getAllFinanceApi } from "@/redux/reducers/allFinance"
 import { store } from '../../redux/store';
 
@@ -180,21 +179,22 @@ export const HomeDashboard = () => {
     //Get total values by month
     const getTotalsByMonth = async ({ month, year, salary: salaryParam }: any) => {
         try {
-            // Use the salary parameter that was passed in
             const currentSalary = salaryParam ?? salary
 
-            console.log(`Buscando totais para ${month}/${year} com salário: ${currentSalary}`)
+           const totalFinanceValue = await store.dispatch(
+                                    getAllFinanceApi.endpoints.getFilteredTotalValuesByMonth.initiate({month, year})
+                                )
+            const total_expense = Number(totalFinanceValue.data.total_geral ?? 0)
+            const extra_income = Number(totalFinanceValue.data.extra_income)
 
-            await requestTotalValuesByMonth(
-                {
-                    month,
-                    year,
-                    salary: currentSalary,
-                    setExpenseTotals,
-                    setExtraIncomeTotal,
-                    setExpenseBalance
-                }
-            )
+            setExpenseTotals(total_expense)
+            setExtraIncomeTotal(extra_income)
+            
+            const balanceMath = (extra_income + currentSalary) - total_expense
+            setExpenseBalance(balanceMath)
+
+            console.log("VALORES FILTRADOS POR MÊS EM RTK",totalFinanceValue.data)
+            console.log(`Buscando totais para ${month}/${year} com salário: ${currentSalary}`)
         } catch (error: any) {
             console.log("Erro ao buscar totais: ", error)
         }
