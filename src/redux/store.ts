@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./reducers/themeReducer"
-import { getAllFinanceApi } from "./reducers/allFinance";
+import { getAllFinanceApi } from "./reducers/getFinanceQuery";
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({

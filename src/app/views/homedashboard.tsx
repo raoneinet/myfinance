@@ -6,7 +6,7 @@ import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/app/types/financeTypes"
 import { BtnType } from "@/app/types/btnType"
 import { dateTime } from "@/app/utils/formatDate"
-import { getAllFinanceApi } from "@/redux/reducers/allFinance"
+import { getAllFinanceApi } from "@/redux/reducers/getFinanceQuery"
 import { store } from '../../redux/store';
 
 
