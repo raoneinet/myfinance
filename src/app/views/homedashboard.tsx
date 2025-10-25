@@ -6,7 +6,7 @@ import { SearchExpense } from "./searchFinance"
 import { FinanceType } from "@/app/types/financeTypes"
 import { BtnType } from "@/app/types/btnType"
 import { dateTime } from "@/app/utils/formatDate"
-import { getAllFinanceApi } from "@/redux/reducers/allFinance"
+import { getAllFinanceApi } from "@/redux/reducers/getFinanceQuery"
 import { store } from '../../redux/store';
 
 
@@ -21,9 +21,6 @@ export const HomeDashboard = () => {
     const [salary, setSalary] = useState<number>(0)
     const [currentMonth, setCurrentMonth] = useState<number | null>(null)
     const [currentYear, setCurrentYear] = useState<number | null>(null)
-
-    //const {data} = useGetAllFinanceQuery()
-    //console.log("VALORES RTK: ",data)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {

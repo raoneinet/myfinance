@@ -28,7 +28,6 @@ export const getAllFinanceApi = createApi({
         getYearList: builder.query<any, void>({
             query: ()=> "get_year.php"
         })
-
     })
 })
 
