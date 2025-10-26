@@ -1,18 +1,19 @@
 import { useForm } from "react-hook-form"
 import { FinanceType } from "@/app/types/financeTypes"
-import api from "@/app/api/api"
 import { ModalButtons } from "./modalButtons"
+import { getFinanceUpdateApi } from "@/redux/reducers/updateFinanceQuery"
+import { store } from "@/redux/store"
 
 type Props = {
     finance: FinanceType
     handleUpdateAll: () => void
-    setOpenActionBox: (arg: boolean)=>void
-    setOpenModal: (arg: boolean)=>void
-    setOpenIdBox: (arg: number | null)=>void
+    setOpenActionBox: (arg: boolean) => void
+    setOpenModal: (arg: boolean) => void
+    setOpenIdBox: (arg: number | null) => void
     getFinancePerMonth: any
 }
 
-export const EditFinanceModal = ({ getFinancePerMonth, finance, handleUpdateAll, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
+export const EditFinanceModal = ({ getFinancePerMonth, finance, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -28,27 +29,18 @@ export const EditFinanceModal = ({ getFinancePerMonth, finance, handleUpdateAll,
 
     const updateTransaction = async (data: any) => {
         try {
-            const response = await api.post("/edit_finance.php", {
-                id: finance.id, // id da movimentação
-                ...data
-            })
+            await store.dispatch(getFinanceUpdateApi.endpoints.postFinanceUpdate.initiate({ data }))
+
+            const filterDate = data.expense_date.split("-")
+            getFinancePerMonth({ month: filterDate[1], year: filterDate[0] })
+            console.log(filterDate)
 
             setOpenIdBox(null)
             setOpenModal(false)
             setOpenActionBox(false)
-            //handleUpdateAll()
-
-            console.log("Movimentação atualizada:", response);
-            console.log("VALORES ATUALIZADOS: ", data)
-            
-            if(response.status === 200){
-                const filterDate = data.expense_date.split("-")
-                getFinancePerMonth({month: filterDate[1], year: filterDate[0]})
-                console.log(filterDate)
-            }
         } catch (error) {
             console.error("Erro ao atualizar:", error);
-        }   
+        }
     }
 
     const closeModal = () => {

@@ -12,23 +12,23 @@ export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, s
 
     const [deleteFinance] = useDeleteFinanceMutation()
 
-    const deleteTransaction = async (id: number | null) => {
+    const deleteSelectedTransaction = async (id: number | null) => {
         try {
             await deleteFinance(id).unwrap()
             
-            handleUpdateAll()
         } catch (error: any) {
             console.log("Error ao apagar movimento: ", error)
         }
     }
 
     const confirmDeletion = () => {
-        deleteTransaction(id)
+        deleteSelectedTransaction(id)
         setDeleteModal(false)
+        handleUpdateAll()
     }
 
     const cancelDeletion = ()=>{
-        deleteTransaction(null)
+        deleteSelectedTransaction(null)
         setDeleteModal(false)
         setOpenIdBox(null)
     }

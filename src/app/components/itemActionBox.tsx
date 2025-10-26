@@ -1,5 +1,6 @@
-import api from "@/app/api/api"
 import { FinanceType } from "@/app/types/financeTypes"
+import { getFinanceUpdateApi } from "@/redux/reducers/updateFinanceQuery"
+import {store} from "@/redux/store"
 
 type Props = {
     handleUpdateAll: () => void
@@ -14,13 +15,13 @@ type Props = {
 
 export const ItemActionBox = ({
     id,
-    handleUpdateAll,
     setEditFinance,
     setOpenModal,
     setOpenActionBox,
     setOpenIdBox,
     setDeleteFinance,
     setDeleteModal }: Props) => {
+
 
     const deleteTransaction = () => {
         setOpenActionBox(false)
@@ -30,8 +31,9 @@ export const ItemActionBox = ({
 
     const editTransaction = async (id: number) => {
         try {
-            const result = await api.get(`/single_finance.php?id=${id}`)
-            setEditFinance(result.data)
+            const res = await store.dispatch(getFinanceUpdateApi.endpoints.getFinanceUpdate.initiate(id))
+
+            setEditFinance(res.data)
             setOpenModal(true)
             setOpenActionBox(false)
             setOpenIdBox(id)
@@ -52,7 +54,7 @@ export const ItemActionBox = ({
                     Editar
                 </div>
                 <div
-                    onClick={() => deleteTransaction()}
+                    onClick={deleteTransaction}
                     className="rounded-md hover:bg-gray-200 flex gap-2 cursor-pointer font-semibold px-4 py-2">
                     <img src="/assets/icons/delete_icon.png" className="w-4 h-4" />
                     Apagar
