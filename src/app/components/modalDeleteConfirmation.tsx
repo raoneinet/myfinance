@@ -1,5 +1,5 @@
 import { ModalButtons } from "./modalButtons"
-import api from "@/app/api/api"
+import { useDeleteFinanceMutation } from "@/redux/reducers/deleteFinanceMutation"
 
 type Props = {
     handleUpdateAll: () => void
@@ -10,10 +10,11 @@ type Props = {
 
 export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, setOpenIdBox }: Props) => {
 
+    const [deleteFinance] = useDeleteFinanceMutation()
+
     const deleteTransaction = async (id: number | null) => {
         try {
-            await api.post("/delete_finance_item.php", { id })
-            console.log("Movimento apagado: ", id)
+            await deleteFinance(id).unwrap()
             
             handleUpdateAll()
         } catch (error: any) {
