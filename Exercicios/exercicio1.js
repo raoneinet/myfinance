@@ -171,3 +171,12 @@ function increasePrice(n){
     console.log("Produto inflacionado: ", res)
 }
 //increasePrice(100)
+
+//Calcular Salario
+function income(n){
+    const discount = 0.08
+    const res = n - (n * discount)
+    console.log("Salarioi líquido: ", res)
+}
+
+income(1600)
