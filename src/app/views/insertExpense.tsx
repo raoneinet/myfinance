@@ -3,7 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { SendFinanceType } from "@/app/types/sendFinanceType"
 import { ModalAddSalary } from "@/app/components/modalAddSalay"
 import { SalaryTypes } from "@/app/types/salaryTypes"
-import api from "@/app/api/api"
+import { usePostSalaryMutation } from "@/redux/reducers/postSalaryMutation"
+import { usePostFinanceMutation } from "@/redux/reducers/postFinanceMutation"
 
 type Props = {
     closeModal: () => void
@@ -17,13 +18,13 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
+    const [postSalary] = usePostSalaryMutation()
+    const [postFinance] = usePostFinanceMutation()
+
     //Add expense
     const handleExpenseInsert: SubmitHandler<SendFinanceType> = async (data) => {
-
         try {
-            await api.post("/add_finance.php", data)
-                .then(res => console.log("Movimentos enviados: ", data))
-                .catch(error => console.log("Erro ao enviar dados", error))
+            await postFinance(data).unwrap()
 
             const date = data.expense_date.split("-")
 
@@ -32,23 +33,24 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
             getTotals()
             getFinancePerMonth({ month: date[1], year: date[0] })
         } catch (error: any) {
-            console.log("Ocorreu um erro ao enviar os seus movimentos", error)
+            closeModal()
+            console.log("Ocorreu um erro ao enviar os seus movimentos financeiros", error)
         }
     }
 
     //Add salary
     const handleInsertSalary: SubmitHandler<SalaryTypes> = async (data) => {
         try {
-            await api.post("/add_salary.php", data)
+            await postSalary(data).unwrap()
 
             closeModal()
             updateDashboard()
             getTotals()
         } catch (error: any) {
-            console.log("Ocorreu um erro ao enviar os seus movimentos", error)
+            closeModal()
+            console.log("Ocorreu um erro ao enviar os seus movimentos financeiros", error)
         }
     }
-
 
     return (
         <div

@@ -2,14 +2,20 @@ import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./reducers/themeReducer"
 import { getAllFinanceApi } from "./reducers/getFinanceQuery";
 import { setupListeners } from '@reduxjs/toolkit/query'
+import { postSalaryApi } from "./reducers/postSalaryMutation";
+import { postFinanceApi } from "./reducers/postFinanceMutation";
 
 export const store = configureStore({
     reducer: {
         theme: themeReducer,
-        [getAllFinanceApi.reducerPath]: getAllFinanceApi.reducer
+        [getAllFinanceApi.reducerPath]: getAllFinanceApi.reducer,
+        [postSalaryApi.reducerPath]: postSalaryApi.reducer,
+        [postFinanceApi.reducerPath]: postFinanceApi.reducer
     },
-    middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(getAllFinanceApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+                    .concat(getAllFinanceApi.middleware)
+                    .concat(postSalaryApi.middleware)
+                    .concat(postFinanceApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
