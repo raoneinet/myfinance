@@ -1,12 +1,9 @@
 import { useForm } from "react-hook-form"
 import { FinanceType } from "@/app/types/financeTypes"
 import { ModalButtons } from "./modalButtons"
-import { getFinanceUpdateApi } from "@/redux/reducers/updateFinanceQuery"
-import { store } from "@/redux/store"
 
 type Props = {
     finance: FinanceType
-    handleUpdateAll: () => void
     setOpenActionBox: (arg: boolean) => void
     setOpenModal: (arg: boolean) => void
     setOpenIdBox: (arg: number | null) => void
@@ -29,15 +26,7 @@ export const EditFinanceModal = ({ getFinancePerMonth, finance, setOpenActionBox
 
     const updateTransaction = async (data: any) => {
         try {
-            await store.dispatch(getFinanceUpdateApi.endpoints.postFinanceUpdate.initiate({ data }))
 
-            const filterDate = data.expense_date.split("-")
-            getFinancePerMonth({ month: filterDate[1], year: filterDate[0] })
-            console.log(filterDate)
-
-            setOpenIdBox(null)
-            setOpenModal(false)
-            setOpenActionBox(false)
         } catch (error) {
             console.error("Erro ao atualizar:", error);
         }

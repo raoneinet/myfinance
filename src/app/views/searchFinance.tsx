@@ -9,7 +9,7 @@ import { RootState } from "@/redux/store"
 
 export const SearchExpense = (
                     {getUniqueYear, currentMonth, currentYear, getSalarySum, 
-                    getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {
+                    getSalary, setModal, getAllFinance, getFinancePerMonth, getCurrent }: any) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
@@ -65,7 +65,7 @@ export const SearchExpense = (
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
                     <AllFinanceBtn 
-                        allFinance={getFinance} 
+                        getAllFinance={getAllFinance} 
                         getSalarySum={getSalarySum} 
                         btnThemeBg={btnThemeBg}
                     />

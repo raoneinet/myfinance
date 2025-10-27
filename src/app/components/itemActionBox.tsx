@@ -1,9 +1,6 @@
 import { FinanceType } from "@/app/types/financeTypes"
-import { getFinanceUpdateApi } from "@/redux/reducers/updateFinanceQuery"
-import {store} from "@/redux/store"
 
 type Props = {
-    handleUpdateAll: () => void
     id: number
     setEditFinance: (arg: FinanceType) => void
     setOpenModal: (arg: boolean) => void
@@ -31,12 +28,7 @@ export const ItemActionBox = ({
 
     const editTransaction = async (id: number) => {
         try {
-            const res = await store.dispatch(getFinanceUpdateApi.endpoints.getFinanceUpdate.initiate(id))
 
-            setEditFinance(res.data)
-            setOpenModal(true)
-            setOpenActionBox(false)
-            setOpenIdBox(id)
         } catch (error: any) {
             console.log("Ocorreu um erro ao editar a transação. ", error)
         }
