@@ -28,7 +28,11 @@ export const HomeDashboard = () => {
     const [currentMonth, setCurrentMonth] = useState<number | null>(null)
     const [currentYear, setCurrentYear] = useState<number | null>(null)
 
-    const {data: allFinance, error, isLoading} = useGetAllFinanceQuery()
+    const { data: allFinance } = useGetAllFinanceQuery()
+    const { data: salarySum } = useGetSalarySumQuery()
+    const { data: totalValuesSum } = useGetTotalFinanceValuesQuery()
+
+    console.log(totalValuesSum)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
@@ -61,7 +65,13 @@ export const HomeDashboard = () => {
     //Get sum of all salaries (for unfiltered view)
     const getSalarySum = async () => {
         try {
+            const { total_salaries } = salarySum
 
+            if (total_salaries !== isNaN) {
+                setSalary(total_salaries)
+            } else {
+                setSalary(Number(total_salaries))
+            }
 
         } catch (error: any) {
             console.log("Erro ao buscar soma dos salários:", error)
@@ -72,20 +82,32 @@ export const HomeDashboard = () => {
     //Gets all finance with no filter
     const getAllFinance = () => {
         try {
-            const {finance} = allFinance
+            const { finance } = allFinance
 
-            setFinance(finance || [])
+            if (finance.lenght != 0) {
+                setFinance(finance)
+            } else {
+                setFinance([])
+            }
 
-            console.log(finance)
-
+            getTotals()
+            getSalarySum()
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
     }
 
     //Get the total sum for income, salary, expense and balance
-    const getTotals = async (salaryValue?: number): Promise<void> => {
+    const getTotals = async () => {
         try {
+            const { total_geral, extra_income } = totalValuesSum
+
+            let totalGeral = Number(total_geral ?? 0)
+            let extraIncome = Number(extra_income ?? 0)
+
+            setExpenseTotals(totalGeral)
+            setExtraIncomeTotal(extraIncome)
+            setExpenseBalance((salary + extraIncome) - totalGeral)
 
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
@@ -119,7 +141,10 @@ export const HomeDashboard = () => {
     }
 
     useEffect(() => {
-    }, [])
+        if(salarySum?.total_salaries) {
+            setSalary(Number(salarySum.total_salaries))
+        }
+    }, [salarySum])
 
     return (
         <>
