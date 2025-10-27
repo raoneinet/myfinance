@@ -73,8 +73,9 @@ export const HomeDashboard = () => {
     const getAllFinance = () => {
         try {
             const {finance} = allFinance
-            setFinance(finance)
-            //console.log(data.finance)
+
+            setFinance(finance || [])
+
             console.log(finance)
 
         } catch (error: any) {
