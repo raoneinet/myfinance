@@ -9,11 +9,10 @@ import { RootState } from "@/redux/store"
 
 type Props = {
     finance: FinanceType[]
-    handleUpdateAll: () => void
     getFinancePerMonth: any
 }
 
-export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: Props) => {
+export const FinanceTable = ({ getFinancePerMonth, finance }: Props) => {
 
     const [openActionBox, setOpenActionBox] = useState(false)
     const [openIdBox, setOpenIdBox] = useState<number | null>()
@@ -103,7 +102,6 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
                                     {(openActionBox && openIdBox === item.id) &&
                                         <ItemActionBox
                                             id={item.id}
-                                            handleUpdateAll={handleUpdateAll}
                                             setEditFinance={setEditFinance}
                                             setOpenModal={setOpenModal}
                                             setOpenActionBox={setOpenActionBox}
@@ -121,7 +119,6 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
             {editFinance && openModal === true &&
                 <EditFinanceModal
                     finance={editFinance}
-                    handleUpdateAll={handleUpdateAll}
                     setOpenActionBox={setOpenActionBox}
                     setOpenModal={setOpenModal}
                     setOpenIdBox={setOpenIdBox}
@@ -130,7 +127,6 @@ export const FinanceTable = ({ getFinancePerMonth, finance, handleUpdateAll }: P
             }
             {deleteModal && deleFinance &&
                 <ModalDeleteConfirmation
-                    handleUpdateAll={handleUpdateAll}
                     id={deleFinance}
                     setDeleteModal={setDeleteModal}
                     setOpenIdBox={setOpenIdBox}
