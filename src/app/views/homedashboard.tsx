@@ -27,12 +27,14 @@ export const HomeDashboard = () => {
     const [salary, setSalary] = useState<number>(0)
     const [currentMonth, setCurrentMonth] = useState<number | null>(null)
     const [currentYear, setCurrentYear] = useState<number | null>(null)
+    const [uniqueYearList, setUniqueYearList] = useState<any>()
 
     const { data: allFinance } = useGetAllFinanceQuery()
     const { data: salarySum } = useGetSalarySumQuery()
     const { data: totalValuesSum } = useGetTotalFinanceValuesQuery()
+    const { data: yearList } = useGetYearListQuery()
 
-    console.log(totalValuesSum)
+    //console.log(yearList)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
@@ -132,8 +134,11 @@ export const HomeDashboard = () => {
         }
     }
 
-    const getUniqueYear = async (setSelectYear: (arg: any) => void): Promise<void> => {
+    const getUniqueYear = () => {
         try {
+            setUniqueYearList(yearList)
+
+            console.log("Lista de anos: ", yearList)
 
         } catch (error: any) {
             console.log("Erro ao buscar pela lista de anos em banco de dados. ", error)
@@ -141,10 +146,26 @@ export const HomeDashboard = () => {
     }
 
     useEffect(() => {
-        if(salarySum?.total_salaries) {
+        if (salarySum?.total_salaries) {
             setSalary(Number(salarySum.total_salaries))
         }
     }, [salarySum])
+
+    useEffect(() => {
+        if (yearList) {
+            setUniqueYearList(yearList)
+            
+
+            const listingYear = yearList.map((item: any) => {
+                return new Date(item.transaction_date).getFullYear()
+            })
+
+            const uniqueYears: any[] = Array.from(new Set(listingYear)).sort((a: any, b: any) => b - a)
+            console.log(uniqueYears)
+
+            setUniqueYearList(uniqueYears)
+        }
+    }, [yearList])
 
     return (
         <>
@@ -163,7 +184,7 @@ export const HomeDashboard = () => {
                     getSalary={getSalary}
                     currentMonth={currentMonth}
                     currentYear={currentYear}
-                    getUniqueYear={getUniqueYear}
+                    uniqueYearList={uniqueYearList}
                 />
                 {showModal &&
                     <InsertExpense
