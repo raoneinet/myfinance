@@ -8,10 +8,10 @@ import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
 
 export const SearchExpense = (
-                    {getUniqueYear, currentMonth, currentYear, getSalarySum, 
+                    {uniqueYearList, currentMonth, currentYear, getSalarySum, 
                     getSalary, setModal, getAllFinance, getFinancePerMonth, getCurrent }: any) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit} = useForm()
     const [selectYear, setSelectYear] = useState<number[]>()
     const [newMonth, setNewMonth] = useState<any>()
     const theme = useSelector((state:RootState)=> state.theme)
@@ -44,12 +44,7 @@ export const SearchExpense = (
         handleFormatMonth()
     }, [currentMonth])
 
-    useEffect(() => {
-        if (selectYear?.length != 0) getUniqueYear(setSelectYear)
-    }, [])
-
     const btnThemeBg = theme.themeStatus === "light" ? "bg-gray-500" : "bg-gray-50"
-
 
     return (
         <div className="px-5 pt-5 w-full flex items-center gap-3 flex-col md:flex-row">
@@ -96,7 +91,7 @@ export const SearchExpense = (
                         className={`px-3 py-2 bg-gray-50 border text-gray-800 rounded-xl outline-0 ${btnThemeBg}`}
                         defaultValue="Ano">
                         <option disabled>Ano</option>
-                        {selectYear?.map((year: number) => (
+                        {uniqueYearList?.map((year: number) => (
                             <option key={year} value={year}>{year}</option>
                         ))
                         }
