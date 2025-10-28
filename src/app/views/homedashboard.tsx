@@ -155,13 +155,11 @@ export const HomeDashboard = () => {
         if (yearList) {
             setUniqueYearList(yearList)
             
-
             const listingYear = yearList.map((item: any) => {
                 return new Date(item.transaction_date).getFullYear()
             })
 
             const uniqueYears: any[] = Array.from(new Set(listingYear)).sort((a: any, b: any) => b - a)
-            console.log(uniqueYears)
 
             setUniqueYearList(uniqueYears)
         }
