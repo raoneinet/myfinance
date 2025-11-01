@@ -15,6 +15,7 @@ import {
     useGetFilteredTotalValuesByMonthQuery,
     useGetYearListQuery,
 } from "@/redux/reducers/getFinanceQuery"
+import { current } from "@reduxjs/toolkit"
 
 export const HomeDashboard = () => {
 
@@ -25,16 +26,28 @@ export const HomeDashboard = () => {
     const [extraIncomeTotal, setExtraIncomeTotal] = useState<number>(0)
     const [expenseBalance, setExpenseBalance] = useState<number>(0)
     const [salary, setSalary] = useState<number>(0)
-    const [currentMonth, setCurrentMonth] = useState<number | null>(null)
-    const [currentYear, setCurrentYear] = useState<number | null>(null)
+    const [currentMonth, setCurrentMonth] = useState<number>(0)
+    const [currentYear, setCurrentYear] = useState<number>(0)
     const [uniqueYearList, setUniqueYearList] = useState<any>()
 
     const { data: allFinance } = useGetAllFinanceQuery()
     const { data: salarySum } = useGetSalarySumQuery()
     const { data: totalValuesSum } = useGetTotalFinanceValuesQuery()
     const { data: yearList } = useGetYearListQuery()
+    const { data: filteredFinance } = useGetFilteredFinanceByMonthQuery(
+        { month: currentMonth, year: currentYear },
+        { skip: !currentMonth || !currentYear }
+    )
+    const { data: filterTotalValues } = useGetFilteredTotalValuesByMonthQuery(
+        { month: currentMonth, year: currentYear },
+        { skip: !currentMonth || !currentYear }
+    )
+    const { data: filteredSalary, refetch: refetchSalary } = useGetSalaryQuery(
+        { month: currentMonth, year: currentYear },
+        { skip: !currentMonth || !currentYear }
+    )
 
-    //console.log(yearList)
+    console.log(filterTotalValues)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
@@ -50,12 +63,17 @@ export const HomeDashboard = () => {
     }
 
     //formats date for filtering
-    const getDateTime = async () => {
+    const getFilterFinance = () => {
+        const { day, month, year } = dateTime()
 
+        if (!month && !year) return
+        setCurrentMonth(month)
+        setCurrentYear(year)
+        getFinancePerMonth({ month, year })
     }
 
     //Get salary according to current month
-    const getSalary = async (month: number, year: number) => {
+    const getSalary = (month: number, year: number) => {
         try {
 
         } catch (error: any) {
@@ -65,7 +83,7 @@ export const HomeDashboard = () => {
     }
 
     //Get sum of all salaries (for unfiltered view)
-    const getSalarySum = async () => {
+    const getSalarySum = () => {
         try {
             const { total_salaries } = salarySum
 
@@ -86,7 +104,7 @@ export const HomeDashboard = () => {
         try {
             const { finance } = allFinance
 
-            if (finance.lenght != 0) {
+            if (finance.length !== 0) {
                 setFinance(finance)
             } else {
                 setFinance([])
@@ -100,16 +118,17 @@ export const HomeDashboard = () => {
     }
 
     //Get the total sum for income, salary, expense and balance
-    const getTotals = async () => {
+    const getTotals = () => {
         try {
             const { total_geral, extra_income } = totalValuesSum
 
             let totalGeral = Number(total_geral ?? 0)
             let extraIncome = Number(extra_income ?? 0)
+            let totalSalary = Number(salary ?? 0)
 
             setExpenseTotals(totalGeral)
             setExtraIncomeTotal(extraIncome)
-            setExpenseBalance((salary + extraIncome) - totalGeral)
+            setExpenseBalance((totalSalary + extraIncome) - totalGeral)
 
         } catch (error: any) {
             console.log("Erro ao buscar os totais: ", error)
@@ -117,16 +136,32 @@ export const HomeDashboard = () => {
     }
 
     //Gets finance by month and year
-    const getFinancePerMonth = async ({ month, year, salary: salaryParam }: any) => {
+    const getFinancePerMonth = async ({ month, year }: { month: number, year: number }) => {
         try {
+            if (!month && !year) {
+                console.log("Não foi filtrado nenhum mês!")
+            }
 
+            if (filteredFinance && Array.isArray(filteredFinance) && filteredFinance.length > 0) {
+                setFinance(filteredFinance)
+            } else if (filteredFinance?.finance && Array.isArray(filteredFinance.finance)) {
+                setFinance(filteredFinance?.finance)
+            } else {
+                setFinance([])
+            }
+
+            setCurrentMonth(month)
+            setCurrentYear(year)
+            console.log("Mês que recebi ", month, "ano que recebi ", year)
+
+            //setFinance(filteredFinance)
         } catch (error: any) {
             console.log("Erro ao buscar movimentos: ", error)
         }
     }
 
     //Get total values by month
-    const getTotalsByMonth = async ({ month, year, salary: salaryParam }: any) => {
+    const getTotalsByMonth = ({ month, year, salary: salaryParam }: any) => {
         try {
 
         } catch (error: any) {
@@ -146,15 +181,45 @@ export const HomeDashboard = () => {
     }
 
     useEffect(() => {
-        if (salarySum?.total_salaries) {
-            setSalary(Number(salarySum.total_salaries))
+        if (!allFinance) return
+
+        const { finance } = allFinance
+
+        if (Array.isArray(finance) && finance.length > 0) {
+            setFinance(finance)
+        } else {
+            setFinance([])
         }
-    }, [salarySum])
+
+        getTotals()
+        getSalarySum()
+    }, [allFinance])
+
+    useEffect(() => {
+        if (filterTotalValues) {
+            const totalGeral = Number(filterTotalValues.total_geral ?? 0)
+            const extraIncome = Number(filterTotalValues.extra_income ?? 0)
+            const totalSalary = Number(filteredSalary?.salary ?? salary ?? 0)
+
+            setExpenseTotals(totalGeral)
+            setExtraIncomeTotal(extraIncome)
+            setExpenseBalance((totalSalary + extraIncome) - totalGeral)
+        }
+
+    }, [filterTotalValues, filteredSalary])
+
+    useEffect(() => {
+        getFilterFinance()
+    }, [filteredFinance])
+
+    useEffect(() => {
+        getFilterFinance()
+    }, [])
 
     useEffect(() => {
         if (yearList) {
             setUniqueYearList(yearList)
-            
+
             const listingYear = yearList.map((item: any) => {
                 return new Date(item.transaction_date).getFullYear()
             })
@@ -178,7 +243,7 @@ export const HomeDashboard = () => {
                     setModal={handleShowModal}
                     getAllFinance={getAllFinance}
                     getFinancePerMonth={getFinancePerMonth}
-                    getCurrent={getDateTime}
+                    getCurrentFinance={getFilterFinance}
                     getSalary={getSalary}
                     currentMonth={currentMonth}
                     currentYear={currentYear}

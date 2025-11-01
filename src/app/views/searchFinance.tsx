@@ -9,10 +9,9 @@ import { RootState } from "@/redux/store"
 
 export const SearchExpense = (
                     {uniqueYearList, currentMonth, currentYear, getSalarySum, 
-                    getSalary, setModal, getAllFinance, getFinancePerMonth, getCurrent }: any) => {
+                    getSalary, setModal, getAllFinance, getFinancePerMonth, getCurrentFinance }: any) => {
 
     const { register, handleSubmit} = useForm()
-    const [selectYear, setSelectYear] = useState<number[]>()
     const [newMonth, setNewMonth] = useState<any>()
     const theme = useSelector((state:RootState)=> state.theme)
 
@@ -24,9 +23,9 @@ export const SearchExpense = (
             return
         }
         
-        if (data.month === "Mês" || data.year === "Ano") return alert("Obrigatório informar Mês e Ano")
+        if (data.month === "Mês" || data.year === "Ano") return console.log("Obrigatório informar Mês e Ano")
 
-        getFinancePerMonth({ month: data.month, year: data.year })
+        getFinancePerMonth({ month: data.month, year: data.year})
         getSalary(data.month, data.year)
         handleFormatMonth()
     }
@@ -65,7 +64,7 @@ export const SearchExpense = (
                         btnThemeBg={btnThemeBg}
                     />
                     <CurrentFinanceBtn 
-                        currentFinance={getCurrent} 
+                        currentFinance={getCurrentFinance} 
                         btnThemeBg={btnThemeBg}
                     />
                     <select
