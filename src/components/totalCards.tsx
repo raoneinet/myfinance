@@ -9,9 +9,9 @@ type Props = {
 
 export const TotalCards = ({ title, value, bgColor, icon, borderColor }: Props) => {
     return (
-        <div className={`bg-white rounded-lg shadow shadow-gray-200 border-t-5 ${borderColor}`}>
+        <div className={`bg-neutral-800 rounded-lg shadow border ${borderColor}`}>
             <div className="flex flex-col justify-between px-3 py-5 text-lg gap-2">
-                <div className={`text-gray-600 flex items-center gap-2`}>
+                <div className={`text-gray-300 flex items-center gap-2`}>
                     <div className={`${bgColor} rounded-lg p-2`}>
                         <img src={icon} className="w-6" />
                     </div>

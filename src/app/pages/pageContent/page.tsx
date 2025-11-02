@@ -11,13 +11,13 @@ const PageContent = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="w-full h-screen bg-indigo-50">
+    <div className="w-full h-screen bg-neutral-900">
       <SignedIn>
         <WelcomePage />
       </SignedIn>
       <SignedOut>
         <div className="container mx-auto">
-          <div>Devo construir uma LP ou página de apresentação.</div>
+          <div></div>
         </div>
       </SignedOut>
     </div>

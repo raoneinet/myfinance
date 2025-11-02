@@ -38,7 +38,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
                     <CurrentFinanceBtn currentFinance={getCurrent} />
                     <select
                         {...register("month")}
-                        className="px-3 py-2 bg-gray-50 border text-gray-600 border-gray-200 rounded-xl outline-0"
+                        className="px-3 py-2 bg-neutral-700 text-gray-50 rounded-xl outline-0"
                         defaultValue="Mês">
                         <option disabled>Mês</option>
                         <option value="1">Janeiro</option>
@@ -56,7 +56,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
                     </select>
                     <select
                         {...register("year")}
-                        className="px-3 py-2 bg-gray-50 border text-gray-600 border-gray-200 rounded-xl outline-0"
+                        className="px-3 py-2 bg-neutral-700 text-gray-50 rounded-xl outline-0"
                         defaultValue="Ano">
                         <option disabled>Ano</option>
                         {selectYear?.map((year: number) => (
@@ -68,7 +68,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
                     <div>
                         <input
                             type="submit"
-                            className="px-3 py-3 text-center bg-gray-50 hover:bg-gray-300 border border-gray-200 rounded-xl cursor-pointer outline-0"
+                            className="px-3 py-3 text-center text-gray-50 bg-neutral-700 hover:bg-neutral-800 rounded-xl cursor-pointer outline-0"
                             value="Buscar" />
                     </div>
                 </form>
