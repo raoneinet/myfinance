@@ -1,13 +1,13 @@
 type Props = {
-    getAllFinance: ()=>void
+    requestAllFinance: ()=>void
     getSalarySum: ()=>void
     btnThemeBg: any
 }
 
-export const AllFinanceBtn = ({ btnThemeBg, getAllFinance, getSalarySum }: Props) => {
+export const AllFinanceBtn = ({ btnThemeBg, requestAllFinance, getSalarySum }: Props) => {
 
     const handleAllFinance = () => {
-        getAllFinance()
+        requestAllFinance()
         //getSalarySum()
     }
     return (

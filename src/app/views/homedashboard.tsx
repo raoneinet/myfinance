@@ -7,7 +7,7 @@ import { FinanceType } from "@/app/types/financeTypes"
 import { BtnType } from "@/app/types/btnType"
 import { dateTime } from "@/app/utils/formatDate"
 import {
-    useGetAllFinanceQuery,
+    useLazyGetAllFinanceQuery,
     useGetSalarySumQuery,
     useGetTotalFinanceValuesQuery,
     useGetSalaryQuery,
@@ -30,7 +30,7 @@ export const HomeDashboard = () => {
     const [currentYear, setCurrentYear] = useState<number>(0)
     const [uniqueYearList, setUniqueYearList] = useState<any>()
 
-    const { data: allFinance } = useGetAllFinanceQuery()
+    const [ getAllFinance, {data: allFinance}]  = useLazyGetAllFinanceQuery()
     const { data: salarySum } = useGetSalarySumQuery()
     const { data: totalValuesSum } = useGetTotalFinanceValuesQuery()
     const { data: yearList } = useGetYearListQuery()
@@ -100,15 +100,19 @@ export const HomeDashboard = () => {
     }
 
     //Gets all finance with no filter
-    const getAllFinance = () => {
+    const requestAllFinance = async () => {
         try {
-            const { finance } = allFinance
+            const result = await getAllFinance().unwrap()
 
-            if (finance.length !== 0) {
-                setFinance(finance)
-            } else {
+            const {finance: allfinanceTransactions } = result
+
+            if(allfinanceTransactions !== 0){
+                setFinance(allfinanceTransactions)
+            }else{
                 setFinance([])
             }
+            
+            console.log("AQUIIII ALL FINANCE", allfinanceTransactions)
 
             getTotals()
             getSalarySum()
@@ -180,20 +184,6 @@ export const HomeDashboard = () => {
         }
     }
 
-    useEffect(() => {
-        if (!allFinance) return
-
-        const { finance } = allFinance
-
-        if (Array.isArray(finance) && finance.length > 0) {
-            setFinance(finance)
-        } else {
-            setFinance([])
-        }
-
-        getTotals()
-        getSalarySum()
-    }, [allFinance])
 
     useEffect(() => {
         if (filterTotalValues) {
@@ -241,7 +231,7 @@ export const HomeDashboard = () => {
                 />
                 <SearchExpense
                     setModal={handleShowModal}
-                    getAllFinance={getAllFinance}
+                    requestAllFinance={requestAllFinance}
                     getFinancePerMonth={getFinancePerMonth}
                     getCurrentFinance={getFilterFinance}
                     getSalary={getSalary}
