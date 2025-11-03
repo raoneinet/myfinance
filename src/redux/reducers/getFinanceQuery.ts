@@ -66,7 +66,7 @@ export const getAllFinanceApi = createApi({
 
 export const {
     useLazyGetAllFinanceQuery,
-    useGetSalarySumQuery,
+    useLazyGetSalarySumQuery,
     useGetTotalFinanceValuesQuery,
     useGetSalaryQuery,
     useGetFilteredFinanceByMonthQuery,

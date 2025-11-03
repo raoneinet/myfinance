@@ -8,7 +8,7 @@ import { BtnType } from "@/app/types/btnType"
 import { dateTime } from "@/app/utils/formatDate"
 import {
     useLazyGetAllFinanceQuery,
-    useGetSalarySumQuery,
+    useLazyGetSalarySumQuery,
     useGetTotalFinanceValuesQuery,
     useGetSalaryQuery,
     useGetFilteredFinanceByMonthQuery,
@@ -31,7 +31,7 @@ export const HomeDashboard = () => {
     const [uniqueYearList, setUniqueYearList] = useState<any>()
 
     const [ getAllFinance, {data: allFinance}]  = useLazyGetAllFinanceQuery()
-    const { data: salarySum } = useGetSalarySumQuery()
+    const [getSalarySum, {data: salarySum}] = useLazyGetSalarySumQuery()
     const { data: totalValuesSum } = useGetTotalFinanceValuesQuery()
     const { data: yearList } = useGetYearListQuery()
     const { data: filteredFinance } = useGetFilteredFinanceByMonthQuery(
@@ -83,15 +83,19 @@ export const HomeDashboard = () => {
     }
 
     //Get sum of all salaries (for unfiltered view)
-    const getSalarySum = () => {
+    const requestSalarySum = async () => {
         try {
-            const { total_salaries } = salarySum
+           const result = await getSalarySum().unwrap()
+
+           const { total_salaries } = result
 
             if (total_salaries !== isNaN) {
                 setSalary(total_salaries)
             } else {
                 setSalary(Number(total_salaries))
             }
+
+            console.log("SALRIOOOO",total_salaries)
 
         } catch (error: any) {
             console.log("Erro ao buscar soma dos salários:", error)
@@ -114,8 +118,8 @@ export const HomeDashboard = () => {
             
             console.log("AQUIIII ALL FINANCE", allfinanceTransactions)
 
-            getTotals()
-            getSalarySum()
+            await getTotals()
+            await requestSalarySum()
         } catch (error: any) {
             console.log("Erro ao buscar por finanças: ", error)
         }
