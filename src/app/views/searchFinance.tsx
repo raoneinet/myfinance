@@ -6,34 +6,38 @@ import { CurrentFinanceBtn } from "@/app/components/currentFinanceBtn"
 import { AllFinanceBtn } from "@/app/components/allFinaneBtn"
 import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
+import { useGetYearListQuery } from "@/redux/reducers/getFinanceQuery"
 
 export const SearchExpense = (
-                    {uniqueYearList, currentMonth, currentYear, getSalarySum, 
-                    getSalary, setModal, requestAllFinance, getFinancePerMonth, getCurrentFinance }: any) => {
+    { currentMonth, currentYear, getSalarySum,
+        getSalary, setModal, requestAllFinance, getFinancePerMonth, getCurrentFinance }: any) => {
 
-    const { register, handleSubmit} = useForm()
+    const { register, handleSubmit } = useForm()
     const [newMonth, setNewMonth] = useState<any>()
-    const theme = useSelector((state:RootState)=> state.theme)
+    const theme = useSelector((state: RootState) => state.theme)
+    const [uniqueYearList, setUniqueYearList] = useState<any>()
+
+    const { data: yearList } = useGetYearListQuery()
 
     const handleFilterExpense = (data: any) => {
         console.log("Valores filtrado para: mês, " + data.month + " e ano, " + data.year)
 
-        if (!data.month || !data.year){
+        if (!data.month || !data.year) {
             console.log("Obrigatório informar Mês e Ano")
             return
         }
-        
+
         if (data.month === "Mês" || data.year === "Ano") return console.log("Obrigatório informar Mês e Ano")
 
-        getFinancePerMonth({ month: data.month, year: data.year})
+        getFinancePerMonth({ month: data.month, year: data.year })
         getSalary(data.month, data.year)
         handleFormatMonth()
     }
 
     const handleFormatMonth = () => {
         const monthOfYear = ["Janeiro", "Fevereiro", "Março", "Abril",
-                             "Maio", "Junho", "Julho", "Agosto", "Setembro",
-                              "Outubro", "Novembro", "Dezembro"]
+            "Maio", "Junho", "Julho", "Agosto", "Setembro",
+            "Outubro", "Novembro", "Dezembro"]
 
         const index = Math.max(1, Math.min(currentMonth, 12)) - 1;
         setNewMonth(monthOfYear[index]);
@@ -43,13 +47,27 @@ export const SearchExpense = (
         handleFormatMonth()
     }, [currentMonth])
 
+    useEffect(() => {
+        if (yearList) {
+            setUniqueYearList(yearList)
+
+            const listingYear = yearList.map((item: any) => {
+                return new Date(item.transaction_date).getFullYear()
+            })
+
+            const uniqueYears: any[] = Array.from(new Set(listingYear)).sort((a: any, b: any) => b - a)
+
+            setUniqueYearList(uniqueYears)
+        }
+    }, [yearList])
+
     const btnThemeBg = theme.themeStatus === "light" ? "bg-gray-500" : "bg-gray-50"
 
     return (
         <div className="px-5 pt-5 w-full flex items-center gap-3 flex-col md:flex-row">
             <div>
                 <h1 className="text-3xl font-bold text-gray-600">Transações</h1>
-                {currentMonth 
+                {currentMonth
                     ? <p className="mt-2 font-bold text-gray-500">{newMonth} de {currentYear}</p>
                     : <p className="mt-2 font-bold text-gray-500">Todas as transações</p>
                 }
@@ -58,13 +76,13 @@ export const SearchExpense = (
                 <form
                     onSubmit={handleSubmit(handleFilterExpense)}
                     className="flex flex-col md:flex-row gap-2 justify-end">
-                    <AllFinanceBtn 
-                        requestAllFinance={requestAllFinance} 
-                        getSalarySum={getSalarySum} 
+                    <AllFinanceBtn
+                        requestAllFinance={requestAllFinance}
+                        getSalarySum={getSalarySum}
                         btnThemeBg={btnThemeBg}
                     />
-                    <CurrentFinanceBtn 
-                        currentFinance={getCurrentFinance} 
+                    <CurrentFinanceBtn
+                        currentFinance={getCurrentFinance}
                         btnThemeBg={btnThemeBg}
                     />
                     <select
@@ -101,7 +119,7 @@ export const SearchExpense = (
                             type="submit"
                             className={`px-3 py-3 text-center 
                                 ${btnThemeBg} hover:bg-gray-300 border border-gray-200 rounded-xl cursor-pointer outline-0`}
-                            value="Buscar" 
+                            value="Buscar"
                         />
                     </div>
                 </form>

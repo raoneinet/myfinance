@@ -13,9 +13,7 @@ import {
     useGetSalaryQuery,
     useGetFilteredFinanceByMonthQuery,
     useGetFilteredTotalValuesByMonthQuery,
-    useGetYearListQuery,
 } from "@/redux/reducers/getFinanceQuery"
-import { current } from "@reduxjs/toolkit"
 
 export const HomeDashboard = () => {
 
@@ -28,12 +26,11 @@ export const HomeDashboard = () => {
     const [salary, setSalary] = useState<number>(0)
     const [currentMonth, setCurrentMonth] = useState<number>(0)
     const [currentYear, setCurrentYear] = useState<number>(0)
-    const [uniqueYearList, setUniqueYearList] = useState<any>()
+
 
     const [ getAllFinance, {data: allFinance}]  = useLazyGetAllFinanceQuery()
     const [getSalarySum, {data: salarySum}] = useLazyGetSalarySumQuery()
     const { data: totalValuesSum } = useGetTotalFinanceValuesQuery()
-    const { data: yearList } = useGetYearListQuery()
     const { data: filteredFinance } = useGetFilteredFinanceByMonthQuery(
         { month: currentMonth, year: currentYear },
         { skip: !currentMonth || !currentYear }
@@ -188,18 +185,6 @@ export const HomeDashboard = () => {
         }
     }
 
-    const getUniqueYear = () => {
-        try {
-            setUniqueYearList(yearList)
-
-            console.log("Lista de anos: ", yearList)
-
-        } catch (error: any) {
-            console.log("Erro ao buscar pela lista de anos em banco de dados. ", error)
-        }
-    }
-
-
     useEffect(() => {
         if (filterTotalValues) {
             const totalGeral = Number(filterTotalValues.total_geral ?? 0)
@@ -221,20 +206,6 @@ export const HomeDashboard = () => {
         getFilterFinance()
     }, [])
 
-    useEffect(() => {
-        if (yearList) {
-            setUniqueYearList(yearList)
-
-            const listingYear = yearList.map((item: any) => {
-                return new Date(item.transaction_date).getFullYear()
-            })
-
-            const uniqueYears: any[] = Array.from(new Set(listingYear)).sort((a: any, b: any) => b - a)
-
-            setUniqueYearList(uniqueYears)
-        }
-    }, [yearList])
-
     return (
         <>
             <div className="container mx-auto">
@@ -252,7 +223,6 @@ export const HomeDashboard = () => {
                     getSalary={requestSalary}
                     currentMonth={currentMonth}
                     currentYear={currentYear}
-                    uniqueYearList={uniqueYearList}
                 />
                 {showModal &&
                     <InsertExpense
