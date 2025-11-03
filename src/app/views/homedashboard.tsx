@@ -47,7 +47,7 @@ export const HomeDashboard = () => {
         { skip: !currentMonth || !currentYear }
     )
 
-    console.log(filterTotalValues)
+    console.log("VALORESS TESTESSS",filteredSalary)
 
     //Get the clicked button to open right modal (add salary or transaction)
     const handleShowModal = (button: any) => {
@@ -70,11 +70,22 @@ export const HomeDashboard = () => {
         setCurrentMonth(month)
         setCurrentYear(year)
         getFinancePerMonth({ month, year })
+        requestSalary(month, year)
     }
 
     //Get salary according to current month
-    const getSalary = (month: number, year: number) => {
+    const requestSalary = (month: number, year: number) => {
         try {
+            const {salary_amount: salaryMonth} = filteredSalary
+
+            if(salaryMonth !== isNaN && salaryMonth > 0){
+                setSalary(salaryMonth)
+            }else if(salaryMonth === isNaN){
+                setSalary(Number(salaryMonth))
+            }else{
+                setSalary(0)
+            }
+            
 
         } catch (error: any) {
             console.log("Erro ao buscar sálario: ", error)
@@ -238,7 +249,7 @@ export const HomeDashboard = () => {
                     requestAllFinance={requestAllFinance}
                     getFinancePerMonth={getFinancePerMonth}
                     getCurrentFinance={getFilterFinance}
-                    getSalary={getSalary}
+                    getSalary={requestSalary}
                     currentMonth={currentMonth}
                     currentYear={currentYear}
                     uniqueYearList={uniqueYearList}
