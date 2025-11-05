@@ -68,8 +68,8 @@ export const {
     useLazyGetAllFinanceQuery,
     useLazyGetSalarySumQuery,
     useGetTotalFinanceValuesQuery,
-    useGetSalaryQuery,
-    useGetFilteredFinanceByMonthQuery,
-    useGetFilteredTotalValuesByMonthQuery,
+    useLazyGetSalaryQuery,
+    useLazyGetFilteredFinanceByMonthQuery,
+    useLazyGetFilteredTotalValuesByMonthQuery,
     useGetYearListQuery,
 } = getAllFinanceApi
