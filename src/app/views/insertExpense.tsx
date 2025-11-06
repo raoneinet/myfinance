@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { SendFinanceType } from "@/app/types/sendFinanceType"
 import { ModalAddSalary } from "@/app/components/modalAddSalay"
 import { SalaryTypes } from "@/app/types/salaryTypes"
-import { usePostFinanceMutation } from "@/redux/reducers/getFinanceQuery"
+import { usePostFinanceMutation, usePostSalaryMutation } from "@/redux/reducers/getFinanceQuery"
 
 type Props = {
     closeModal: () => void
@@ -15,7 +15,8 @@ type Props = {
 export const InsertExpense = ({ closeModal, handleUpdate, clickedBtn }: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const [postFinance, {error}] = usePostFinanceMutation()
+    const [postFinance] = usePostFinanceMutation()
+    const [postSalary] = usePostSalaryMutation()
 
     //Add expense
     const handleExpenseInsert: SubmitHandler<SendFinanceType> = async (data) => {
@@ -29,7 +30,6 @@ export const InsertExpense = ({ closeModal, handleUpdate, clickedBtn }: Props) =
             const year = Number(date[0])
             closeModal()
             handleUpdate(month, year)
-            console.log("VALORES ENVIADOS: ", date)
         } catch (error: any) {
             closeModal()
             console.log("Ocorreu um erro ao enviar os seus movimentos financeiros", error)
@@ -39,7 +39,8 @@ export const InsertExpense = ({ closeModal, handleUpdate, clickedBtn }: Props) =
     //Add salary
     const handleInsertSalary: SubmitHandler<SalaryTypes> = async (data) => {
         try {
-           
+            await postSalary(data)
+           closeModal()
         } catch (error: any) {
             closeModal()
             console.log("Ocorreu um erro ao enviar os seus movimentos financeiros", error)

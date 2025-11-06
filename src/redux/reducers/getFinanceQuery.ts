@@ -72,5 +72,6 @@ export const {
     useLazyGetFilteredFinanceByMonthQuery,
     useLazyGetFilteredTotalValuesByMonthQuery,
     useGetYearListQuery,
-    usePostFinanceMutation
+    usePostFinanceMutation,
+    usePostSalaryMutation
 } = getAllFinanceApi
