@@ -8,7 +8,7 @@ import { usePostFinanceMutation } from "@/redux/reducers/getFinanceQuery"
 type Props = {
     closeModal: () => void
     getTotals: () => void
-    handleUpdate: ({ month, year }: any) => void
+    handleUpdate: (month:number, year:number) => void
     clickedBtn: any
 }
 
@@ -25,10 +25,10 @@ export const InsertExpense = ({ closeModal, handleUpdate, clickedBtn }: Props) =
             const {expense_date} = data
 
             const date = expense_date.split("-")
-            const month = date[1]
-            const year = date[0]
+            const month = Number(date[1])
+            const year = Number(date[0])
             closeModal()
-            handleUpdate({month, year})
+            handleUpdate(month, year)
             console.log("VALORES ENVIADOS: ", date)
         } catch (error: any) {
             closeModal()

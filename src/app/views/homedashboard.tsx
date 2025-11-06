@@ -210,7 +210,7 @@ export const HomeDashboard = () => {
 
     useEffect(() => {
         getFilterFinance()
-    }, [filteredFinance])
+    }, [])
 
     return (
         <>
