@@ -7,6 +7,7 @@ import { AllFinanceBtn } from "@/app/components/allFinaneBtn"
 import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
 import { useGetYearListQuery } from "@/redux/reducers/getFinanceQuery"
+import { usePostFinanceMutation } from "@/redux/reducers/getFinanceQuery"
 
 export const SearchExpense = (
     { currentMonth, currentYear, getSalarySum,

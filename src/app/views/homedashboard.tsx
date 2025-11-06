@@ -169,6 +169,11 @@ export const HomeDashboard = () => {
         }
     }
 
+    const handleUpdate = (month: number, year: number)=>{
+        getFinancePerMonth({ month, year })
+        getTotals()
+    }
+
     //Get total values by month
     const getTotalsByMonth = async ({ month, year, salary: salaryParam }: any) => {
         try {
@@ -205,7 +210,7 @@ export const HomeDashboard = () => {
 
     useEffect(() => {
         getFilterFinance()
-    }, [])
+    }, [filteredFinance])
 
     return (
         <>
@@ -229,7 +234,7 @@ export const HomeDashboard = () => {
                     <InsertExpense
                         closeModal={handleCloseModal}
                         getTotals={getTotals}
-                        getFinancePerMonth={getFinancePerMonth}
+                        handleUpdate={handleUpdate}
                         clickedBtn={clickedBtn}
                     />
                 }
