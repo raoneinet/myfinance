@@ -67,14 +67,13 @@ export const HomeDashboard = () => {
         try {
             const salaryMonth = await getSalary({month, year})
 
-            if (salaryMonth.data.salary_amount !== isNaN && salaryMonth.data.salary_amount > 0) {
+            if (!isNaN(salaryMonth.data.salary_amount) && salaryMonth.data.salary_amount > 0) {
                 setSalary(salaryMonth.data.salary_amount)
-            } else if (salaryMonth.data.salary_amount === isNaN) {
+            } else if (isNaN(salaryMonth.data.salary_amount)) {
                 setSalary(Number(salaryMonth.data.salary_amount))
             } else {
                 setSalary(0)
             }
-
 
         } catch (error: any) {
             console.log("Erro ao buscar sálario: ", error)
@@ -89,7 +88,7 @@ export const HomeDashboard = () => {
 
             const { total_salaries } = result
 
-            if (total_salaries !== isNaN) {
+            if (!isNaN(total_salaries)) {
                 setSalary(total_salaries)
             } else {
                 setSalary(Number(total_salaries))
