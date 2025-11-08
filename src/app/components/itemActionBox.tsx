@@ -1,5 +1,4 @@
 import { FinanceType } from "@/app/types/financeTypes"
-import { useDeleteFinanceMutation } from "@/redux/reducers/getFinanceQuery"
 
 type Props = {
     id: number
@@ -20,16 +19,11 @@ export const ItemActionBox = ({
     setDeleteFinance,
     setDeleteModal }: Props) => {
 
-    const [deleteFinance] = useDeleteFinanceMutation()
-
-
-    const deleteTransaction = async (id: number) => {
+    const deleteTransaction = (id: number) => {
         try {
             setOpenActionBox(false)
-            //setDeleteFinance(id)
+            setDeleteFinance(id)
             setDeleteModal(true)
-            await deleteFinance(id)
-            console.log("APAGADO MOVIMENTO: ", id)
         }catch(error: any){
             console.log("Erro ao apagar movimento: ", error)
         }

@@ -1,28 +1,27 @@
 import { ModalButtons } from "./modalButtons"
+import { useDeleteFinanceMutation } from "@/redux/reducers/getFinanceQuery"
 
 type Props = {
     id: number
-    setDeleteModal: (arg: boolean)=>void
-    setOpenIdBox: (arg: number | null)=>void
+    setDeleteModal: (arg: boolean) => void
+    setOpenIdBox: (arg: number | null) => void
 }
 
-export const ModalDeleteConfirmation = ({id, setDeleteModal, setOpenIdBox }: Props) => {
+export const ModalDeleteConfirmation = ({ id, setDeleteModal, setOpenIdBox }: Props) => {
 
-    const deleteSelectedTransaction = async (id: number | null) => {
+    const [deleteFinance] = useDeleteFinanceMutation()
+
+    const confirmDeletion = async () => {
         try {
-            
+            await deleteFinance(id)
+            console.log("MOVIMENTO APAGADO: ", id)
         } catch (error: any) {
-            console.log("Error ao apagar movimento: ", error)
+            console.log("Erro ao apagar movimento: ", error)
         }
-    }
-
-    const confirmDeletion = () => {
-        deleteSelectedTransaction(id)
         setDeleteModal(false)
     }
 
-    const cancelDeletion = ()=>{
-        deleteSelectedTransaction(null)
+    const cancelDeletion = () => {
         setDeleteModal(false)
         setOpenIdBox(null)
     }
