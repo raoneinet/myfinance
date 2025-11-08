@@ -48,8 +48,8 @@ export const getAllFinanceApi = createApi({
             query: (id) => `/single_finance.php?id=${id}`
         }),
         postFinanceUpdate: builder.mutation<any, any>({
-            query: ({ data }) => ({
-                url: `/edit_finance.php`,
+            query: (data) => ({
+                url: `/edit_finance.php?id=${data.id}`,
                 method: "post",
                 body: data
             })
@@ -74,5 +74,7 @@ export const {
     useGetYearListQuery,
     usePostFinanceMutation,
     usePostSalaryMutation,
-    useDeleteFinanceMutation
+    useDeleteFinanceMutation,
+    useLazyGetFinanceUpdateQuery,
+    usePostFinanceUpdateMutation
 } = getAllFinanceApi

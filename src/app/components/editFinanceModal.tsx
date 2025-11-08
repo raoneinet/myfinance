@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { FinanceType } from "@/app/types/financeTypes"
 import { ModalButtons } from "./modalButtons"
+import { usePostFinanceUpdateMutation } from "@/redux/reducers/getFinanceQuery"
 
 type Props = {
     finance: FinanceType
@@ -8,10 +9,12 @@ type Props = {
     setOpenModal: (arg: boolean) => void
     setOpenIdBox: (arg: number | null) => void
     getFinancePerMonth: any
+    handleUpdate: any
 }
 
-export const EditFinanceModal = ({ getFinancePerMonth, finance, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
+export const EditFinanceModal = ({ handleUpdate, getFinancePerMonth, finance, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
 
+    const [postFinanceUpdate] = usePostFinanceUpdateMutation()
     const { register, handleSubmit } = useForm({
         defaultValues: {
             id: finance.id,
@@ -25,8 +28,17 @@ export const EditFinanceModal = ({ getFinancePerMonth, finance, setOpenActionBox
     })
 
     const updateTransaction = async (data: any) => {
-        try {
+        
+        const handleDate = data.expense_date.split("-")
+        const month = handleDate[1]
+        const year = handleDate[0]
 
+        try {
+            await postFinanceUpdate(data)
+            setOpenIdBox(null)
+            setOpenModal(false)
+            handleUpdate({ month, year })
+            console.log("ATUALIZAR ESTES VALORES", handleDate)
         } catch (error) {
             console.error("Erro ao atualizar:", error);
         }

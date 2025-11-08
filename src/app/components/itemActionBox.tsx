@@ -1,4 +1,5 @@
 import { FinanceType } from "@/app/types/financeTypes"
+import {useLazyGetFinanceUpdateQuery} from "@/redux/reducers/getFinanceQuery"
 
 type Props = {
     id: number
@@ -19,6 +20,8 @@ export const ItemActionBox = ({
     setDeleteFinance,
     setDeleteModal }: Props) => {
 
+    const [getFinanceUpdate, {data: dataUpdate}] = useLazyGetFinanceUpdateQuery()
+
     const deleteTransaction = (id: number) => {
         try {
             setOpenActionBox(false)
@@ -27,12 +30,14 @@ export const ItemActionBox = ({
         }catch(error: any){
             console.log("Erro ao apagar movimento: ", error)
         }
-
     }
 
     const editTransaction = async (id: number) => {
         try {
-
+            const data = await getFinanceUpdate(id)
+            setEditFinance(data.data)
+            setOpenModal(true)
+            console.log("Alterar dados: ", data.data)
         } catch (error: any) {
             console.log("Ocorreu um erro ao editar a transação. ", error)
         }

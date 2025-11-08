@@ -189,7 +189,6 @@ export const HomeDashboard = () => {
             }
 
             console.log("TOTAIS POR MÊS", totalsByMonth)
-
         } catch (error: any) {
             console.log("Erro ao buscar totais: ", error)
         }
@@ -241,6 +240,7 @@ export const HomeDashboard = () => {
                 <ExpenseTable
                     finance={finance}
                     getFinancePerMonth={getFinancePerMonth}
+                    handleUpdate={handleUpdate}
                 />
             </div>
         </>
