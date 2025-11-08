@@ -178,5 +178,57 @@ function income(n){
     const res = n - (n * discount)
     console.log("Salarioi líquido: ", res)
 }
+//income(1600)
 
-income(1600)
+function positiveNumber(n){
+    if(n > 0){
+        console.log("Positivo")
+    }else if(n < 0){
+        console.log("Negativo")
+    }else{
+        console.log("Zero")
+    }
+}
+//positiveNumber(0)
+
+function divisiveByFive(n){
+    const timesFive = n % 5 === 0 ? "Divisível por 5": "Não é divisível por 5"
+    console.log(timesFive)
+}
+//divisiveByFive(112)
+
+function divsiveByFiveAndThree(n){
+    const res = (n % 3 === 0 && n% 5 === 0) ? "Divisível por 3 e por 5" : "Não é divisível por 3 e por 5"
+    console.log(res)
+}
+//divsiveByFiveAndThree(100)
+
+function vowel(n){
+    const vowels = ["a", "e", "i", "o", "u"]
+    if(vowels.indexOf(n.toLowerCase().trim()) !== -1){
+        console.log(n+", é uma vogal")
+    }else{
+        console.log(n+", É uma consoante")
+    }
+}
+//vowel("w")
+
+function checkAge(n){
+    if(n > 0 && n < 18){
+        console.log("Menor de idade")
+    }else if(n >= 18 && n <= 60){
+        console.log("Adulto")
+    }else{
+        console.log("Idoso")
+    }
+}
+//checkAge(19)
+
+function checkPass(n){
+    if(n === "1234" || n === 1234){
+        console.log("Senha não ok")
+    }else{
+        console.log("Senha ok")
+    }
+}
+//checkPass(1234)
