@@ -93,8 +93,6 @@ export const HomeDashboard = () => {
 
             await requestFinance({ setFinance })
 
-            // For unfiltered view, get TOTAL of all salaries (not just current month)
-            // Use requestSalarySum which updates the salary state AND returns the value
             const totalSalaries = await requestSalarySum(setSalary)
             console.log("Total de todos os salários:", totalSalaries)
 
