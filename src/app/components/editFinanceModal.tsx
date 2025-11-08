@@ -30,14 +30,14 @@ export const EditFinanceModal = ({ handleUpdate, getFinancePerMonth, finance, se
     const updateTransaction = async (data: any) => {
         
         const handleDate = data.expense_date.split("-")
-        const month = handleDate[1]
-        const year = handleDate[0]
+        const month = Number(handleDate[1])
+        const year = Number(handleDate[0])
 
         try {
             await postFinanceUpdate(data)
             setOpenIdBox(null)
             setOpenModal(false)
-            handleUpdate({ month, year })
+            await handleUpdate(month, year)
             console.log("ATUALIZAR ESTES VALORES", handleDate)
         } catch (error) {
             console.error("Erro ao atualizar:", error);
