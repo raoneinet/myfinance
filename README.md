@@ -53,13 +53,18 @@ C:\xampp\htdocs\seu-projeto
 🗄️ Banco de Dados
 
 O MySQL conta com tabelas como:
+
 users — dados de autenticação
+
 finance — receitas e despesas
+
 salary - dados sálarios
+
 
 Inicie o Apache e o MySQL no XAMPP.
 
 O backend estará disponível em:
+
 http://localhost/seu-projeto
 
 
