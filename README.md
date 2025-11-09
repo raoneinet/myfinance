@@ -20,12 +20,19 @@ phpMyAdmin — Gerenciamento do banco
 
 Funcionalidades do Projeto
 ✅ Registro e login de usuário
+
 ✅ Autenticação com sessões em PHP
+
 ✅ CRUD de transações (receitas e despesas)
+
 ✅ Cálculo automático de saldo
+
 ✅ Categorias de movimentações
+
 ✅ Interface responsiva com TailwindCSS
+
 ✅ Formulários validados com React Hook Form
+
 
 🔧 Como Rodar o Projeto
 ✅ Frontend
