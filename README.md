@@ -3,9 +3,9 @@
 Um sistema completo para controle de finanças pessoais, desenvolvido com React + Next.js + TypeScript no frontend e PHP puro no backend.
 O projeto permite que usuários registrem receitas e despesas, acompanhem transações e visualizem seu saldo de forma simples e eficiente.
 
-🚀 Tecnologias Utilizadas
+🚀** Tecnologias Utilizadas**
 
-Frontend
+**Frontend**
 
 Next.js (React + SSR/SSG)
 
@@ -18,7 +18,7 @@ React Hook Form — Gerenciamento de formulários
 Axios — Consumo da API em PHP
 
 
-Backend
+**Backend**
 
 PHP Puro
 
@@ -31,7 +31,7 @@ MySQL — Banco de dados
 phpMyAdmin — Gerenciamento do banco
 
 
-Funcionalidades do Projeto
+**Funcionalidades do Projeto**
 
 ✅ Registro e login de usuário
 
