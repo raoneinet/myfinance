@@ -44,8 +44,7 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                     <tr className="align-middle">
                         <th className="py-3 pl-2 mb-5">Descrição</th>
                         <th>valor</th>
-                        <th>Fixo/Variável</th>
-                        <th className="">Tipo de pgto</th>
+                        <th>Tipo</th>
                         <th>data</th>
                         <th className="">Ação</th>
                     </tr>
@@ -56,7 +55,7 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                             className=" hover:bg-neutral-800 text-xs 
                                     text-gray-50 md:text-base align-middle" key={item.id}>
                             <td className="py-3 pl-2 flex gap-2 items-center">
-                                <img src={`/assets/icons/${item.standard_category}.png`} className="w-auto h-8" />
+                                <img src={`/assets/icons/${item.standard_category}.png`} className="w-auto md:h-8 h-6" />
                                 <div>
                                     <div className="font-bold">{item.transaction_desc}</div>
                                     <div className="text-xs text-gray-50 rounded-md w-fit">
@@ -67,16 +66,20 @@ export const FinanceTable = ({ finance, handleUpdateAll }: Props) => {
                             <td className={`${(item.standard_category !== "Recebimento") ?
                                 "text-red-700" : "text-green-700"}`}>
                                 <div className={`${(item.standard_category !== "Recebimento") ?
-                                    "bg-red-200" : "bg-green-200"} w-fit rounded-lg  px-3`}>
+                                    "bg-red-200" : "bg-green-200"} w-fit rounded-lg  md:px-3`}>
                                     <span>{(item.standard_category !== "Recebimento") ? "- " : "+ "}</span>
                                     € {item.transaction_value}
                                 </div>
                             </td>
                             <td className="">
-                                {(item.fixed_expense === 'fixed') && "Fixo"}
-                                {(item.fixed_expense === 'notFixed') && "Variável"}
+                                <div>
+                                    {(item.fixed_expense === 'fixed') && "Fixo"}
+                                    {(item.fixed_expense === 'notFixed') && "Variável"}
+                                </div>
+                                <div className="bg-neutral-500 w-fit px-2 rounded-lg">
+                                    {item.transaction_type}
+                                </div>
                             </td>
-                            <td>{item.transaction_type}</td>
                             <td>{item.transaction_date}</td>
                             <td className="">
                                 <div>
