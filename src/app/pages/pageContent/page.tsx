@@ -11,7 +11,7 @@ const PageContent = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-full md:h-screen">
       <SignedIn>
         <WelcomePage />
       </SignedIn>
