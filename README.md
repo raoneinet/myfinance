@@ -51,12 +51,12 @@ phpMyAdmin — Gerenciamento do banco
 🔧 Como Rodar o Projeto
 ✅ Frontend
 
-# Instalar dependências
+**Instalar dependências**
 
 npm install
 
 
-# Rodar o servidor de desenvolvimento
+**Rodar o servidor de desenvolvimento**
 
 npm run dev
 
