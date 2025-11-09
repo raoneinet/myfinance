@@ -36,18 +36,25 @@ Funcionalidades do Projeto
 
 🔧 Como Rodar o Projeto
 ✅ Frontend
+
 # Instalar dependências
+
 npm install
 
+
 # Rodar o servidor de desenvolvimento
+
 npm run dev
+
 yarn start
+
 
 Acesse: http://localhost:3000
 
 ✅ Backend (PHP + XAMPP)
 
 Coloque os arquivos do backend na pasta:
+
 C:\xampp\htdocs\seu-projeto
 
 🗄️ Banco de Dados
