@@ -26,7 +26,7 @@ export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, g
 
 
     return (
-        <div className="px-5 py-5 w-full flex items-center gap-3 flex-col md:flex-row">
+        <div className="px-5 py-5 w-full flex items-center gap-3 flex-col lg:flex-row">
             <div>
                 <h1 className="text-3xl font-bold text-gray-600">Transações</h1>
             </div>
