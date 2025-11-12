@@ -178,5 +178,37 @@ function income(n){
     const res = n - (n * discount)
     console.log("Salarioi líquido: ", res)
 }
+//income(1600)
 
-income(1600)
+function checkNumber(n){
+    if(n > 10 && n < 50){
+        console.log("Número "+n+" está entre 10 e 50")
+    }else{
+        console.log("Número "+n+" NÃO está entre 10 e 50")
+    }
+}
+//checkNumber(4)
+
+
+function studentPassed(){
+    let nota = [8, 9, 8]
+
+    let passed = 0
+    for(let i = 0; i < nota.length; i++){
+        passed += nota[i]
+    }
+
+    res = passed / nota.length
+    console.log(res >= 7 ? "Aluno passou. Média: "+res.toFixed(2) : "Aluno reprovou. Média: "+res.toFixed(2))
+}
+//studentPassed()
+
+function biggestN(){
+    if(n > y && n > z){
+        console.log(n+" é o maior número")
+    }else if(y > n && y > z){
+        console.log(y+" é o maior número")
+    }else{
+        console.log(z+" é o maior número")
+    }
+}
