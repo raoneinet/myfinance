@@ -9,8 +9,9 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { FinanceType } from "@/types/financeTypes"
-import { ItemActionBox } from "@/components/itemActionBox"
 import { TableMenuOptions } from "@/components/tableMenuOptions"
+import { ModalDeleteConfirmation } from "@/components/modalDeleteConfirmation"
+import { useState } from "react"
 
 export type HeaderType = {
     id: number
@@ -18,14 +19,15 @@ export type HeaderType = {
     header: string
 }
 
-
 type Props = {
     columns: HeaderType[]
     data: FinanceType[]
+    handleUpdateAll: any
 }
 
-
-export function DataTable({ columns, data }: Props) {
+export function DataTable({ columns, data, handleUpdateAll }: Props) {
+    const [deleteId, setDeleteId] = useState()
+    const [deleteModal, setDeleteModal] = useState(true)
 
     return (
         <div className="overflow-hidden rounded-md border">
@@ -67,22 +69,31 @@ export function DataTable({ columns, data }: Props) {
                                     <div className="text-xs">
                                         {item.fixed_expense === "fixed" ? "Fixo" : "Variável"}
                                     </div>
-                                    
+
                                 </TableCell>
                                 <TableCell>
                                     {item.transaction_date}
                                 </TableCell>
                                 <TableCell>
                                     <TableMenuOptions
-                                        finance={data}
                                         id={item.id}
+                                        setDeleteId={setDeleteId}
                                     />
                                 </TableCell>
                             </TableRow>
                         ))
                     }
+
                 </TableBody>
             </Table>
+            {data.length === 0 &&
+                <div className="flex justify-center w-full text-neutral-50">
+                    Nenhuma transação encontrada
+                </div>
+            }
+            {deleteId != null &&
+                <ModalDeleteConfirmation id={deleteId} handleUpdateAll={handleUpdateAll} setDeleteModal={setDeleteModal} setDeleteId={setDeleteId}/>
+            }
         </div >
     )
 }

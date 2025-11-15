@@ -19,7 +19,7 @@ export const ExpenseTable = ({ finance, getFinance, handleUpdateAll }: Props) =>
 
     return (
         <div className="px-5 py-5 flex gap-3 flex-col">
-            <DataTable columns={columns} data={finance} />
+            <DataTable columns={columns} data={finance} handleUpdateAll={handleUpdateAll}/>
         </div>
     )
 }
