@@ -1,5 +1,5 @@
 import { FinanceType } from "@/types/financeTypes"
-import { DataTable } from "@/components/table"
+import { DataTable } from "@/components/table/table"
 import { columns } from "@/utils/tableHead"
 
 type Props = {

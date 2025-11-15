@@ -1,5 +1,5 @@
 "use client"
-import LoginForm from "@/components/loginForm"
+import LoginForm from "@/components/forms/loginForm"
 import { Header } from "@/views/header"
 import GoToHomeButton from "@/components/buttons/goToHomeBtn"
 import Link from "next/link"

@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import SignupForm from "@/components/signupForm"
+import SignupForm from "@/components/forms/signupForm"
 import { Header } from "@/views/header"
 import GoToHomeButton from "@/components/buttons/goToHomeBtn"
 

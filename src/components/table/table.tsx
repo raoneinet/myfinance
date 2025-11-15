@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { FinanceType } from "@/types/financeTypes"
-import { TableMenuOptions } from "@/components/tableMenuOptions"
+import { TableMenuOptions } from "@/components/buttons/tableMenuOptions"
 import { ModalDeleteConfirmation } from "@/components/modal/modalDeleteConfirmation"
 import { EditFinanceModal } from "@/components/modal/editFinanceModal"
 import { useState } from "react"
@@ -35,7 +35,7 @@ export function DataTable({ columns, data, handleUpdateAll }: Props) {
         <div className="overflow-hidden rounded-md border">
             <Table>
                 <TableHeader>
-                    <TableRow>
+                    <TableRow className="hover:">
                         {
                             columns.map(item => (
                                 <TableHead className="font-semibold text-neutral-50">
