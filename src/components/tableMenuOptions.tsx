@@ -5,9 +5,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { EditFinanceModal } from "./editFinanceModal"
 
-export const TableMenuOptions = ({id, setDeleteId }: any) => {
+export const TableMenuOptions = ({id, setDeleteId, setEditFinance }: any) => {
 
     const deleteTransaction = () => {
         setDeleteId(id)
@@ -17,7 +16,8 @@ export const TableMenuOptions = ({id, setDeleteId }: any) => {
     const editTransaction = async (id: number) => {
         try {
             const result = await api.get(`/single_finance.php?id=${id}`)
-            //setEditFinance(result.data)
+            setEditFinance(result.data)
+            console.log("Editar o ID: ", id)
         } catch (error: any) {
             console.log("Ocorreu um erro ao editar a transação. ", error)
         }

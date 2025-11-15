@@ -1,11 +1,11 @@
-import { ModalButtons } from "./modalButtons"
+import { ModalButtons } from "@/components/modal/modalButtons"
 import api from "@/app/api/api"
 
 type Props = {
     handleUpdateAll: () => void
     id: number
     setDeleteModal: (arg: boolean) => void
-    setDeleteId: any
+    setDeleteId: (id: number | null)=>void
 }
 
 export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, setDeleteId }: Props) => {
@@ -13,12 +13,10 @@ export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, s
     const deleteTransaction = async (id: number) => {
         try {
             await api.post("/delete_finance_item.php", { id })
-            console.log("Movimento apagado: ", id)
             setDeleteId(null)
         } catch (error: any) {
             console.log("Error ao apagar movimento: ", error)
         }
-
     }
 
     const confirmDeletion = () => {
@@ -28,8 +26,6 @@ export const ModalDeleteConfirmation = ({ handleUpdateAll, id, setDeleteModal, s
     }
 
     const cancelDeletion = () => {
-        //deleteTransaction(null)
-        //setDeleteModal(false)
         setDeleteId(null)
     }
 

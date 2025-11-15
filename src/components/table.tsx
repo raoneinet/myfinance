@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/table"
 import { FinanceType } from "@/types/financeTypes"
 import { TableMenuOptions } from "@/components/tableMenuOptions"
-import { ModalDeleteConfirmation } from "@/components/modalDeleteConfirmation"
+import { ModalDeleteConfirmation } from "@/components/modal/modalDeleteConfirmation"
+import { EditFinanceModal } from "@/components/modal/editFinanceModal"
 import { useState } from "react"
 
 export type HeaderType = {
@@ -26,8 +27,9 @@ type Props = {
 }
 
 export function DataTable({ columns, data, handleUpdateAll }: Props) {
-    const [deleteId, setDeleteId] = useState()
+    const [deleteId, setDeleteId] = useState<number | null>()
     const [deleteModal, setDeleteModal] = useState(true)
+    const [editFinance, setEditFinance] = useState<FinanceType>()
 
     return (
         <div className="overflow-hidden rounded-md border">
@@ -78,6 +80,7 @@ export function DataTable({ columns, data, handleUpdateAll }: Props) {
                                     <TableMenuOptions
                                         id={item.id}
                                         setDeleteId={setDeleteId}
+                                        setEditFinance={setEditFinance}
                                     />
                                 </TableCell>
                             </TableRow>
@@ -92,7 +95,19 @@ export function DataTable({ columns, data, handleUpdateAll }: Props) {
                 </div>
             }
             {deleteId != null &&
-                <ModalDeleteConfirmation id={deleteId} handleUpdateAll={handleUpdateAll} setDeleteModal={setDeleteModal} setDeleteId={setDeleteId}/>
+                <ModalDeleteConfirmation
+                    id={deleteId}
+                    handleUpdateAll={handleUpdateAll}
+                    setDeleteModal={setDeleteModal}
+                    setDeleteId={setDeleteId} 
+                />
+            }
+            {editFinance?.id != null &&
+                <EditFinanceModal 
+                    finance={editFinance}
+                    handleUpdateAll={handleUpdateAll}
+                    setEditFinance={setEditFinance}
+                />
             }
         </div >
     )

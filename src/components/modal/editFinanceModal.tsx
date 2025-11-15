@@ -1,51 +1,43 @@
 import { useForm } from "react-hook-form"
 import { FinanceType } from "@/types/financeTypes"
 import api from "@/app/api/api"
-import { ModalButtons } from "./modalButtons"
+import { ModalButtons } from "@/components/modal/modalButtons"
 
 type Props = {
     finance: FinanceType
     handleUpdateAll: () => void
-    setOpenActionBox: (arg: boolean)=>void
-    setOpenModal: (arg: boolean)=>void
-    setOpenIdBox: (arg: number | null)=>void
+    setEditFinance: any
 }
 
-export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, setOpenModal, setOpenIdBox }: Props) => {
+export const EditFinanceModal = ({ finance, handleUpdateAll, setEditFinance }: Props) => {
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
             id: finance.id,
-            expense_desc: finance.transaction_desc,
-            expense_value: finance.transaction_value,
-            expense_standard_category: finance.standard_category,
-            expense_isFixed: finance.fixed_expense,
-            expense_payment_type: finance.transaction_type,
-            expense_date: finance.transaction_date.split(' ')[0] // caso seja DATETIME
+            transaction_desc: finance.transaction_desc,
+            transaction_value: finance.transaction_value,
+            standard_category: finance.standard_category,
+            fixed_expense: finance.fixed_expense,
+            transaction_type: finance.transaction_type,
+            transaction_date: finance.transaction_date.split(' ')[0]
         }
     })
 
     const updateTransaction = async (data: any) => {
         try {
-            const response = await api.post("/edit_finance.php", {
-                id: finance.id, // id da movimentação
-                ...data
+            const response = await api.post(`/edit_finance.php`, {
+                ...data,
+                id: finance.id
             })
-
-            setOpenIdBox(null)
-            setOpenModal(false)
-            setOpenActionBox(false)
             handleUpdateAll()
-            
-            console.log("Movimentação atualizada:", response.data);
+            setEditFinance(null)
         } catch (error) {
             console.error("Erro ao atualizar:", error);
-        }   
+        }
     }
 
     const closeModal = () => {
-        setOpenIdBox(null)
-        setOpenModal(false)
+        setEditFinance(null)
     }
 
     return (
@@ -56,16 +48,16 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
                     className="flex flex-col gap-5 justify-between py-5"
                 >
                     <div className="flex flex-col md:flex-row gap-2">
-                        <input {...register("expense_desc", { required: true })}
+                        <input {...register("transaction_desc", { required: true })}
                             className="p-2 border border-gray-300 rounded-lg"
                         />
-                        <input {...register("expense_value", { required: true })}
+                        <input {...register("transaction_value", { required: true })}
                             className="p-2 border border-gray-300 rounded-lg"
                             placeholder="Valor"
                         />
                     </div>
                     <div className="flex flex-col md:flex-row justify-between gap-3">
-                        <select {...register("expense_standard_category", { required: "Campo obrigatório" })}
+                        <select {...register("standard_category", { required: "Campo obrigatório" })}
                             className="p-2 border border-gray-300 rounded-lg" aria-required>
                             <option value="Alimentação">Alimentação</option>
                             <option value="Alimentação">Alimentação</option>
@@ -77,12 +69,12 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
                             <option value="Saúde">Saúde</option>
                             <option value="Transporte">Transporte</option>
                         </select>
-                        <select {...register("expense_isFixed", { required: "Campo obrigatório" })}
+                        <select {...register("fixed_expense", { required: "Campo obrigatório" })}
                             className="p-2 border border-gray-300 rounded-lg" aria-required>
                             <option value="fixed">Gasto Fixo</option>
                             <option value="notFixed">Gasto Variável</option>
                         </select>
-                        <select {...register("expense_payment_type", { required: "Campo obrigatório" })}
+                        <select {...register("transaction_type", { required: "Campo obrigatório" })}
                             className="p-2 border border-gray-300 rounded-lg" aria-required>
                             <option value="Crédito">Crédito</option>
                             <option value="Débito">Débito</option>
@@ -92,7 +84,7 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setOpenActionBox, s
                     </div>
                     <div>
                         <input
-                            type="date" {...register("expense_date", { required: true })}
+                            type="date" {...register("transaction_date", { required: true })}
                             className="p-2 border border-gray-300 rounded-lg"
                         />
                     </div>

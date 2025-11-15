@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { AddFinanceBtn } from "@/components/addFinanceBtn"
-import { AddSalaryBtn } from "@/components/addSalaryBtn"
-import { CurrentFinanceBtn } from "@/components/currentFinanceBtn"
-import { AllFinanceBtn } from "@/components/allFinaneBtn"
+import { AddFinanceBtn } from "@/components/buttons/addFinanceBtn"
+import { AddSalaryBtn } from "@/components/buttons/addSalaryBtn"
+import { CurrentFinanceBtn } from "@/components/buttons/currentFinanceBtn"
+import { AllFinanceBtn } from "@/components/buttons/allFinaneBtn"
 import { getUniqueYear } from "@/services/finance"
 
 export const SearchExpense = ({ getSalarySum, getSalary, setModal, getFinance, getFinancePerMonth, getCurrent }: any) => {

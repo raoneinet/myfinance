@@ -1,7 +1,7 @@
-import { ModalAddFinance } from "@/components/modalAddfinance"
+import { ModalAddFinance } from "@/components/modal/modalAddfinance"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { SendFinanceType } from "@/types/sendFinanceType"
-import { ModalAddSalary } from "@/components/modalAddSalay"
+import { ModalAddSalary } from "@/components/modal/modalAddSalay"
 import { SalaryTypes } from "@/types/salaryTypes"
 import api from "@/app/api/api"
 
