@@ -2,21 +2,24 @@
 import { useEffect } from "react"
 import { FinanceType } from "@/types/financeTypes"
 import { FinanceTable } from "@/components/financeTable"
+import { DataTable } from "@/components/table"
+import { columns } from "@/utils/tableHead"
 
 type Props = {
     finance: FinanceType[]
-    getFinance: ()=>void
-    handleUpdateAll: ()=>void
+    getFinance: () => void
+    handleUpdateAll: () => void
 }
 
-export const ExpenseTable = ({finance, getFinance, handleUpdateAll}: Props) => {
+export const ExpenseTable = ({ finance, getFinance, handleUpdateAll }: Props) => {
+    // <FinanceTable
+    //     finance={finance}
+    //     handleUpdateAll={handleUpdateAll}
+    // />
 
     return (
-        <div className="px-5 py-5 max-h-5/6 flex gap-3 lg:flex-row flex-col">
-            <FinanceTable
-                finance={finance}
-                handleUpdateAll={handleUpdateAll}
-            />
+        <div className="px-5 py-5 flex gap-3 flex-col">
+            <DataTable columns={columns} data={finance} />
         </div>
     )
 }
