@@ -1,8 +1,8 @@
 "use client";
 import WelcomePage from "../welcome/page";
-import { SignedIn } from "@/components/signedin";
-import { SignedOut } from "@/components/signedout";
-import { LoadingSpinner } from "@/components/loadingSpinner";
+import { SignedIn } from "@/components/signwindows/signedin";
+import { SignedOut } from "@/components/signwindows/signedout";
+import { LoadingSpinner } from "@/components/loading/loadingSpinner";
 import { useAuthContext } from "@/app/context/authContext";
 
 const PageContent = () => {

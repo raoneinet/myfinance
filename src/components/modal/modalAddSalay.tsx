@@ -1,6 +1,6 @@
-import { ModalButtons } from "./modalButtons"
+import { ModalButtons } from "@/components/modal/modalButtons"
 
-export const ModalAddSalary = ({ closeModal, register, handleSubmit, handleInsertSalary, errors }: any) => {
+export const ModalAddSalary = ({ closeModal, register, handleSubmit, handleInsertSalary}: any) => {
 
     return (
         <div className="shadow shadow-gray-700 p-4 bg-neutral-600 rounded-lg w-fit px-6">
