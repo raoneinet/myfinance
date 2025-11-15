@@ -38,6 +38,7 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setEditFinance }: P
 
     const closeModal = () => {
         setEditFinance(null)
+        console.log("closed Modal")
     }
 
     return (
