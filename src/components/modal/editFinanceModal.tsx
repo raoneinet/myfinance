@@ -48,30 +48,17 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setEditFinance }: P
                     className="flex flex-col gap-5 justify-between py-5"
                 >
                     <div className="flex flex-col md:flex-row gap-2">
-<<<<<<< HEAD:src/components/editFinanceModal.tsx
-                        <input {...register("expense_desc", { required: true })}
-                            className="p-2 border border-gray-500 bg-neutral-400 rounded-lg"
-                        />
-                        <input {...register("expense_value", { required: true })}
-                            className="p-2 border border-gray-500 bg-neutral-400 rounded-lg"
-=======
                         <input {...register("transaction_desc", { required: true })}
                             className="p-2 border border-gray-300 rounded-lg"
                         />
                         <input {...register("transaction_value", { required: true })}
                             className="p-2 border border-gray-300 rounded-lg"
->>>>>>> shadcn-init:src/components/modal/editFinanceModal.tsx
                             placeholder="Valor"
                         />
                     </div>
                     <div className="flex flex-col md:flex-row justify-between gap-3">
-<<<<<<< HEAD:src/components/editFinanceModal.tsx
-                        <select {...register("expense_standard_category", { required: "Campo obrigatório" })}
-                            className="p-2 border border-gray-500 bg-neutral-400 rounded-lg" aria-required>
-=======
                         <select {...register("standard_category", { required: "Campo obrigatório" })}
                             className="p-2 border border-gray-300 rounded-lg" aria-required>
->>>>>>> shadcn-init:src/components/modal/editFinanceModal.tsx
                             <option value="Alimentação">Alimentação</option>
                             <option value="Alimentação">Alimentação</option>
                             <option value="Casa">Casa</option>
@@ -82,15 +69,6 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setEditFinance }: P
                             <option value="Saúde">Saúde</option>
                             <option value="Transporte">Transporte</option>
                         </select>
-<<<<<<< HEAD:src/components/editFinanceModal.tsx
-                        <select {...register("expense_isFixed", { required: "Campo obrigatório" })}
-                            className="p-2 border border-gray-500 bg-neutral-400 rounded-lg" aria-required>
-                            <option value="fixed">Gasto Fixo</option>
-                            <option value="notFixed">Gasto Variável</option>
-                        </select>
-                        <select {...register("expense_payment_type", { required: "Campo obrigatório" })}
-                            className="p-2 border border-gray-500 bg-neutral-400 rounded-lg" aria-required>
-=======
                         <select {...register("fixed_expense", { required: "Campo obrigatório" })}
                             className="p-2 border border-gray-300 rounded-lg" aria-required>
                             <option value="fixed">Gasto Fixo</option>
@@ -98,7 +76,6 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setEditFinance }: P
                         </select>
                         <select {...register("transaction_type", { required: "Campo obrigatório" })}
                             className="p-2 border border-gray-300 rounded-lg" aria-required>
->>>>>>> shadcn-init:src/components/modal/editFinanceModal.tsx
                             <option value="Crédito">Crédito</option>
                             <option value="Débito">Débito</option>
                             <option value="Dinheiro">Dinheiro</option>
@@ -107,13 +84,8 @@ export const EditFinanceModal = ({ finance, handleUpdateAll, setEditFinance }: P
                     </div>
                     <div>
                         <input
-<<<<<<< HEAD:src/components/editFinanceModal.tsx
-                            type="date" {...register("expense_date", { required: true })}
-                            className="p-2 border border-gray-500 bg-neutral-400 rounded-lg"
-=======
                             type="date" {...register("transaction_date", { required: true })}
                             className="p-2 border border-gray-300 rounded-lg"
->>>>>>> shadcn-init:src/components/modal/editFinanceModal.tsx
                         />
                     </div>
                     <div className="">
