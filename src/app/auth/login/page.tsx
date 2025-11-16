@@ -17,8 +17,9 @@ const Login = () => {
                             <p>Faça login e gerencie suas finanças</p>
                         </div>
                         <LoginForm />
-                        <div className="text-sm pt-5">
-                            <p>Ainda não tem conta? {" "}<Link className="underline text-neutral-400" href="/auth/register">Criar conta</Link></p>
+                        <div className="text-sm pt-5 flex gap-2">
+                            <p>Ainda não tem conta?</p>
+                            <Link className="underline text-neutral-400" href="/auth/register">Criar conta</Link>
                         </div>
                     </div>
                 </div>
