@@ -4,16 +4,47 @@ import { useAuthContext } from "@/app/context/authContext"
 import { LoginTypes } from "@/types/loginTypes"
 import { useRouter } from "next/navigation"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+
+
 const LoginForm = () => {
 
     const router = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginTypes>()
     const { login } = useAuthContext()
+
+    const formSchema = z.object({
+        email: z.email("Email inválido ou incorreto"),
+        password: z.string().min(6, {
+            message: "A senha precisa ter no mínimo 6 caracteres"
+        })
+    })
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            password: ""
+        }
+    })
 
     const handleLogin: SubmitHandler<LoginTypes> = async (data) => {
         try {
             await login(data)
             router.push("/")
+
+            console.log("Dados: ", data)
 
         } catch (error) {
             alert("Erro ao fazer login" + error)
@@ -22,24 +53,38 @@ const LoginForm = () => {
     }
 
     return (
-        <div className="p-5 bg-white">
-            <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-2">
-                <div>
-                    <input type="email" {...register("email", { required: "Campo obrigatório" })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Email" />
-                    {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
-                </div>
-                <div>
-                    <input type="password" {...register("password", { required: "Campo obrigatório", minLength: 6, maxLength: 20 })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Senha" />
-                    {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
-                </div>
-                <div className="place-self-end">
-                    <input type="submit" value="Entrar" className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer" />
-                </div>
-            </form>
+        <div className="py-5">
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="exemplo@email.com" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="******" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">Entrar</Button>
+                </form>
+            </Form>
         </div>
     )
 }

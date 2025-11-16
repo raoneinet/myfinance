@@ -1,6 +1,7 @@
 import { FinanceType } from "@/types/financeTypes"
 import { DataTable } from "@/components/table/table"
 import { columns } from "@/utils/tableHead"
+import { PaginationDemo } from "@/components/patination"
 
 type Props = {
     finance: FinanceType[]
@@ -9,8 +10,9 @@ type Props = {
 
 export const ExpenseTable = ({ finance, handleUpdateAll }: Props) => {
     return (
-        <div className="px-5 py-5 flex gap-3 flex-col">
-            <DataTable columns={columns} data={finance} handleUpdateAll={handleUpdateAll}/>
+        <div className="px-5 py-5 flex gap-3 flex-col ">
+            <DataTable columns={columns} data={finance} handleUpdateAll={handleUpdateAll} />
+            <PaginationDemo/>
         </div>
     )
 }

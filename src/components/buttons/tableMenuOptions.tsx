@@ -5,8 +5,10 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { MoreHorizontal } from "lucide-react"
 
-export const TableMenuOptions = ({id, setDeleteId, setEditFinance }: any) => {
+export const TableMenuOptions = ({ id, setDeleteId, setEditFinance }: any) => {
 
     const deleteTransaction = () => {
         setDeleteId(id)
@@ -26,7 +28,10 @@ export const TableMenuOptions = ({id, setDeleteId, setEditFinance }: any) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="cursor-pointer">
-                Opções
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">Open menu</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem>

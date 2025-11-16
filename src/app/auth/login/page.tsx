@@ -10,15 +10,15 @@ const Login = () => {
             <Header />
             <div className="w-full h-[calc(100vh-80px)] flex justify-center items-center p-2 bg-gray-100">
                 <div className="container h-full px-5 mx-auto flex flex-col">
-                    <GoToHomeButton/>
-                    <div className="mx-auto my-auto flex flex-col justify-center items-center p-5 w-2xl h-80 bg-white rounded-lg shadow shadow-gray-400">
-                        <div>
-                            <h1 className="font-bold text-xl pb-4">Bem-vindo ao MyFinance</h1>
+                    <GoToHomeButton />
+                    <div className="mx-auto my-auto flex flex-col justify-center items-center p-5 w-2xl h-fit bg-white rounded-lg shadow shadow-gray-400">
+                        <div className="pb-5">
+                            <h1 className="font-bold text-xl pb-2">Bem-vindo ao MyFinance</h1>
                             <p>Faça login e gerencie suas finanças</p>
                         </div>
                         <LoginForm />
-                        <div>
-                            <p>Ainda não tem conta? {" "}<Link href="/auth/register">Criar conta</Link></p>
+                        <div className="text-sm pt-5">
+                            <p>Ainda não tem conta? {" "}<Link className="underline text-neutral-400" href="/auth/register">Criar conta</Link></p>
                         </div>
                     </div>
                 </div>

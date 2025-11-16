@@ -12,6 +12,7 @@ import { FinanceType } from "@/types/financeTypes"
 import { TableMenuOptions } from "@/components/buttons/tableMenuOptions"
 import { ModalDeleteConfirmation } from "@/components/modal/modalDeleteConfirmation"
 import { EditFinanceModal } from "@/components/modal/editFinanceModal"
+import {PaginationDemo} from "@/components/patination"
 import { useState } from "react"
 
 export type HeaderType = {
@@ -32,7 +33,7 @@ export function DataTable({ columns, data, handleUpdateAll }: Props) {
     const [editFinance, setEditFinance] = useState<FinanceType>()
 
     return (
-        <div className="overflow-hidden rounded-md border">
+        <div className="rounded-md border">
             <Table>
                 <TableHeader>
                     <TableRow className="hover:">
@@ -89,6 +90,7 @@ export function DataTable({ columns, data, handleUpdateAll }: Props) {
 
                 </TableBody>
             </Table>
+            
             {data.length === 0 &&
                 <div className="flex justify-center w-full text-neutral-50">
                     Nenhuma transação encontrada
