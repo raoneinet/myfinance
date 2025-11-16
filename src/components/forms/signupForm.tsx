@@ -5,14 +5,42 @@ import { SignupTypes } from "@/types/signupTypes"
 import { useRouter } from "next/navigation"
 import api from "@/app/api/api"
 import jsSHA from "jssha"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
 const SignupForm = () => {
 
     const [confirmPassword, setConfirmPassword] = useState<boolean>(false)
     const router = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm<SignupTypes>()
 
-    const generateHash = ({ password }: {password: string}) => {
+    const formSchema = z.object({
+        fullname: z.string().min(2, { message: "Nome precisa pelo menos de 2 caracteres" }),
+        email: z.email("Email inválido"),
+        password: z.string().min(6, { message: "Senha precisa pelo menos 6 caracteres" }),
+        passwordConfirmation: z.string().min(2, { message: "Senhas precisam ser iguais" })
+    })
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            fullname: "",
+            email: "",
+            password: "",
+            passwordConfirmation: ""
+        }
+    })
+
+    const generateHash = ({ password }: { password: string }) => {
         let shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" })
         shaObj.update(password)
         return shaObj.getHash("HEX")
@@ -28,7 +56,7 @@ const SignupForm = () => {
                 return
             }
 
-            const pwd_hash = generateHash({password})
+            const pwd_hash = generateHash({ password })
 
             try {
                 await api.post("/create_user.php",
@@ -58,39 +86,64 @@ const SignupForm = () => {
 
     return (
         <div className="p-5 bg-white">
-            <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-2">
-                <div>
-                    <input type="name" {...register("fullname", { required: "Campo obrigatório" })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.fullname ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Nome e sobrenome" />
-                    {errors.fullname && <p className="text-xs">{errors.fullname.message}</p>}
-                </div>
-                <div>
-                    <input type="email" {...register("email", { required: "Campo obrigatório" })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Email" />
-                    {errors.email && <p className="text-xs">{errors.email.message}</p>}
-                </div>
-                <div>
-                    <input type="password" {...register("password", { required: "Campo obrigatório", min: 6, max: 20 })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Senha" />
-                    {errors.password && <p className="text-xs">{errors.password.message}</p>}
-                </div>
-                <div>
-                    <input type="password" {...register("passwordConfirmation", { required: "Campo obrigatório", min: 6, max: 20 })}
-                        className={`w-82 px-3 py-2 bg-gray-200 border ${(errors.passwordConfirmation || confirmPassword) ? "border-red-500" : "border-gray-300"} rounded-lg`}
-                        placeholder="Senha" />
-                    {errors.passwordConfirmation && <p className="text-xs">{errors.passwordConfirmation.message}</p>}
-                    {confirmPassword && <p className="text-xs">As senhas não são iguais</p>}
-                </div>
-                <div className="place-self-end">
-                    <input
-                        type="submit"
-                        value="Criar conta"
-                        className="w-fit px-3 py-2 bg-green-500 rounded-lg font-bold text-white cursor-pointer" />
-                </div>
-            </form>
+
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-8">
+                    <FormField
+                        control={form.control}
+                        name="fullname"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nome Completo</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="John Smith" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="exemplo@email.com" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Senha</FormLabel>
+                                <FormControl>
+                                    <Input type="password" placeholder="senha" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="passwordConfirmation"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Confirmar senha</FormLabel>
+                                <FormControl>
+                                    <Input type="password" placeholder="Confirmar senha" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">Enviar</Button>
+                </form>
+            </Form>
         </div>
     )
 }
