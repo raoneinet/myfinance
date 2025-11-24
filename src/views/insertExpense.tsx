@@ -19,14 +19,15 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
 
     //Add expense
     const handleExpenseInsert: SubmitHandler<SendFinanceType> = async (data) => {
-
         try {
             const created_at = new Date()
-            await api.post("/add_finance.php", data)
-                .then(res => console.log("Movimentos enviados: ", {data, created_at}))
+            const mysqlDatetime = created_at.toISOString().slice(0, 19).replace("T", " ")
+            const newFinance = { ...data, mysqlDatetime }
+            await api.post("/add_finance.php", newFinance)
+                .then(res => console.log("Movimentos enviados: ", { data, created_at }))
                 .catch(error => console.log("Erro ao enviar dados", error))
 
-                console.log("Criado em: ",created_at)
+            console.log("Criado em: ", created_at)
 
             const date = data.expense_date.split("-")
 
@@ -42,7 +43,10 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
     //Add salary
     const handleInsertSalary: SubmitHandler<SalaryTypes> = async (data) => {
         try {
-            await api.post("/add_salary.php", data)
+            const created_at = new Date()
+            const mysqlDatetime = created_at.toISOString().slice(0, 19).replace("T", " ")
+            const newSalary = { ...data, mysqlDatetime}
+            await api.post("/add_salary.php", newSalary)
 
             closeModal()
             updateDashboard()
