@@ -21,9 +21,12 @@ export const InsertExpense = ({ closeModal, updateDashboard, getTotals, getFinan
     const handleExpenseInsert: SubmitHandler<SendFinanceType> = async (data) => {
 
         try {
+            const created_at = new Date()
             await api.post("/add_finance.php", data)
-                .then(res => console.log("Movimentos enviados: ", data))
+                .then(res => console.log("Movimentos enviados: ", {data, created_at}))
                 .catch(error => console.log("Erro ao enviar dados", error))
+
+                console.log("Criado em: ",created_at)
 
             const date = data.expense_date.split("-")
 
