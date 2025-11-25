@@ -203,7 +203,8 @@ function studentPassed(){
 }
 //studentPassed()
 
-function biggestN(){
+//biggest number
+function biggestN(n){
     if(n > y && n > z){
         console.log(n+" é o maior número")
     }else if(y > n && y > z){
@@ -212,3 +213,45 @@ function biggestN(){
         console.log(z+" é o maior número")
     }
 }
+
+function showNumber(){
+    for(let i = 0; i < 10; i++){
+        console.log(i)
+    }
+}
+
+function showPair(){
+    for(let i = 0; i < 20; i++){
+        if(i % 2 === 0){
+            console.log(i)
+        }
+    }
+}
+
+function showEven(){
+    for(let i = 0; i < 20; i++){
+        if(i % 2 !== 0){
+            console.log(i)
+        }
+    }
+}
+
+
+function calcSum(){
+    let sum = 0
+    for(let i = sum; i <= 100; i++){
+        sum += i
+        console.log(sum)
+    }
+}
+
+//calcSum()
+
+function triangle(){
+    for(let i = 0; i < 5; i++){
+        for(let j = 0; j < i; j++){
+            console.log(" * ")
+        }
+    }
+}
+triangle()
