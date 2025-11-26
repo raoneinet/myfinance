@@ -58,12 +58,16 @@ const SignupForm = () => {
 
             const pwd_hash = generateHash({ password })
 
+            const createdDate = new Date()
+            const created_at = createdDate.toISOString().slice(0, 19).replace("T", "")
+
             try {
                 await api.post("/create_user.php",
                     {
                         fullname: data.fullname,
                         email: data.email,
-                        password: data.password
+                        password: data.password,
+                        created_at: created_at
                     }
                 )
 
