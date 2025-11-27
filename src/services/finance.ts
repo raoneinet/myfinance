@@ -23,7 +23,7 @@ export const requestSalary = async ({ month, year, setSalary }: SalaryProps): Pr
     } catch (error: any) {
         console.log("Erro ao buscar sálario: ", error)
         setSalary(0)
-        return 0 // Always return a value, even on error
+        return 0 
     }
 }
 
